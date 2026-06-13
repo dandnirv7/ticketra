@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Studio extends Model
@@ -31,5 +32,10 @@ class Studio extends Model
     public function bioskop(): BelongsTo
     {
         return $this->belongsTo(Bioskop::class);
+    }
+
+    public function kursis(): HasMany
+    {
+        return $this->hasMany(Kursi::class)->orderBy('label_baris')->orderBy('nomor_kursi');
     }
 }

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Bioskop;
 use App\Models\Film;
 use App\Models\JadwalTayang;
+use App\Models\Kursi;
 use App\Models\Studio;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,26 +20,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-
-        // User::factory(10)->create();
-
         User::factory()->create([
             'name' => 'User',
             'email' => 'user@ticketra.web.id',
         ]);
+
         $films = Film::factory()->count(5)->create();
         $bioskops = Bioskop::factory()->count(3)->create();
 
         $bioskops->each(function ($bioskop) use ($films) {
-            $studios = Studio::factory()->count(2)->create([
-                'bioskop_id' => $bioskop->id,
-            ]);
+
+            $studios = Studio::factory()
+                ->count(2)
+                ->create([
+                    'bioskop_id' => $bioskop->id,
+                ]);
 
             $studios->each(function ($studio) use ($films) {
-                JadwalTayang::factory()->count(5)->create([
-                    'studio_id' => $studio->id,
-                    'film_id' => $films->random()->id,
-                ]);
+
+                JadwalTayang::factory()
+                    ->count(5)
+                    ->create([
+                        'studio_id' => $studio->id,
+                        'film_id' => $films->random()->id,
+                    ]);
+
+                $rows = range('A', 'J');
+
+                foreach ($rows as $row) {
+                    for ($i = 1; $i <= 15; $i++) {
+                        Kursi::create([
+                            'studio_id' => $studio->id,
+                            'label_baris' => $row,
+                            'nomor_kursi' => $i,
+                            'tipe_kursi' => 'reguler',
+                            'is_aktif' => true,
+                        ]);
+                    }
+                }
             });
         });
     }
