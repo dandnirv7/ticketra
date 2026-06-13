@@ -18,7 +18,13 @@ class StudioFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nama' => 'Studio ' . fake()->numberBetween(1, 10),
+            'tipe' => fake()->randomElement(['reguler', 'premiere', 'imax']),
+            'kapasitas' => fake()->randomElement([100, 150, 200, 250]),
+            'layout_kursi' => [
+                'baris' => 10,
+                'kolom' => 15,
+            ],
         ];
     }
 }
