@@ -125,8 +125,8 @@
                   </p>
                 </div>
 
-                <a href="#" class="neo-button-primary">
-                  Pilih Kursi
+                <a href="{{ route('jadwal.kursi', $jadwalTayang->id) }}" class="neo-button-primary">
+                  Pilih Kursi <x-heroicon-o-arrow-right class="inline w-4 h-4 ml-1" />
                 </a>
               </div>
 
