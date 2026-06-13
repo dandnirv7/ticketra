@@ -1,3 +1,146 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .neo-card {
+        @apply overflow-hidden bg-white border-4 border-black rounded-2xl shadow-neo-lg;
+    }
+
+    .neo-card-sm {
+        @apply overflow-hidden bg-white border-4 border-black rounded-xl shadow-neo;
+    }
+
+    .neo-info-box {
+        @apply p-4 border-4 border-black rounded-xl shadow-neo;
+    }
+
+    .neo-info-pink {
+        @apply bg-pink-100 neo-info-box;
+    }
+
+    .neo-info-blue {
+        @apply bg-blue-100 neo-info-box;
+    }
+
+    .neo-info-yellow {
+        @apply bg-yellow-100 neo-info-box;
+    }
+
+    .neo-info-green {
+        @apply bg-green-100 neo-info-box;
+    }
+
+    .neo-info-purple {
+        @apply bg-purple-100 neo-info-box;
+    }
+
+    .neo-button {
+        @apply inline-block px-6 py-3 font-bold text-gray-900 border-4 border-black rounded-xl shadow-neo 
+               hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-neo-hover 
+               active:translate-x-[6px] active:translate-y-[6px] active:shadow-neo-active 
+               transition-all duration-150;
+    }
+
+    .neo-button-primary {
+        @apply bg-green-300 neo-button;
+    }
+
+    .neo-button-secondary {
+        @apply bg-yellow-200 neo-button;
+    }
+
+    .neo-button-danger {
+        @apply bg-red-300 neo-button;
+    }
+
+    .neo-badge {
+        @apply inline-block px-3 py-1 text-xs font-bold border-2 border-black rounded-lg shadow-neo-sm;
+    }
+
+    .neo-badge-blue {
+        @apply bg-blue-200 neo-badge;
+    }
+
+    .neo-badge-yellow {
+        @apply bg-yellow-200 neo-badge;
+    }
+
+    .neo-badge-green {
+        @apply bg-green-200 neo-badge;
+    }
+
+    .neo-badge-pink {
+        @apply bg-pink-200 neo-badge;
+    }
+
+    .neo-icon {
+        @apply flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white border-2 border-black rounded-lg;
+    }
+
+    .neo-banner {
+        @apply px-6 py-3 bg-pink-200 border-b-4 border-black;
+    }
+
+    .neo-divider {
+        @apply my-5 border-t-4 border-black border-dashed;
+    }
+
+    .neo-title {
+        @apply text-3xl font-black leading-tight text-gray-900;
+    }
+
+    .neo-subtitle {
+        @apply text-sm font-bold tracking-wider text-gray-600 uppercase;
+    }
+
+    .neo-text {
+        @apply font-black text-gray-900;
+    }
+
+    .neo-text-sm {
+        @apply text-sm text-gray-700;
+    }
+
+    .neo-price {
+        @apply text-4xl font-black text-gray-900;
+    }
+
+    .neo-dots {
+        @apply flex justify-center gap-2 mt-8;
+    }
+
+    .neo-dot {
+        @apply w-3 h-3 border-2 border-black rounded-full;
+    }
+
+    .neo-dot-pink {
+        @apply bg-pink-400 neo-dot;
+    }
+
+    .neo-dot-yellow {
+        @apply bg-yellow-400 neo-dot;
+    }
+
+    .neo-dot-blue {
+        @apply bg-blue-400 neo-dot;
+    }
+
+    .neo-dot-green {
+        @apply bg-green-400 neo-dot;
+    }
+
+    .neo-poster-frame {
+        @apply absolute top-3 left-3 right-[-12px] bottom-[-12px] bg-purple-300 border-4 border-black rounded-2xl -z-10;
+    }
+
+    .neo-poster {
+        @apply w-full rounded-2xl border-4 border-black object-cover aspect-[2/3] shadow-neo;
+    }
+
+    .neo-back-button {
+        @apply flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-900 bg-yellow-200 border-2 border-black rounded-lg shadow-neo-sm 
+               hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] 
+               transition-all;
+    }
+}
