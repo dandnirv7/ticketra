@@ -38,17 +38,6 @@
         </p>
       </div>
 
-      @if ($errors->any())
-      <div class="mb-4 neo-info-pink">
-        <p class="mb-2 font-bold">Ada kesalahan:</p>
-        <ul class="text-sm list-disc list-inside">
-          @foreach ($errors->all() as $error)
-          <li>{{ $error }}</li>
-          @endforeach
-        </ul>
-      </div>
-      @endif
-
       <form
         id="bookingForm"
         action="{{ route('jadwal.kursi.store', $jadwalTayang->id) }}"

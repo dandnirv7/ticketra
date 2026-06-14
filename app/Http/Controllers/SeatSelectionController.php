@@ -43,7 +43,23 @@ class SeatSelectionController extends Controller
         $kursiIds = $request->input('kursi_ids');
         $totalPrice = count($kursiIds) * $jadwalTayang->harga;
 
-        $bookingId = DB::transaction(function () {
+        $existingStatuses = StatusKursi::whereIn('kursi_id', $kursiIds)
+            ->where('jadwal_tayang_id', $jadwalTayang->id)
+            ->whereIn('status', ['dikunci', 'terjual'])
+            ->with('kursi')
+            ->get();
+
+        if ($existingStatuses->isNotEmpty()) {
+            $kursiTerpakai = $existingStatuses->map(function ($status) {
+                return $status->kursi->label_baris . $status->kursi->nomor_kursi;
+            })->implode(', ');
+
+            return redirect()->back()
+                ->with('error', "Maaf, kursi {$kursiTerpakai} sudah dipilih oleh pengguna lain. Silakan pilih kursi lain.")
+                ->withInput();
+        }
+
+        $bookingIdString = DB::transaction(function () {
             $prefix = 'TK-' . now()->format('dmyHis') . '-';
 
             $lastBooking = Booking::where('booking_id', 'like', $prefix . '%')
@@ -60,10 +76,10 @@ class SeatSelectionController extends Controller
             return $prefix . str_pad($sequence, 3, '0', STR_PAD_LEFT);
         });
 
-        DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice, $bookingId) {
+        $booking = DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice, $bookingIdString) {
 
             $booking = Booking::create([
-                'booking_id' => $bookingId,
+                'booking_id' => $bookingIdString,
                 'user_id' => $user->id,
                 'jadwal_tayang_id' => $jadwalTayang->id,
                 'status' => 'locked',
@@ -82,10 +98,12 @@ class SeatSelectionController extends Controller
                     'lock_expiry' => now()->addMinutes(10),
                 ]);
             }
+
+            return $booking;
         });
 
-        return redirect()->route('dashboard')
-            ->with('success', "Booking berhasil! ID Booking Anda: {$bookingId}. Silakan lanjutkan pembayaran.");
+        return redirect()->route('checkout.index', $booking->id)
+            ->with('success', "Kursi berhasil dikunci! Silakan selesaikan pembayaran Anda.");
     }
 
     /**

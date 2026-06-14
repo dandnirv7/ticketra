@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\JadwalTayangController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeatSelectionController;
@@ -24,6 +25,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/jadwal/{jadwalTayang}/kursi', [SeatSelectionController::class, 'store'])
         ->name('jadwal.kursi.store');
+
+    Route::get('/checkout/{booking}', [CheckoutController::class, 'index'])
+        ->name('checkout.index');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
