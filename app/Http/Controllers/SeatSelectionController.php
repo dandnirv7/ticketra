@@ -2,8 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBookingRequest;
+use App\Models\Booking;
 use App\Models\JadwalTayang;
+use App\Models\StatusKursi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class SeatSelectionController extends Controller
 {
@@ -32,9 +37,55 @@ class SeatSelectionController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreBookingRequest $request, JadwalTayang $jadwalTayang)
     {
-        //
+        $user = auth()->user();
+        $kursiIds = $request->input('kursi_ids');
+        $totalPrice = count($kursiIds) * $jadwalTayang->harga;
+
+        $bookingId = DB::transaction(function () {
+            $prefix = 'TK-' . now()->format('dmyHis') . '-';
+
+            $lastBooking = Booking::where('booking_id', 'like', $prefix . '%')
+                ->orderBy('id', 'desc')
+                ->lockForUpdate()
+                ->first();
+
+            $sequence = 1;
+            if ($lastBooking) {
+                $lastSeq = (int) substr($lastBooking->booking_id, -3);
+                $sequence = $lastSeq + 1;
+            }
+
+            return $prefix . str_pad($sequence, 3, '0', STR_PAD_LEFT);
+        });
+
+        DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice, $bookingId) {
+
+            $booking = Booking::create([
+                'booking_id' => $bookingId,
+                'user_id' => $user->id,
+                'jadwal_tayang_id' => $jadwalTayang->id,
+                'status' => 'locked',
+                'total_price' => $totalPrice,
+                'locked_at' => now(),
+                'lock_expiry' => now()->addMinutes(10),
+            ]);
+
+            foreach ($kursiIds as $kursiId) {
+                StatusKursi::create([
+                    'kursi_id' => $kursiId,
+                    'jadwal_tayang_id' => $jadwalTayang->id,
+                    'booking_id' => $booking->id,
+                    'status' => 'dikunci',
+                    'locked_at' => now(),
+                    'lock_expiry' => now()->addMinutes(10),
+                ]);
+            }
+        });
+
+        return redirect()->route('dashboard')
+            ->with('success', "Booking berhasil! ID Booking Anda: {$bookingId}. Silakan lanjutkan pembayaran.");
     }
 
     /**
