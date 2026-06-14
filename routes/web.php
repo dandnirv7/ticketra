@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\JadwalTayangController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeatSelectionController;
 use Illuminate\Support\Facades\Route;
@@ -28,6 +29,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/checkout/{booking}', [CheckoutController::class, 'index'])
         ->name('checkout.index');
+
+    Route::get('/payment/success/{booking}', [PaymentController::class, 'success'])
+        ->name('payment.success');
+
+    Route::get('/payment/pending/{booking}', [PaymentController::class, 'pending'])
+        ->name('payment.pending');
+
+    Route::get('/payment/finish', [PaymentController::class, 'finish'])
+        ->name('payment.finish');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

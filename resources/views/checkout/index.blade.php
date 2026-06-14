@@ -126,7 +126,7 @@
           <p class="text-2xl neo-price">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</p>
         </div>
 
-        <button class="px-8 py-4 text-lg neo-button-primary">
+        <button id="pay-button" class="px-8 py-4 text-lg neo-button-primary">
           Bayar Sekarang <x-heroicon-o-credit-card class="inline w-5 h-5 ml-2" />
         </button>
       </div>
@@ -134,3 +134,47 @@
 
   </div>
 </x-app-layout>
+
+@if($snapToken)
+<script src="https://app.sandbox.midtrans.com/snap/snap.js"
+  data-client-key="{{ config('midtrans.client_key') }}"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const payButton = document.getElementById('pay-button');
+
+    if (payButton) {
+      payButton.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        this.disabled = true;
+        this.innerHTML = 'Memproses... <svg class="inline w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
+
+        window.snap.pay('{{ $snapToken }}', {
+          onSuccess: function(result) {
+            console.log('Payment Success:', result);
+            window.location.href = '{{ route('
+            payment.success ', $booking->id) }}';
+          },
+          onPending: function(result) {
+            console.log('Payment Pending:', result);
+            window.location.href = '{{ route('
+            payment.pending ', $booking->id) }}';
+          },
+          onError: function(result) {
+            console.log('Payment Error:', result);
+            alert('Pembayaran gagal. Silakan coba lagi.');
+            payButton.disabled = false;
+            payButton.innerHTML = 'Bayar Sekarang <svg class="inline w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>';
+          },
+          onClose: function() {
+            alert('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.');
+            payButton.disabled = false;
+            payButton.innerHTML = 'Bayar Sekarang <svg class="inline w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>';
+          }
+        });
+      });
+    }
+  });
+</script>
+@endif

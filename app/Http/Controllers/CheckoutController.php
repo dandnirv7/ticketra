@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Services\PaymentService;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -12,7 +13,6 @@ class CheckoutController extends Controller
      */
     public function index(Booking $booking)
     {
-
         if ($booking->user_id !== auth()->id()) {
             abort(403, 'Unauthorized action.');
         }
@@ -23,7 +23,13 @@ class CheckoutController extends Controller
             'statusKursis.kursi'
         ]);
 
-        return view('checkout.index', compact('booking'));
+        $snapToken = null;
+        if (in_array($booking->status, ['locked', 'pending_payment'])) {
+            $paymentService = new PaymentService();
+            $snapToken = $paymentService->createTransaction($booking);
+        }
+
+        return view('checkout.index', compact('booking', 'snapToken'));
     }
 
     /**
