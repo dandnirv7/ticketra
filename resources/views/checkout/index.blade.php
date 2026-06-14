@@ -126,7 +126,10 @@
           <p class="text-2xl neo-price">Rp {{ number_format($booking->total_price, 0, ',', '.') }}</p>
         </div>
 
-        <button id="pay-button" class="px-8 py-4 text-lg neo-button-primary">
+        <button id="pay-button"
+                class="px-8 py-4 text-lg neo-button-primary"
+                data-success-url="{{ route('payment.success', $booking->id) }}"
+                data-pending-url="{{ route('payment.pending', $booking->id) }}">
           Bayar Sekarang <x-heroicon-o-credit-card class="inline w-5 h-5 ml-2" />
         </button>
       </div>
@@ -153,13 +156,11 @@
         window.snap.pay('{{ $snapToken }}', {
           onSuccess: function(result) {
             console.log('Payment Success:', result);
-            window.location.href = '{{ route('
-            payment.success ', $booking->id) }}';
+            window.location.href = payButton.dataset.successUrl;
           },
           onPending: function(result) {
             console.log('Payment Pending:', result);
-            window.location.href = '{{ route('
-            payment.pending ', $booking->id) }}';
+            window.location.href = payButton.dataset.pendingUrl;
           },
           onError: function(result) {
             console.log('Payment Error:', result);

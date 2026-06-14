@@ -44,4 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/webhooks/midtrans', [App\Http\Controllers\PaymentWebhookController::class, 'handleMidtrans'])
+    ->name('webhooks.midtrans');
+
 require __DIR__ . '/auth.php';
