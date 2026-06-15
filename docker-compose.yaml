@@ -1,0 +1,104 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ticketra-app:latest
+    container_name: ticketra-app
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      APP_ENV: production
+      APP_DEBUG: "false"
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: "3306"
+      DB_DATABASE: ${DB_DATABASE:-ticketra}
+      DB_USERNAME: ${DB_USERNAME:-ticketra}
+      DB_PASSWORD: ${DB_PASSWORD:-ticketra_secret}
+      CACHE_STORE: redis
+      CACHE_HOST: redis
+      CACHE_PORT: "6379"
+      SESSION_DRIVER: redis
+      SESSION_CONNECTION: default
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      QUEUE_CONNECTION: redis
+      LOG_CHANNEL: stack
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    networks:
+      - ticketra-net
+    volumes:
+      - ticketra-storage:/var/www/html/storage
+      - ticketra-db:/var/www/html/database
+    healthcheck:
+      test: ["CMD", "php", "-r", "exit(0);"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+  nginx:
+    image: nginx:1.27-alpine
+    container_name: ticketra-nginx
+    restart: unless-stopped
+    ports:
+      - "${APP_PORT:-8080}:80"
+    depends_on:
+      - app
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - ticketra-net
+
+  mysql:
+    image: mysql:8.0
+    container_name: ticketra-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-root_secret}
+      MYSQL_DATABASE: ${DB_DATABASE:-ticketra}
+      MYSQL_USER: ${DB_USERNAME:-ticketra}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-ticketra_secret}
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ticketra-mysql-data:/var/lib/mysql
+    networks:
+      - ticketra-net
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD:-root_secret}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: ticketra-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    volumes:
+      - ticketra-redis-data:/data
+    networks:
+      - ticketra-net
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+networks:
+  ticketra-net:
+    driver: bridge
+
+volumes:
+  ticketra-storage:
+  ticketra-db:
+  ticketra-mysql-data:
+  ticketra-redis-data:
