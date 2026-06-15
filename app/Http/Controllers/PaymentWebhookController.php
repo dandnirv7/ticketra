@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\BookingConfirmationMail;
 use App\Models\Booking;
 use App\Models\PaymentWebhook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
+use Milon\Barcode\Facades\DNS2DFacade;
 
 class PaymentWebhookController extends Controller
 {
@@ -95,8 +98,9 @@ class PaymentWebhookController extends Controller
             ]);
 
             $responseStatus = 'ok';
+            $shouldSendEmail = false;
 
-            DB::transaction(function () use ($booking, $data, $transactionId, $paymentType, $finalStatus, &$responseStatus) {
+            DB::transaction(function () use ($booking, $data, $transactionId, $paymentType, $finalStatus, &$responseStatus, &$shouldSendEmail) {
 
                 $existingWebhook = PaymentWebhook::where('webhook_id', $transactionId)->first();
 
@@ -115,7 +119,7 @@ class PaymentWebhookController extends Controller
 
                         $responseStatus = 'updated';
 
-                        $this->updateBookingStatus($booking, $finalStatus, $transactionId, $paymentType);
+                        $shouldSendEmail = $this->updateBookingStatus($booking, $finalStatus, $transactionId, $paymentType);
                     } else {
                         $responseStatus = 'already_processed';
                         Log::info('True duplicate webhook, skipping');
@@ -132,10 +136,15 @@ class PaymentWebhookController extends Controller
                     ]);
 
                     Log::info('PaymentWebhook created');
-                    $this->updateBookingStatus($booking, $finalStatus, $transactionId, $paymentType);
+
+                    $shouldSendEmail = $this->updateBookingStatus($booking, $finalStatus, $transactionId, $paymentType);
                     Log::info('Booking status updated');
                 }
             });
+
+            if ($shouldSendEmail) {
+                $this->sendBookingConfirmationEmail($booking);
+            }
 
             Log::info('=== WEBHOOK SUCCESS ===', ['response' => $responseStatus]);
 
@@ -161,36 +170,30 @@ class PaymentWebhookController extends Controller
 
         if ($transactionStatus == 'capture') {
             if ($fraudStatus == 'challenge') {
-                Log::info('Returning pending_payment (capture + challenge)');
                 return 'pending_payment';
             } elseif ($fraudStatus == 'accept') {
-                Log::info('Returning confirmed (capture + accept)');
                 return 'confirmed';
             }
-            Log::info('Returning pending_payment (capture + unknown fraud)');
             return 'pending_payment';
         } elseif ($transactionStatus == 'settlement') {
-            Log::info('Returning confirmed (settlement)');
             return 'confirmed';
         } elseif ($transactionStatus == 'deny') {
-            Log::info('Returning failed (deny)');
             return 'failed';
         } elseif ($transactionStatus == 'cancel' || $transactionStatus == 'expire') {
-            Log::info('Returning cancelled (cancel/expire)');
             return 'cancelled';
         } elseif ($transactionStatus == 'failure') {
-            Log::info('Returning failed (failure)');
             return 'failed';
         }
 
-        Log::warning('Unknown status combination, returning pending_payment', [
-            'transactionStatus' => $transactionStatus,
-            'fraudStatus' => $fraudStatus,
-        ]);
         return 'pending_payment';
     }
 
-    private function updateBookingStatus(Booking $booking, string $finalStatus, string $transactionId, string $paymentType): void
+    /**
+     * Update booking status
+     * 
+     * @return bool True jika email harus dikirim (status berubah ke confirmed)
+     */
+    private function updateBookingStatus(Booking $booking, string $finalStatus, string $transactionId, string $paymentType): bool
     {
         Log::info('updateBookingStatus called', [
             'booking_id' => $booking->booking_id,
@@ -214,7 +217,7 @@ class PaymentWebhookController extends Controller
                 'current' => $booking->status,
                 'attempted' => $finalStatus,
             ]);
-            return;
+            return false;
         }
 
         $updateData = ['status' => $finalStatus];
@@ -225,10 +228,58 @@ class PaymentWebhookController extends Controller
 
         $booking->update($updateData);
 
+        $freshBooking = $booking->fresh();
+
         Log::info('Booking updated', [
             'booking_id' => $booking->booking_id,
-            'new_status' => $booking->fresh()->status,
-            'new_paid_at' => $booking->fresh()->paid_at,
+            'new_status' => $freshBooking->status,
+            'new_paid_at' => $freshBooking->paid_at,
         ]);
+
+        return $finalStatus === 'confirmed';
+    }
+
+    /**
+     * Send booking confirmation email (dipanggil DI LUAR transaction)
+     */
+    private function sendBookingConfirmationEmail(Booking $booking): void
+    {
+        try {
+            $booking->refresh();
+
+            $booking->load([
+                'user',
+                'jadwalTayang.film',
+                'jadwalTayang.studio.bioskop',
+                'statusKursis.kursi',
+            ]);
+
+            if (!$booking->user || !$booking->user->email) {
+                Log::error('Cannot send email: user or email not found', [
+                    'booking_id' => $booking->booking_id,
+                ]);
+                return;
+            }
+
+            $qrData = "TICKETRA:{$booking->booking_id}|{$booking->user_id}|{$booking->jadwal_tayang_id}";
+            $qrCodePng = DNS2DFacade::getBarcodePNG($qrData, 'QRCODE', 8, 8, [0, 0, 0]);
+            $qrCodeBase64 = base64_encode($qrCodePng);
+
+            Mail::to($booking->user->email)
+                ->queue(new BookingConfirmationMail($booking, $qrCodeBase64));
+
+            Log::info('Booking confirmation email queued successfully', [
+                'email' => $booking->user->email,
+                'booking_id' => $booking->booking_id,
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Failed to send booking confirmation email', [
+                'error' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'booking_id' => $booking->booking_id,
+                'trace' => $e->getTraceAsString(),
+            ]);
+        }
     }
 }
