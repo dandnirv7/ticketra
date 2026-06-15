@@ -50,4 +50,9 @@ class Booking extends Model
     {
         return $this->hasMany(StatusKursi::class);
     }
+
+    public function paymentWebhooks(): HasMany
+    {
+        return $this->hasMany(PaymentWebhook::class);
+    }
 }

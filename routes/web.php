@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\JadwalTayangController;
 use App\Http\Controllers\PaymentController;
@@ -38,6 +39,11 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/payment/finish', [PaymentController::class, 'finish'])
         ->name('payment.finish');
+
+    Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+    Route::get('/bookings/{booking}/pdf', [BookingController::class, 'downloadPdf'])
+        ->name('bookings.pdf');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
