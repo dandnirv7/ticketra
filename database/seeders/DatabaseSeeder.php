@@ -25,6 +25,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'user@ticketra.web.id',
         ]);
 
+        User::factory()->create([
+            'name' => 'Dandi',
+            'email' => 'dandinirpana7@gmail.com',
+        ]);
+
         $films = Film::factory()->count(5)->create();
         $bioskops = Bioskop::factory()->count(3)->create();
 

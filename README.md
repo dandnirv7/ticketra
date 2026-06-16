@@ -41,6 +41,29 @@ php artisan boost:install
 
 Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
 
+
+
+## Local Development
+
+Project ini memakai Docker. Untuk development lokal dengan auto-reload (bind-mount source code, auto-migrate):
+
+```bash
+docker compose up -d
+```
+
+Override `docker-compose.override.yaml` akan otomatis aktif dan:
+
+- Bind-mount `app/`, `bootstrap/`, `config/`, `database/{migrations,seeders,factories}`, `public/`, `resources/`, `routes/` ke container.
+- Set `APP_ENV=local`, `APP_DEBUG=true`, `RUN_MIGRATIONS=true` (entrypoint akan menjalankan `php artisan migrate --force` saat start).
+
+Untuk production (tanpa override):
+
+```bash
+COMPOSE_FILE=docker-compose.yaml docker compose up -d
+```
+
+Cache Laravel & Filament dibersihkan otomatis di awal start container oleh `docker/entrypoint.sh` agar perubahan widget/page selalu konsisten.
+
 ## Contributing
 
 Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).

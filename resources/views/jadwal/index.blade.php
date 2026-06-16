@@ -24,20 +24,20 @@
 
           <div class="flex items-start justify-between gap-3 p-5 pb-0">
             <div class="flex-1 min-w-0">
-              <h3 class="mb-1 text-xl truncate neo-title" title="{{ $jadwal->film->judul }}">
-                {{ $jadwal->film->judul }}
+              <h3 class="mb-1 text-xl truncate neo-title" title="{{ $jadwal->film?->judul ?? 'Film tidak tersedia' }}">
+                {{ $jadwal->film?->judul ?? 'Film tidak tersedia' }}
               </h3>
               <p class="flex items-center gap-1 neo-text-sm">
                 <x-heroicon-o-building-storefront class="flex-shrink-0 w-4 h-4" />
-                <span class="truncate">{{ $jadwal->studio->bioskop->nama }}</span>
+                <span class="truncate">{{ $jadwal->studio?->bioskop?->nama ?? 'Bioskop tidak tersedia' }}</span>
               </p>
               <p class="flex items-center gap-1 mt-1 neo-text-sm">
                 <x-heroicon-o-video-camera class="flex-shrink-0 w-4 h-4" />
-                {{ $jadwal->studio->nama }}
+                {{ $jadwal->studio?->nama ?? 'Studio tidak tersedia' }}
               </p>
             </div>
             <span class="flex-shrink-0 neo-badge-pink">
-              {{ ucfirst($jadwal->studio->tipe) }}
+              {{ ucfirst($jadwal->studio?->tipe ?? '-') }}
             </span>
           </div>
 
@@ -48,13 +48,13 @@
               <div class="flex items-center gap-2 mb-2">
                 <x-heroicon-o-calendar class="w-5 h-5 text-gray-900" />
                 <p class="neo-text">
-                  {{ $jadwal->waktu_mulai->format('d M Y') }}
+                  {{ $jadwal->waktu_mulai?->format('d M Y') ?? '-' }}
                 </p>
               </div>
               <div class="flex items-center gap-2">
                 <x-heroicon-o-clock class="w-5 h-5 text-gray-900" />
                 <p class="font-bold neo-text-sm">
-                  {{ $jadwal->waktu_mulai->format('H:i') }} - {{ $jadwal->waktu_selesai->format('H:i') }} WIB
+                  {{ $jadwal->waktu_mulai?->format('H:i') ?? '-' }} - {{ $jadwal->waktu_selesai?->format('H:i') ?? '-' }} WIB
                 </p>
               </div>
             </div>
@@ -63,7 +63,7 @@
               <div>
                 <p class="neo-subtitle">Harga</p>
                 <p class="text-2xl neo-price">
-                  Rp {{ number_format($jadwal->harga, 0, ',', '.') }}
+                  Rp {{ number_format($jadwal->harga ?? 0, 0, ',', '.') }}
                 </p>
               </div>
 
