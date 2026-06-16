@@ -25,7 +25,7 @@ class JadwalTayang extends Model
 
     public function film(): BelongsTo
     {
-        return $this->belongsTo(Film::class);
+        return $this->belongsTo(Film::class)->withTrashed();
     }
 
     public function studio(): BelongsTo
