@@ -49,7 +49,6 @@
                     seats: @json($jadwalTayang->studio->kursis),
 
                     toggleSeat(seatId) {
-                        // seatId sudah string UUID, tidak perlu Number()
                         if (this.selected.includes(seatId)) {
                             this.selected = this.selected.filter(id => id !== seatId);
                         } else {

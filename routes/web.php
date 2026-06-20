@@ -3,20 +3,22 @@
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\JadwalTayangController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeatSelectionController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
-Route::middleware(['auth'])->group(function () {
+Route::get('/auth', function () {
+    return view('auth');
+})->name('auth.page');
 
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+Route::middleware(['auth', 'verified'])->group(function () {
+
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
+        ->name('dashboard');
 
     Route::resource('jadwal', JadwalTayangController::class)->parameters([
         'jadwal' => 'jadwalTayang'
@@ -52,5 +54,9 @@ Route::middleware(['auth'])->group(function () {
 
 Route::post('/webhooks/midtrans', [App\Http\Controllers\PaymentWebhookController::class, 'handleMidtrans'])
     ->name('webhooks.midtrans');
+
+Route::post('email/verification-notification', [App\Http\Controllers\Auth\EmailVerificationNotificationController::class, 'store'])
+    ->middleware('throttle:6,1')
+    ->name('verification.send');
 
 require __DIR__ . '/auth.php';

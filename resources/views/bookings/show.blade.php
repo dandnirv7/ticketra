@@ -11,8 +11,7 @@
     </div>
   </x-slot>
 
-  <div class="min-h-screen py-8 bg-amber-50">
-    <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+  <div class="max-w-4xl">
 
       @if($booking->status === 'confirmed')
       <div class="p-4 mb-6 bg-green-100 neo-card-sm">
@@ -183,9 +182,7 @@
             </div>
           </div>
 
-        </div>
       </div>
-
     </div>
   </div>
 </x-app-layout>

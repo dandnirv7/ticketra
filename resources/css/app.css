@@ -4,15 +4,15 @@
 
 @layer components {
     .neo-card {
-        @apply overflow-hidden bg-white border-4 border-black rounded-2xl shadow-neo-lg;
+        @apply overflow-hidden bg-white rounded-2xl border-4 border-black shadow-neo-lg;
     }
 
     .neo-card-sm {
-        @apply overflow-hidden bg-white border-4 border-black rounded-xl shadow-neo;
+        @apply overflow-hidden bg-white rounded-xl border-4 border-black shadow-neo;
     }
 
     .neo-info-box {
-        @apply p-4 border-4 border-black rounded-xl shadow-neo;
+        @apply p-4 rounded-xl border-4 border-black shadow-neo;
     }
 
     .neo-info-pink {
@@ -36,9 +36,9 @@
     }
 
     .neo-button {
-        @apply inline-block px-6 py-3 font-bold text-gray-900 border-4 border-black rounded-xl shadow-neo 
-               hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-neo-hover 
-               active:translate-x-[6px] active:translate-y-[6px] active:shadow-neo-active 
+        @apply inline-block px-6 py-3 font-bold text-gray-900 border-4 border-black rounded-xl shadow-neo
+               hover:translate-x-[3px] hover:translate-y-[3px] hover:shadow-neo-hover
+               active:translate-x-[6px] active:translate-y-[6px] active:shadow-neo-active
                transition-all duration-150;
     }
 
@@ -55,7 +55,7 @@
     }
 
     .neo-badge {
-        @apply inline-block px-3 py-1 text-xs font-bold border-2 border-black rounded-lg shadow-neo-sm;
+        @apply inline-block px-3 py-1 text-xs font-bold rounded-lg border-2 border-black shadow-neo-sm;
     }
 
     .neo-badge-blue {
@@ -75,7 +75,7 @@
     }
 
     .neo-icon {
-        @apply flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white border-2 border-black rounded-lg;
+        @apply flex flex-shrink-0 justify-center items-center w-10 h-10 bg-white rounded-lg border-2 border-black;
     }
 
     .neo-banner {
@@ -107,11 +107,11 @@
     }
 
     .neo-dots {
-        @apply flex justify-center gap-2 mt-8;
+        @apply flex gap-2 justify-center mt-8;
     }
 
     .neo-dot {
-        @apply w-3 h-3 border-2 border-black rounded-full;
+        @apply w-3 h-3 rounded-full border-2 border-black;
     }
 
     .neo-dot-pink {
@@ -139,8 +139,186 @@
     }
 
     .neo-back-button {
-        @apply flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-900 bg-yellow-200 border-2 border-black rounded-lg shadow-neo-sm 
-               hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000] 
+        @apply flex items-center gap-2 px-4 py-2 text-sm font-bold text-gray-900 bg-yellow-200 border-2 border-black rounded-lg shadow-neo-sm
+               hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0px_0px_#000]
                transition-all;
     }
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+    body {
+        @apply antialiased text-foreground font-base;
+        background-color: oklch(0.96 0.01 155);
+        background-image:
+            linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+    body::selection,
+    ::selection {
+        @apply bg-main text-main-foreground;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        @apply font-extrabold font-heading;
+    }
+}
+
+@layer components {
+    .brutal-box {
+        @apply relative z-10 border-2 shadow-sm bg-secondary-background border-border rounded-base;
+    }
+    .brutal-card {
+        @apply relative z-10 border-2 shadow-md transition-all duration-300 bg-secondary-background border-border rounded-base;
+    }
+    .brutal-card:hover {
+        @apply -translate-x-[2px] -translate-y-[2px] shadow-lg;
+    }
+    .brutal-btn {
+        @apply inline-flex gap-2 justify-center items-center px-6 py-3 font-bold border-2 shadow-sm transition-all duration-200 cursor-pointer font-heading text-main-foreground bg-main border-border rounded-base;
+    }
+    .brutal-btn:not(:disabled):hover {
+        @apply translate-x-[2px] translate-y-[2px];
+        box-shadow: 2px 2px 0px oklch(25% 0.02 260);
+    }
+    .brutal-btn:not(:disabled):active {
+        @apply translate-x-[4px] translate-y-[4px] scale-95;
+        box-shadow: 0px 0px 0px oklch(25% 0.02 260);
+    }
+    .brutal-btn:disabled {
+        @apply opacity-50 cursor-not-allowed;
+    }
+    .brutal-btn-secondary {
+        @apply bg-white hover:bg-pastel-sky;
+    }
+
+    .seat {
+        @apply flex justify-center items-center w-8 h-8 text-xs font-bold rounded-t-lg rounded-b-sm border-2 transition-all cursor-pointer border-border md:w-10 md:h-10;
+    }
+    .seat-available {
+        @apply bg-secondary-background hover:bg-pastel-sky hover:-translate-y-1;
+    }
+    .seat-selected {
+        @apply shadow-sm scale-105 bg-accent-green text-main-foreground;
+    }
+    .seat-occupied {
+        @apply text-gray-500 bg-gray-300 border-gray-400 opacity-60 cursor-not-allowed hover:translate-y-0;
+    }
+
+    .hide-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .perspective-1000 {
+        perspective: 1000px;
+    }
+
+    .line-clamp-1 {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 1;
+    }
+}
+
+.modal-enter-active,
+.modal-leave-active {
+    transition: opacity 0.3s ease;
+}
+.modal-enter-from,
+.modal-leave-to {
+    opacity: 0;
+}
+.modal-enter-active .modal-content,
+.modal-leave-active .modal-content {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.modal-enter-from .modal-content,
+.modal-leave-to .modal-content {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+}
+.faq-enter-active,
+.faq-leave-active {
+    transition: all 0.3s ease;
+    overflow: hidden;
+}
+.faq-enter-from,
+.faq-leave-to {
+    opacity: 0;
+    max-height: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.faq-enter-to,
+.faq-leave-from {
+    opacity: 1;
+    max-height: 200px;
+}
+
+@layer base {
+    :root {
+        --border: #111827;
+        --background: oklch(97% 0.02 130);
+    }
+}
+
+@layer components {
+    .brutal-card {
+        @apply bg-white border-[3px] border-border rounded-[24px] shadow-[8px_8px_0px_var(--border)] relative;
+    }
+
+    .brutal-btn {
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3.5 font-heading font-extrabold uppercase border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] transition-all duration-200 cursor-pointer active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed hover:-translate-y-1 hover:shadow-[6px_6px_0px_var(--border)];
+    }
+
+    .brutal-input {
+        @apply w-full bg-white border-[3px] border-border rounded-xl px-4 py-3.5 font-bold outline-none transition-all duration-300 focus:-translate-y-1 focus:shadow-[4px_4px_0px_var(--border)];
+    }
+
+    .brutal-input::placeholder {
+        @apply font-medium text-gray-400;
+    }
+
+    .bg-dot-matrix {
+        background-image: radial-gradient(
+            var(--border) 1.5px,
+            transparent 1.5px
+        );
+        background-size: 24px 24px;
+    }
+}
+
+.form-fade-enter-active,
+.form-fade-leave-active {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.form-fade-enter-from {
+    opacity: 0;
+    transform: translateX(20px);
+}
+.form-fade-leave-to {
+    opacity: 0;
+    transform: translateX(-20px);
+}
+
+.toast-enter-active,
+.toast-leave-active {
+    transition: all 0.3s ease;
+}
+.toast-enter-from,
+.toast-leave-to {
+    opacity: 0;
+    transform: translate(-50%, -20px);
 }

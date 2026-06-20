@@ -5,22 +5,25 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
-use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
-    public function create(): View
+    public function create(Request $request)
     {
-        return view('auth.register');
+        if ($request->wantsJson() || $request->expectsJson() || $request->ajax()) {
+            return response()->json(['ok' => true]);
+        }
+        return redirect()->route('auth.page', ['view' => 'register']);
     }
 
     /**
@@ -28,7 +31,7 @@ class RegisteredUserController extends Controller
      *
      * @throws ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request): RedirectResponse|JsonResponse
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
@@ -44,8 +47,18 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
-        Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        if ($request->wantsJson() || $request->expectsJson()) {
+            return response()->json([
+                'ok' => true,
+                'message' => 'Pendaftaran berhasil. Silakan cek email Anda untuk verifikasi.',
+                'email' => $user->email,
+            ], 201);
+        }
+
+        return redirect()->route('auth.page', [
+            'view' => 'verify',
+            'email' => $user->email,
+        ]);
     }
 }

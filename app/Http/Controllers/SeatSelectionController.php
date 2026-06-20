@@ -23,7 +23,12 @@ class SeatSelectionController extends Controller
             'studio.kursis'
         ]);
 
-        return view('seat-selection.index', compact('jadwalTayang'));
+        $occupiedSeats = StatusKursi::where('jadwal_tayang_id', $jadwalTayang->id)
+            ->whereIn('status', ['dikunci', 'terjual'])
+            ->pluck('kursi_id')
+            ->toArray();
+
+        return view('seat-selection.index', compact('jadwalTayang', 'occupiedSeats'));
     }
 
     /**
