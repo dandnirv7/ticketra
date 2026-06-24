@@ -4,15 +4,15 @@
 
 @layer components {
     .neo-card {
-        @apply overflow-hidden bg-white rounded-2xl border-4 border-black shadow-neo-lg;
+        @apply overflow-hidden bg-white border-4 border-black rounded-2xl shadow-neo-lg;
     }
 
     .neo-card-sm {
-        @apply overflow-hidden bg-white rounded-xl border-4 border-black shadow-neo;
+        @apply overflow-hidden bg-white border-4 border-black rounded-xl shadow-neo;
     }
 
     .neo-info-box {
-        @apply p-4 rounded-xl border-4 border-black shadow-neo;
+        @apply p-4 border-4 border-black rounded-xl shadow-neo;
     }
 
     .neo-info-pink {
@@ -55,7 +55,7 @@
     }
 
     .neo-badge {
-        @apply inline-block px-3 py-1 text-xs font-bold rounded-lg border-2 border-black shadow-neo-sm;
+        @apply inline-block px-3 py-1 text-xs font-bold border-2 border-black rounded-lg shadow-neo-sm;
     }
 
     .neo-badge-blue {
@@ -75,7 +75,7 @@
     }
 
     .neo-icon {
-        @apply flex flex-shrink-0 justify-center items-center w-10 h-10 bg-white rounded-lg border-2 border-black;
+        @apply flex items-center justify-center flex-shrink-0 w-10 h-10 bg-white border-2 border-black rounded-lg;
     }
 
     .neo-banner {
@@ -107,11 +107,11 @@
     }
 
     .neo-dots {
-        @apply flex gap-2 justify-center mt-8;
+        @apply flex justify-center gap-2 mt-8;
     }
 
     .neo-dot {
-        @apply w-3 h-3 rounded-full border-2 border-black;
+        @apply w-3 h-3 border-2 border-black rounded-full;
     }
 
     .neo-dot-pink {
@@ -169,6 +169,15 @@
     h6 {
         @apply font-extrabold font-heading;
     }
+
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 }
 
 @layer components {
@@ -176,13 +185,13 @@
         @apply relative z-10 border-2 shadow-sm bg-secondary-background border-border rounded-base;
     }
     .brutal-card {
-        @apply relative z-10 border-2 shadow-md transition-all duration-300 bg-secondary-background border-border rounded-base;
+        @apply relative z-10 transition-all duration-300 border-2 shadow-md bg-secondary-background border-border rounded-base;
     }
     .brutal-card:hover {
         @apply -translate-x-[2px] -translate-y-[2px] shadow-lg;
     }
     .brutal-btn {
-        @apply inline-flex gap-2 justify-center items-center px-6 py-3 font-bold border-2 shadow-sm transition-all duration-200 cursor-pointer font-heading text-main-foreground bg-main border-border rounded-base;
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold transition-all duration-200 border-2 shadow-sm cursor-pointer font-heading text-main-foreground bg-main border-border rounded-base;
     }
     .brutal-btn:not(:disabled):hover {
         @apply translate-x-[2px] translate-y-[2px];
@@ -200,16 +209,16 @@
     }
 
     .seat {
-        @apply flex justify-center items-center w-8 h-8 text-xs font-bold rounded-t-lg rounded-b-sm border-2 transition-all cursor-pointer border-border md:w-10 md:h-10;
+        @apply flex items-center justify-center w-8 h-8 text-xs font-bold transition-all border-2 rounded-t-lg rounded-b-sm cursor-pointer border-border md:w-10 md:h-10;
     }
     .seat-available {
         @apply bg-secondary-background hover:bg-pastel-sky hover:-translate-y-1;
     }
     .seat-selected {
-        @apply shadow-sm scale-105 bg-accent-green text-main-foreground;
+        @apply scale-105 shadow-sm bg-accent-green text-main-foreground;
     }
     .seat-occupied {
-        @apply text-gray-500 bg-gray-300 border-gray-400 opacity-60 cursor-not-allowed hover:translate-y-0;
+        @apply text-gray-500 bg-gray-300 border-gray-400 cursor-not-allowed opacity-60 hover:translate-y-0;
     }
 
     .hide-scrollbar {
@@ -284,7 +293,7 @@
     }
 
     .brutal-input {
-        @apply w-full bg-white border-[3px] border-border rounded-xl px-4 py-3.5 font-bold outline-none transition-all duration-300 focus:-translate-y-1 focus:shadow-[4px_4px_0px_var(--border)];
+        @apply w-full bg-white border-[3px] border-border rounded-xl px-4 py-3.5 font-bold outline-none transition-all duration-300 focus:-translate-y-1 focus:shadow-[4px_4px_0px_var(--border)] focus:border-border focus:ring-0;
     }
 
     .brutal-input::placeholder {

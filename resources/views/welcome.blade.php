@@ -294,7 +294,8 @@
             <div class="flex gap-6 overflow-x-auto pb-8 snap-x hide-scrollbar relative z-10">
                 @foreach ($movies as $movie)
                     <article class="min-w-[280px] md:min-w-[300px] lg:min-w-[280px] brutal-card group flex flex-col overflow-hidden bg-white snap-start">
-                        <div class="relative aspect-[2/3] border-b-2 border-border overflow-hidden bg-gray-100">
+                        <div class="relative aspect-[2/3] border-b-2 border-border overflow-hidden bg-gray-100 cursor-pointer"
+                             onclick="window.location.href = '{{ route('film.show', $movie['id']) }}'">
                             <img src="{{ $movie['poster'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
                             <div class="absolute top-3 right-3 bg-accent-yellow border-2 border-border rounded-full px-2 py-1 text-sm font-bold flex items-center gap-1 shadow-sm">
                                 <x-icon name="heroicon-s-star" class="w-4 h-4 fill-main-foreground" /> {{ $movie['rating'] }}
@@ -302,22 +303,19 @@
                         </div>
                         <div class="p-5 flex-1 flex flex-col">
                             <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">{{ $movie['genre'] }}</span>
-                            <h3 class="text-xl mb-2 line-clamp-1" title="{{ $movie['title'] }}">{{ $movie['title'] }}</h3>
+                            <h3 class="text-xl mb-2 line-clamp-1 cursor-pointer hover:text-main" title="{{ $movie['title'] }}"
+                                onclick="window.location.href = '{{ route('film.show', $movie['id']) }}'">
+                                {{ $movie['title'] }}
+                            </h3>
                             <div class="flex items-center justify-between mb-5">
                                 <div class="flex items-center gap-1.5 text-sm font-medium opacity-80">
                                     <x-icon name="heroicon-s-clock" class="w-4 h-4" /> {{ $movie['duration'] }}
                                 </div>
                                 <div class="text-xs font-bold px-2 py-0.5 bg-pastel-lavender rounded border border-border">{{ $movie['ageRating'] }}</div>
                             </div>
-                            @auth
-                                <a href="{{ route('jadwal.kursi', ['jadwalTayang' => 'placeholder']) }}" class="brutal-btn w-full mt-auto text-sm !py-2.5">
-                                    Pesan Sekarang
-                                </a>
-                            @else
-                                <a href="{{ route('auth.page', ['view' => 'login']) }}" class="brutal-btn w-full mt-auto text-sm !py-2.5 text-center">
-                                    Pesan Sekarang
-                                </a>
-                            @endauth
+                            <a href="{{ route('film.show', $movie['id']) }}" class="brutal-btn w-full mt-auto text-sm !py-2.5 text-center">
+                                Pesan Sekarang
+                            </a>
                         </div>
                     </article>
                 @endforeach

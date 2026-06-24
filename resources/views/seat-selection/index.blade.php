@@ -122,17 +122,30 @@
 
             <div class="flex gap-2">
               @foreach($kursis as $kursi)
-              <button
-                type="button"
-                @click.prevent="toggleSeat('{{ $kursi->id }}')"
-                :class="{
-                    'bg-green-300 hover:bg-green-400': !selected.includes('{{ $kursi->id }}'),
-                    'bg-yellow-300': selected.includes('{{ $kursi->id }}')
-                }"
-                class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg shadow-[3px_3px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center text-[10px] font-bold text-gray-900"
-                title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }}">
-                {{ $kursi->nomor_kursi }}
-              </button>
+                @php
+                  $isOccupied = in_array($kursi->id, $occupiedSeats);
+                @endphp
+                @if($isOccupied)
+                  <button
+                    type="button"
+                    disabled
+                    class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg bg-red-300 text-gray-500 cursor-not-allowed shadow-none flex items-center justify-center text-[10px] font-bold"
+                    title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }} (Terisi)">
+                    {{ $kursi->nomor_kursi }}
+                  </button>
+                @else
+                  <button
+                    type="button"
+                    @click.prevent="toggleSeat('{{ $kursi->id }}')"
+                    :class="{
+                        'bg-green-300 hover:bg-green-400': !selected.includes('{{ $kursi->id }}'),
+                        'bg-yellow-300': selected.includes('{{ $kursi->id }}')
+                    }"
+                    class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg shadow-[3px_3px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center text-[10px] font-bold text-gray-900"
+                    title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }}">
+                    {{ $kursi->nomor_kursi }}
+                  </button>
+                @endif
               @endforeach
             </div>
 

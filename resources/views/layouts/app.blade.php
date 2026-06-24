@@ -52,7 +52,7 @@
                         <x-icon name="heroicon-s-building-storefront" class="w-5 h-5 text-border" />
                         Bioskop
                     </a>
-                    <a href="#" class="{{ $linkClass(['film.*']) }}">
+                    <a href="{{ route('film.index') }}" class="{{ $linkClass(['film.*']) }}">
                         <x-icon name="heroicon-s-film" class="w-5 h-5 text-border" />
                         Film
                     </a>
@@ -64,7 +64,7 @@
                         <x-icon name="heroicon-s-tag" class="w-5 h-5 text-border" />
                         Promo
                     </a>
-                    <a href="#" class="{{ $linkClass(['snacks.*']) }}">
+                    <a href="{{ route('snacks.index') }}" class="{{ $linkClass(['snacks.*']) }}">
                         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                         Snack Bar
                     </a>
@@ -88,10 +88,10 @@
                 
                 <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                     <div class="pr-12">
-                        <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'Andi')[0] }}! 👋</p>
+                        <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>
                     </div>
-                    <span class="absolute right-2 bottom-2 text-3xl select-none">🍿</span>
+                    <x-icon name="heroicon-s-ticket" class="absolute right-2 bottom-2 w-8 h-8 text-border/25 transform rotate-12" />
                 </div>
             </div>
         </aside>
@@ -137,8 +137,8 @@
                     </button>
 
                     
-                    <a href="{{ route('profile.edit') }}" class="w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full flex items-center justify-center font-extrabold text-sm hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        {{ $avatarInitial }}{{ $avatarInitial }}
+                    <a href="{{ route('profile.edit') }}" class="w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full flex items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
+                        {{ $user->avatar_emoji ?? '🍿' }}
                     </a>
                 </div>
             </header>

@@ -16,10 +16,10 @@
         $currentView = 'login';
     }
     $views = [
-        'login' => ['bg' => 'bg-pastel-sky', 'emoji' => '🍿', 'title' => 'Welcome Back!', 'desc' => 'Kursi strategis dan snack favoritmu sudah menanti. Yuk masuk!'],
-        'register' => ['bg' => 'bg-pastel-pink', 'emoji' => '🎟️', 'title' => 'Join The Club', 'desc' => 'Daftar sekarang dan nikmati promo pengguna baru hingga 50%.'],
-        'forgot' => ['bg' => 'bg-pastel-lemon', 'emoji' => '🤔', 'title' => 'Lupa Sandi?', 'desc' => 'Tenang, gak perlu panik. Masukkan emailmu dan kami kirim tautan reset.'],
-        'verify' => ['bg' => 'bg-pastel-lavender', 'emoji' => '✉️', 'title' => 'Cek Emailmu', 'desc' => 'Kami sudah mengirim tautan verifikasi ke kotak masukmu.'],
+        'login' => ['bg' => 'bg-pastel-sky', 'icon' => 'heroicon-s-shopping-bag', 'title' => 'Welcome Back!', 'desc' => 'Kursi strategis dan snack favoritmu sudah menanti. Yuk masuk!'],
+        'register' => ['bg' => 'bg-pastel-pink', 'icon' => 'heroicon-s-ticket', 'title' => 'Join The Club', 'desc' => 'Daftar sekarang dan nikmati promo pengguna baru hingga 50%.'],
+        'forgot' => ['bg' => 'bg-pastel-lemon', 'icon' => 'heroicon-s-question-mark-circle', 'title' => 'Lupa Sandi?', 'desc' => 'Tenang, gak perlu panik. Masukkan emailmu dan kami kirim tautan reset.'],
+        'verify' => ['bg' => 'bg-pastel-lavender', 'icon' => 'heroicon-s-envelope-open', 'title' => 'Cek Emailmu', 'desc' => 'Kami sudah mengirim tautan verifikasi ke kotak masukmu.'],
     ];
     $v = $views[$currentView];
 @endphp
@@ -76,8 +76,8 @@
 
                 
                 <div class="relative z-10 mt-12 md:mt-0 flex flex-col items-center md:items-start text-center md:text-left">
-                    <div class="w-24 h-24 md:w-32 md:h-32 border-[3px] border-border rounded-3xl bg-white shadow-[4px_4px_0px_var(--border)] flex items-center justify-center text-5xl md:text-6xl mb-6 transform -rotate-6 hover:rotate-0 hover:scale-110 transition-all duration-300">
-                        <span>{{ $v['emoji'] }}</span>
+                    <div class="w-24 h-24 md:w-32 md:h-32 border-[3px] border-border rounded-3xl bg-white shadow-[4px_4px_0px_var(--border)] flex items-center justify-center mb-6 transform -rotate-6 hover:rotate-0 hover:scale-110 transition-all duration-300">
+                        <x-icon name="{{ $v['icon'] }}" class="w-12 h-12 md:w-16 md:h-16 text-border" />
                     </div>
                     <h2 class="text-3xl md:text-4xl font-black uppercase leading-[1.1] mb-3">
                         {{ $v['title'] }}
