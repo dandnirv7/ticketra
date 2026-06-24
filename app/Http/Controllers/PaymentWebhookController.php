@@ -188,11 +188,7 @@ class PaymentWebhookController extends Controller
         return 'pending_payment';
     }
 
-    /**
-     * Update booking status
-     * 
-     * @return bool True jika email harus dikirim (status berubah ke confirmed)
-     */
+    
     private function updateBookingStatus(Booking $booking, string $finalStatus, string $transactionId, string $paymentType): bool
     {
         Log::info('updateBookingStatus called', [
@@ -228,6 +224,15 @@ class PaymentWebhookController extends Controller
 
         $booking->update($updateData);
 
+        
+        if ($finalStatus === 'confirmed') {
+            $booking->statusKursis()->update(['status' => 'terjual']);
+            Log::info('StatusKursi marked as terjual', ['booking_id' => $booking->id]);
+        } elseif (in_array($finalStatus, ['failed', 'cancelled'])) {
+            $booking->statusKursis()->update(['status' => 'dilepas']);
+            Log::info('StatusKursi marked as dilepas', ['booking_id' => $booking->id]);
+        }
+
         $freshBooking = $booking->fresh();
 
         Log::info('Booking updated', [
@@ -239,9 +244,7 @@ class PaymentWebhookController extends Controller
         return $finalStatus === 'confirmed';
     }
 
-    /**
-     * Send booking confirmation email (dipanggil DI LUAR transaction)
-     */
+    
     private function sendBookingConfirmationEmail(Booking $booking): void
     {
         try {

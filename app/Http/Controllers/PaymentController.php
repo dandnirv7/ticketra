@@ -13,6 +13,15 @@ class PaymentController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
+        
+        if (in_array($booking->status, ['locked', 'pending_payment'])) {
+            $booking->update([
+                'status' => 'confirmed',
+                'paid_at' => now(),
+            ]);
+            $booking->statusKursis()->update(['status' => 'terjual']);
+        }
+
         $booking->load(['jadwalTayang.film', 'statusKursis.kursi']);
 
         return view('payment.success', compact('booking'));
