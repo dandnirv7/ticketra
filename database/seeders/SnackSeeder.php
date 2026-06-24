@@ -1,0 +1,186 @@
+<?php
+
+namespace Database\Seeders;
+
+use App\Models\Snack;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
+
+class SnackSeeder extends Seeder
+{
+    
+    public function run(): void
+    {
+        $snacks = [
+            [
+                'id' => 'f3',
+                'name' => 'Mega Combo Puas Banget',
+                'desc' => 'Popcorn XL + 2 Coca Cola + 1 Hotdog. Hemat 20Rb!',
+                'price' => 120000,
+                'emoji' => '🍱',
+                'category' => 'Combo',
+                'status' => 'TERSEDIA',
+                'popular' => 100,
+                'layout' => 'mega',
+            ],
+            [
+                'id' => 'f1',
+                'name' => 'Popcorn Asin Large',
+                'desc' => 'Popcorn gurih ukuran besar yang siap menemani filmmu.',
+                'price' => 45000,
+                'emoji' => '🍿',
+                'category' => 'Popcorn',
+                'status' => 'TERSEDIA',
+                'popular' => 90,
+                'layout' => 'wide',
+            ],
+            [
+                'id' => 'f4',
+                'name' => 'Coca Cola 22oz',
+                'desc' => 'Minuman soda Coca Cola segar.',
+                'price' => 25000,
+                'emoji' => '🥤',
+                'category' => 'Minuman',
+                'status' => 'TERSEDIA',
+                'popular' => 85,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f6',
+                'name' => 'Hotdog Deluxe',
+                'desc' => 'Hotdog premium dengan sosis jumbo.',
+                'price' => 40000,
+                'emoji' => '🌭',
+                'category' => 'Snack',
+                'status' => 'TERSEDIA',
+                'popular' => 80,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f10',
+                'name' => 'Truffle Fries Platter',
+                'desc' => 'Kentang goreng renyah dengan minyak truffle & keju.',
+                'price' => 55000,
+                'emoji' => '🍟',
+                'category' => 'Snack',
+                'status' => 'SISA SEDIKIT',
+                'popular' => 75,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f2',
+                'name' => 'Popcorn Caramel Med',
+                'desc' => 'Popcorn manis rasa karamel ukuran sedang.',
+                'price' => 35000,
+                'emoji' => '🍿',
+                'category' => 'Popcorn',
+                'status' => 'SISA SEDIKIT',
+                'popular' => 70,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f9',
+                'name' => 'Combo Couple Chill',
+                'desc' => '1 Caramel Medium + 2 Mineral Water',
+                'price' => 60000,
+                'emoji' => '🍿',
+                'category' => 'Combo',
+                'status' => 'TERSEDIA',
+                'popular' => 65,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f11',
+                'name' => 'Iced Matcha Latte',
+                'desc' => 'Matcha latte dingin berkualitas tinggi.',
+                'price' => 32000,
+                'emoji' => '🍵',
+                'category' => 'Minuman',
+                'status' => 'TERSEDIA',
+                'popular' => 60,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f7',
+                'name' => 'Nachos Cheese',
+                'desc' => 'Keripik nachos dengan cocolan keju hangat.',
+                'price' => 35000,
+                'emoji' => '🌮',
+                'category' => 'Snack',
+                'status' => 'TERSEDIA',
+                'popular' => 50,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f5',
+                'name' => 'Iced Lemon Tea',
+                'desc' => 'Teh lemon dingin segar.',
+                'price' => 20000,
+                'emoji' => '🍹',
+                'category' => 'Minuman',
+                'status' => 'HABIS',
+                'popular' => 40,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f12',
+                'name' => 'Sweet & Salt Mix',
+                'desc' => 'Popcorn campur asin & manis ukuran besar',
+                'price' => 50000,
+                'emoji' => '🍿',
+                'category' => 'Popcorn',
+                'status' => 'TERSEDIA',
+                'popular' => 35,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f13',
+                'name' => 'Crispy Chicken Wings',
+                'desc' => 'Sayap ayam krispi lezat.',
+                'price' => 42000,
+                'emoji' => '🍗',
+                'category' => 'Snack',
+                'status' => 'TERSEDIA',
+                'popular' => 30,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f14',
+                'name' => 'Mineral Water 600ml',
+                'desc' => 'Air mineral kemasan dingin.',
+                'price' => 15000,
+                'emoji' => '💧',
+                'category' => 'Minuman',
+                'status' => 'TERSEDIA',
+                'popular' => 25,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f15',
+                'name' => 'Hot Americano',
+                'desc' => 'Kopi hitam Americano hangat.',
+                'price' => 28000,
+                'emoji' => '☕',
+                'category' => 'Minuman',
+                'status' => 'SISA SEDIKIT',
+                'popular' => 20,
+                'layout' => 'normal',
+            ],
+            [
+                'id' => 'f16',
+                'name' => 'Ice Cream Float',
+                'desc' => 'Minuman float dengan es krim vanilla lembut.',
+                'price' => 30000,
+                'emoji' => '🍦',
+                'category' => 'Snack',
+                'status' => 'HABIS',
+                'popular' => 10,
+                'layout' => 'normal',
+            ],
+        ];
+
+        foreach ($snacks as $snack) {
+            Snack::updateOrCreate(['id' => $snack['id']], $snack);
+        }
+    }
+}
