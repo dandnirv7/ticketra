@@ -6,9 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
+    
     public function up(): void
     {
         Schema::create('films', function (Blueprint $table) {
@@ -21,14 +19,20 @@ return new class extends Migration
             $table->string('genre')->nullable();
             $table->date('tanggal_rilis')->nullable();
             $table->boolean('sedang_tayang')->default(true);
+            $table->string('sutradara')->nullable();
+            $table->string('penulis')->nullable();
+            $table->text('pemain')->nullable();
+            $table->string('bahasa')->default('Inggris');
+            $table->string('negara')->default('USA');
+            $table->string('produksi')->nullable();
+            $table->string('rating_usia')->default('13+');
+            $table->string('trailer_url')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
+    
     public function down(): void
     {
         Schema::dropIfExists('films');
