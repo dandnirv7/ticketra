@@ -10,12 +10,13 @@ use Illuminate\Support\Facades\Storage;
 
 class Film extends Model
 {
-    /** @use HasFactory<\Database\Factories\FilmFactory> */
+    
     use HasFactory, HasUuids, SoftDeletes;
     public $incrementing = false;
     protected $keyType = 'string';
 
     protected $fillable = [
+        'slug',
         'judul',
         'poster_url',
         'sinopsis',
@@ -23,7 +24,7 @@ class Film extends Model
         'rating',
         'genre',
         'tanggal_rilis',
-        'sedang_tayang'
+        'sedang_tayang',
     ];
 
     protected $casts = [
