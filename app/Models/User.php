@@ -11,21 +11,17 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password'])]
+#[Fillable(['name', 'email', 'password', 'phone', 'avatar_emoji'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail
 {
-    /** @use HasFactory<UserFactory> */
+    
     use HasFactory, Notifiable, HasUuids;
 
     public $incrementing = false;
     protected $keyType = 'string';
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
+    
     protected function casts(): array
     {
         return [

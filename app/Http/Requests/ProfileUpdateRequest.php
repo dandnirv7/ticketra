@@ -9,11 +9,7 @@ use Illuminate\Validation\Rule;
 
 class ProfileUpdateRequest extends FormRequest
 {
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, ValidationRule|array<mixed>|string>
-     */
+    
     public function rules(): array
     {
         return [
@@ -26,6 +22,8 @@ class ProfileUpdateRequest extends FormRequest
                 'max:255',
                 Rule::unique(User::class)->ignore($this->user()->id),
             ],
+            'phone' => ['nullable', 'string', 'max:20'],
+            'avatar_emoji' => ['nullable', 'string', 'max:10'],
         ];
     }
 }
