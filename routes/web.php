@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\FilmController;
 use App\Http\Controllers\JadwalTayangController;
 use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeatSelectionController;
+use App\Http\Controllers\SnacksController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -19,6 +21,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard');
+
+    Route::get('/film', [FilmController::class, 'index'])->name('film.index');
+    Route::get('/film/{film}', [FilmController::class, 'show'])->name('film.show');
 
     Route::resource('jadwal', JadwalTayangController::class)->parameters([
         'jadwal' => 'jadwalTayang'
@@ -50,6 +55,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/snacks', [SnacksController::class, 'index'])->name('snacks.index');
 });
 
 Route::post('/webhooks/midtrans', [App\Http\Controllers\PaymentWebhookController::class, 'handleMidtrans'])
