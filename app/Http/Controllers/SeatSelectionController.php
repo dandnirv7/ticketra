@@ -24,7 +24,13 @@ class SeatSelectionController extends Controller
         ]);
 
         $occupiedSeats = StatusKursi::where('jadwal_tayang_id', $jadwalTayang->id)
-            ->whereIn('status', ['dikunci', 'terjual'])
+            ->where(function ($query) {
+                $query->where('status', 'terjual')
+                    ->orWhere(function ($q) {
+                        $q->where('status', 'dikunci')
+                          ->where('lock_expiry', '>', now());
+                    });
+            })
             ->pluck('kursi_id')
             ->toArray();
 
@@ -48,67 +54,79 @@ class SeatSelectionController extends Controller
         $kursiIds = $request->input('kursi_ids');
         $totalPrice = count($kursiIds) * $jadwalTayang->harga;
 
-        $existingStatuses = StatusKursi::whereIn('kursi_id', $kursiIds)
-            ->where('jadwal_tayang_id', $jadwalTayang->id)
-            ->whereIn('status', ['dikunci', 'terjual'])
-            ->with('kursi')
-            ->get();
+        try {
+            $booking = DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice) {
+                $lockedJadwal = JadwalTayang::where('id', $jadwalTayang->id)->lockForUpdate()->firstOrFail();
 
-        if ($existingStatuses->isNotEmpty()) {
-            $kursiTerpakai = $existingStatuses->map(function ($status) {
-                return $status->kursi->label_baris . $status->kursi->nomor_kursi;
-            })->implode(', ');
+                $existingStatuses = StatusKursi::whereIn('kursi_id', $kursiIds)
+                    ->where('jadwal_tayang_id', $lockedJadwal->id)
+                    ->where(function ($query) {
+                        $query->where('status', 'terjual')
+                            ->orWhere(function ($q) {
+                                $q->where('status', 'dikunci')
+                                  ->where('lock_expiry', '>', now());
+                            });
+                    })
+                    ->with('kursi')
+                    ->get();
 
-            return redirect()->back()
-                ->with('error', "Maaf, kursi {$kursiTerpakai} sudah dipilih oleh pengguna lain. Silakan pilih kursi lain.")
-                ->withInput();
-        }
+                if ($existingStatuses->isNotEmpty()) {
+                    $kursiTerpakai = $existingStatuses->map(function ($status) {
+                        return $status->kursi->label_baris . $status->kursi->nomor_kursi;
+                    })->implode(', ');
 
-        $bookingIdString = DB::transaction(function () {
-            $prefix = 'TK-' . now()->format('dmyHis') . '-';
+                    throw new \Exception("Maaf, kursi {$kursiTerpakai} sudah dipilih oleh pengguna lain. Silakan pilih kursi lain.");
+                }
 
-            $lastBooking = Booking::where('booking_id', 'like', $prefix . '%')
-                ->orderBy('id', 'desc')
-                ->lockForUpdate()
-                ->first();
+                $prefix = 'TK-' . now()->format('dmyHis') . '-';
+                $lastBooking = Booking::where('booking_id', 'like', $prefix . '%')
+                    ->orderBy('id', 'desc')
+                    ->lockForUpdate()
+                    ->first();
 
-            $sequence = 1;
-            if ($lastBooking) {
-                $lastSeq = (int) substr($lastBooking->booking_id, -3);
-                $sequence = $lastSeq + 1;
-            }
+                $sequence = 1;
+                if ($lastBooking) {
+                    $lastSeq = (int) substr($lastBooking->booking_id, -3);
+                    $sequence = $lastSeq + 1;
+                }
+                $bookingIdString = $prefix . str_pad($sequence, 3, '0', STR_PAD_LEFT);
 
-            return $prefix . str_pad($sequence, 3, '0', STR_PAD_LEFT);
-        });
-
-        $booking = DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice, $bookingIdString) {
-
-            $booking = Booking::create([
-                'booking_id' => $bookingIdString,
-                'user_id' => $user->id,
-                'jadwal_tayang_id' => $jadwalTayang->id,
-                'status' => 'locked',
-                'total_price' => $totalPrice,
-                'locked_at' => now(),
-                'lock_expiry' => now()->addMinutes(10),
-            ]);
-
-            foreach ($kursiIds as $kursiId) {
-                StatusKursi::create([
-                    'kursi_id' => $kursiId,
-                    'jadwal_tayang_id' => $jadwalTayang->id,
-                    'booking_id' => $booking->id,
-                    'status' => 'dikunci',
+                $newBooking = Booking::create([
+                    'booking_id' => $bookingIdString,
+                    'user_id' => $user->id,
+                    'jadwal_tayang_id' => $lockedJadwal->id,
+                    'status' => 'locked',
+                    'total_price' => $totalPrice,
                     'locked_at' => now(),
                     'lock_expiry' => now()->addMinutes(10),
                 ]);
-            }
 
-            return $booking;
-        });
+                foreach ($kursiIds as $kursiId) {
+                    StatusKursi::updateOrCreate(
+                        [
+                            'kursi_id' => $kursiId,
+                            'jadwal_tayang_id' => $lockedJadwal->id,
+                        ],
+                        [
+                            'booking_id' => $newBooking->id,
+                            'status' => 'dikunci',
+                            'locked_at' => now(),
+                            'lock_expiry' => now()->addMinutes(10),
+                        ]
+                    );
+                }
 
-        return redirect()->route('checkout.index', $booking->id)
-            ->with('success', "Kursi berhasil dikunci! Silakan selesaikan pembayaran Anda.");
+                return $newBooking;
+            });
+
+            return redirect()->route('checkout.index', $booking->id)
+                ->with('success', "Kursi berhasil dikunci! Silakan selesaikan pembayaran Anda.");
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', $e->getMessage())
+                ->withInput();
+        }
     }
 
     /**
