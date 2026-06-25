@@ -23,6 +23,14 @@ class CheckoutController extends Controller
             'statusKursis.kursi'
         ]);
 
+        if ($booking->lock_expiry && $booking->lock_expiry->isPast() && in_array($booking->status, ['locked', 'pending_payment'])) {
+            $booking->update(['status' => 'cancelled']);
+            $booking->statusKursis()->update(['status' => 'dilepas']);
+
+            return redirect()->route('jadwal.kursi', $booking->jadwal_tayang_id)
+                ->with('error', 'Waktu pemesanan Anda telah kedaluwarsa (lebih dari 10 menit). Silakan pilih kursi kembali.');
+        }
+
         $snapToken = null;
         if (in_array($booking->status, ['locked', 'pending_payment'])) {
             $paymentService = new PaymentService();
