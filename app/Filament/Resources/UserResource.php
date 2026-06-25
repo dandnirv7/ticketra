@@ -48,7 +48,7 @@ class UserResource extends Resource
             return in_array($user->role, $roles, true);
         }
 
-        return true;
+        return false;
     }
 
     public static function canViewAny(): bool
@@ -102,6 +102,16 @@ class UserResource extends Resource
                             ->displayFormat('d M Y H:i')
                             ->helperText('Kosongkan jika belum verifikasi.'),
 
+                        Forms\Components\Select::make('role')
+                            ->label('Role')
+                            ->required()
+                            ->options([
+                                'admin' => 'Admin',
+                                'editor' => 'Editor',
+                                'user' => 'User',
+                            ])
+                            ->default('user'),
+
                         Forms\Components\TextInput::make('password')
                             ->label('Password')
                             ->password()
@@ -110,7 +120,8 @@ class UserResource extends Resource
                             ->rule(Password::default())
                             ->dehydrated(fn($state) => filled($state))
                             ->dehydrateStateUsing(fn($state) => Hash::make($state))
-                            ->helperText(fn($livewire) => $livewire instanceof Pages\EditUser ? 'Kosongkan jika tidak ingin mengubah password.' : 'Minimal 8 karakter.'),
+                            ->helperText(fn($livewire) => $livewire instanceof Pages\EditUser ? 'Kosongkan jika tidak ingin mengubah password.' : 'Minimal 8 karakter.')
+                            ->columnSpan(2),
                     ]),
             ]);
     }
@@ -137,6 +148,18 @@ class UserResource extends Resource
                     ->label('Email')
                     ->searchable()
                     ->sortable(),
+
+                Tables\Columns\TextColumn::make('role')
+                    ->label('Role')
+                    ->badge()
+                    ->color(fn(string $state): string => match ($state) {
+                        'admin' => 'danger',
+                        'editor' => 'warning',
+                        'user' => 'gray',
+                        default => 'gray',
+                    })
+                    ->sortable()
+                    ->searchable(),
 
                 Tables\Columns\IconColumn::make('email_verified_at')
                     ->label('Verifikasi')

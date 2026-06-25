@@ -49,7 +49,7 @@ class BookingResource extends Resource
             return in_array($user->role, $roles, true);
         }
 
-        return true;
+        return false;
     }
 
     public static function canViewAny(): bool

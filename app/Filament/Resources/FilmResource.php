@@ -54,7 +54,7 @@ class FilmResource extends Resource
 
         // Fallback: jika tidak ada helper role/kolom role, izinkan semua user terautentikasi.
         // Segera ganti dengan sistem role yang sebenarnya (Spatie/kolom role) untuk produksi.
-        return true;
+        return false;
     }
 
     public static function canViewAny(): bool
