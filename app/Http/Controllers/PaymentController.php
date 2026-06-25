@@ -14,12 +14,29 @@ class PaymentController extends Controller
         }
 
         
-        if (in_array($booking->status, ['locked', 'pending_payment'])) {
-            $booking->update([
-                'status' => 'confirmed',
-                'paid_at' => now(),
-            ]);
-            $booking->statusKursis()->update(['status' => 'terjual']);
+        // Configure Midtrans server key and environment
+        \Midtrans\Config::$serverKey = config('midtrans.server_key');
+        \Midtrans\Config::$isProduction = config('midtrans.is_production');
+        \Midtrans\Config::$isSanitized = config('midtrans.sanitized');
+
+        try {
+            // Fetch transaction status directly from Midtrans API
+            $status = \Midtrans\Transaction::status($booking->booking_id);
+            $transactionStatus = $status->transaction_status ?? null;
+            $fraudStatus = $status->fraud_status ?? 'accept';
+
+            // Confirm booking only if Midtrans reports successful payment
+            if ($transactionStatus === 'settlement' || ($transactionStatus === 'capture' && $fraudStatus === 'accept')) {
+                if ($booking->status !== 'confirmed') {
+                    $booking->update([
+                        'status' => 'confirmed',
+                        'paid_at' => now(),
+                    ]);
+                    $booking->statusKursis()->update(['status' => 'terjual']);
+                }
+            }
+        } catch (\Exception $e) {
+            // Ignore API exceptions to just render the view with current status
         }
 
         $booking->load(['jadwalTayang.film', 'statusKursis.kursi']);

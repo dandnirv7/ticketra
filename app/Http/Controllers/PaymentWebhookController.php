@@ -197,19 +197,16 @@ class PaymentWebhookController extends Controller
             'final_status' => $finalStatus,
         ]);
 
-        $statusPriority = [
-            'confirmed' => 4,
-            'pending_payment' => 3,
-            'locked' => 2,
-            'failed' => 1,
-            'cancelled' => 1,
-        ];
+        if (in_array($booking->status, ['confirmed', 'failed', 'cancelled'], true)) {
+            Log::warning('Skipping status update from terminal state', [
+                'current' => $booking->status,
+                'attempted' => $finalStatus,
+            ]);
+            return false;
+        }
 
-        $currentPriority = $statusPriority[$booking->status] ?? 0;
-        $newPriority = $statusPriority[$finalStatus] ?? 0;
-
-        if ($newPriority < $currentPriority) {
-            Log::warning('Skipping status downgrade', [
+        if ($booking->status === 'pending_payment' && $finalStatus === 'locked') {
+            Log::warning('Skipping status update from pending_payment to locked', [
                 'current' => $booking->status,
                 'attempted' => $finalStatus,
             ]);

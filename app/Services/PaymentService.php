@@ -25,25 +25,50 @@ class PaymentService
         $user = $booking->user;
         $jadwalTayang = $booking->jadwalTayang;
 
+        $ticketCount = $booking->statusKursis->count();
+        $ticketPrice = (int) $jadwalTayang->harga;
+
+        $itemDetails = [
+            [
+                'id' => 'TICKET-' . $jadwalTayang->film->id,
+                'price' => $ticketPrice,
+                'quantity' => $ticketCount,
+                'name' => 'Tiket ' . $jadwalTayang->film->judul,
+            ]
+        ];
+
+        $serviceFee = (int) ($booking->service_fee ?? 0);
+        if ($serviceFee > 0) {
+            $itemDetails[] = [
+                'id' => 'SERVICE-FEE',
+                'price' => $serviceFee,
+                'quantity' => 1,
+                'name' => 'Biaya Layanan',
+            ];
+        }
+
+        $fnbTotal = (int) ($booking->fnb_total ?? 0);
+        if ($fnbTotal > 0) {
+            $itemDetails[] = [
+                'id' => 'FNB-TOTAL',
+                'price' => $fnbTotal,
+                'quantity' => 1,
+                'name' => 'Camilan (F&B)',
+            ];
+        }
+
+        $grossAmount = ($ticketPrice * $ticketCount) + $serviceFee + $fnbTotal;
 
         $params = [
             'transaction_details' => [
                 'order_id' => $booking->booking_id,
-                'gross_amount' => (int) $booking->total_price,
+                'gross_amount' => $grossAmount,
             ],
             'customer_details' => [
                 'first_name' => $user->name,
                 'email' => $user->email,
-
             ],
-            'item_details' => [
-                [
-                    'id' => 'TICKET-' . $jadwalTayang->film->id,
-                    'price' => (int) $jadwalTayang->harga,
-                    'quantity' => $booking->statusKursis->count(),
-                    'name' => 'Tiket ' . $jadwalTayang->film->judul,
-                ]
-            ],
+            'item_details' => $itemDetails,
             'enabled_payments' => [
                 'gopay',
                 'shopeepay',
@@ -58,7 +83,6 @@ class PaymentService
                 'finish' => route('payment.finish'),
             ],
         ];
-
 
         $snapToken = Snap::getSnapToken($params);
 
