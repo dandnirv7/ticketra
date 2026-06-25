@@ -15,6 +15,20 @@
   <div class="min-h-screen pt-8 pb-40 bg-amber-50">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
+      @if (session('success'))
+          <div class="px-4 py-3 mb-6 font-bold text-gray-900 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl bg-pastel-mint flex items-center gap-3">
+              <x-icon name="heroicon-s-check-circle" class="w-5 h-5 text-border shrink-0" />
+              <div>{{ session('success') }}</div>
+          </div>
+      @endif
+
+      @if (session('error'))
+          <div class="px-4 py-3 mb-6 font-bold text-gray-900 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl bg-pastel-peach flex items-center gap-3">
+              <x-icon name="heroicon-s-exclamation-triangle" class="w-5 h-5 text-border shrink-0" />
+              <div>{{ session('error') }}</div>
+          </div>
+      @endif
+
       <div class="flex items-start justify-between mb-8">
         <div>
           <p class="neo-subtitle">Film</p>
