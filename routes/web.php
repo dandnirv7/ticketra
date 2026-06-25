@@ -27,7 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('jadwal', JadwalTayangController::class)->parameters([
         'jadwal' => 'jadwalTayang'
-    ]);
+    ])->only(['index', 'show']);
 
     Route::get('/jadwal/{jadwalTayang}/kursi', [SeatSelectionController::class, 'index'])
         ->name('jadwal.kursi');
