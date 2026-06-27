@@ -82,7 +82,7 @@ class PaymentMethodChartWidget extends ChartWidget
     private function color(string $type): string
     {
         return match (true) {
-            str_ends_with($type, '_va') || $type === 'echannel' => 'rgb(59, 130, 246)',
+            str_ends_with($type, '_va') || $type === 'echannel' || $type === 'bank_transfer' => 'rgb(59, 130, 246)',
             in_array($type, ['gopay', 'shopeepay', 'dana', 'ovo'], true) => 'rgb(16, 185, 129)',
             $type === 'qris' => 'rgb(239, 68, 68)',
             $type === 'credit_card' => 'rgb(245, 158, 11)',

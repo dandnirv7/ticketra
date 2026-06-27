@@ -60,9 +60,10 @@ class RecentActivityWidget extends BaseWidget
                     ->label('Status Booking')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'paid' => 'success',
-                        'cancel', 'expired' => 'danger',
+                        'pending_payment' => 'warning',
+                        'locked' => 'info',
+                        'confirmed' => 'success',
+                        'cancelled', 'failed' => 'danger',
                         default => 'gray',
                     }),
 

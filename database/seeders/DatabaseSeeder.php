@@ -49,5 +49,6 @@ class DatabaseSeeder extends Seeder
 
         $this->call(FilmIndonesiaSeeder::class);
         $this->call(SnackSeeder::class);
+        $this->call(JadwalTayangSeeder::class);
     }
 }

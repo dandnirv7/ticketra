@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\DB;
 
 class BookingTrendChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Tren Booking 7 Hari Terakhir';
+    protected static ?string $heading = 'Tren Booking & Revenue (7 Hari Terakhir)';
 
-    protected static ?string $description = 'Jumlah booking dan revenue harian';
+    protected static ?string $description = null;
 
     protected static ?string $maxHeight = '260px';
 
@@ -47,7 +47,7 @@ class BookingTrendChartWidget extends ChartWidget
 
         $revenueRows = Booking::query()
             ->selectRaw('DATE(paid_at) as date, SUM(total_price) as revenue')
-            ->where('status', 'paid')
+            ->where('status', 'confirmed')
             ->whereBetween('paid_at', [$start, $end])
             ->groupBy(DB::raw('DATE(paid_at)'))
             ->pluck('revenue', 'date')

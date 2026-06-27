@@ -19,15 +19,28 @@ class BookingAttentionWidget extends BaseWidget
 
     public function table(Table $table): Table
     {
+        $attentionCount = Booking::query()
+            ->where(function (Builder $q) {
+                $q->where('status', 'pending_payment')
+                    ->orWhere('status', 'cancelled')
+                    ->orWhere('status', 'failed')
+                    ->orWhere(function (Builder $q2) {
+                        $q2->where('status', 'locked')
+                            ->where('lock_expiry', '<', now());
+                    });
+            })
+            ->count();
+
         return $table
             ->query(
                 Booking::query()
                     ->with(['user', 'jadwalTayang.film', 'jadwalTayang.studio'])
                     ->where(function (Builder $q) {
-                        $q->where('status', 'pending')
-                            ->orWhere('status', 'cancel')
+                        $q->where('status', 'pending_payment')
+                            ->orWhere('status', 'cancelled')
+                            ->orWhere('status', 'failed')
                             ->orWhere(function (Builder $q2) {
-                                $q2->where('status', 'pending')
+                                $q2->where('status', 'locked')
                                     ->where('lock_expiry', '<', now());
                             });
                     })
@@ -62,9 +75,10 @@ class BookingAttentionWidget extends BaseWidget
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'pending' => 'warning',
-                        'cancel', 'expired' => 'danger',
-                        'paid' => 'success',
+                        'pending_payment' => 'warning',
+                        'locked' => 'info',
+                        'cancelled', 'failed' => 'danger',
+                        'confirmed' => 'success',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state) => strtoupper($state)),
@@ -74,10 +88,21 @@ class BookingAttentionWidget extends BaseWidget
                     ->since()
                     ->placeholder('—'),
             ])
+            ->heading(new \Illuminate\Support\HtmlString('Booking Butuh Perhatian <span class="ml-1.5 px-2 py-0.5 text-xs font-bold text-red-600 bg-red-50 border border-red-200 rounded-full inline-flex items-center justify-center min-w-[20px] h-[20px] align-middle">' . $attentionCount . '</span>'))
+            ->headerActions([
+                Tables\Actions\Action::make('view_all')
+                    ->label('Lihat semua')
+                    ->icon('heroicon-m-arrow-right')
+                    ->iconPosition(\Filament\Support\Enums\IconPosition::After)
+                    ->url(fn() => BookingResource::getUrl('index'))
+                    ->color('gray')
+                    ->extraAttributes(['class' => 'font-semibold text-sm hover:underline']),
+            ])
             ->actions([
                 Tables\Actions\Action::make('open')
                     ->label('Detail')
                     ->icon('heroicon-m-arrow-top-right-on-square')
+                    ->color('warning')
                     ->url(fn (Booking $record) => BookingResource::getUrl('edit', ['record' => $record])),
             ])
             ->paginated([5, 10, 25])

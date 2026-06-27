@@ -30,7 +30,7 @@ class OccupancyStatsWidget extends BaseWidget
 
             $occupiedSeats += StatusKursi::query()
                 ->where('jadwal_tayang_id', $jadwal->id)
-                ->where('status', 'booked')
+                ->where('status', 'terjual')
                 ->count();
         }
 
@@ -39,17 +39,17 @@ class OccupancyStatsWidget extends BaseWidget
             : 0.0;
 
         $paymentOkToday = DB::table('bookings')
-            ->where('status', 'paid')
+            ->where('status', 'confirmed')
             ->whereBetween('paid_at', [$todayStart, $todayEnd])
             ->count();
 
         $paymentPendingToday = DB::table('bookings')
-            ->where('status', 'pending')
+            ->where('status', 'pending_payment')
             ->whereBetween('created_at', [$todayStart, $todayEnd])
             ->count();
 
         $revenueToday = (float) DB::table('bookings')
-            ->where('status', 'paid')
+            ->where('status', 'confirmed')
             ->whereBetween('paid_at', [$todayStart, $todayEnd])
             ->sum('total_price');
 

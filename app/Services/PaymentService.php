@@ -28,14 +28,15 @@ class PaymentService
         $ticketCount = $booking->statusKursis->count();
         $ticketPrice = (int) $jadwalTayang->harga;
 
-        $itemDetails = [
-            [
+        $itemDetails = [];
+        if ($ticketCount > 0) {
+            $itemDetails[] = [
                 'id' => 'TICKET-' . $jadwalTayang->film->id,
                 'price' => $ticketPrice,
                 'quantity' => $ticketCount,
                 'name' => 'Tiket ' . $jadwalTayang->film->judul,
-            ]
-        ];
+            ];
+        }
 
         $serviceFee = (int) ($booking->service_fee ?? 0);
         if ($serviceFee > 0) {

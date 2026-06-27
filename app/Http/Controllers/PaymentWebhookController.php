@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\BookingConfirmationMail;
 use App\Models\Booking;
 use App\Models\PaymentWebhook;
+use App\Models\SnackOrder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -80,6 +81,10 @@ class PaymentWebhookController extends Controller
             $booking = Booking::where('booking_id', $orderId)->first();
 
             if (!$booking) {
+                if (str_starts_with($orderId, 'SN-')) {
+                    return $this->handleSnackWebhook($data);
+                }
+
                 Log::error('Booking not found', ['order_id' => $orderId]);
                 return response()->json(['error' => 'Booking not found'], 404);
             }
@@ -241,7 +246,61 @@ class PaymentWebhookController extends Controller
         return $finalStatus === 'confirmed';
     }
 
-    
+    private function handleSnackWebhook(array $data): \Illuminate\Http\JsonResponse
+    {
+        $orderId = $data['order_id'];
+        $transactionId = $data['transaction_id'] ?? null;
+        $transactionStatus = $data['transaction_status'] ?? null;
+        $fraudStatus = $data['fraud_status'] ?? 'accept';
+
+        Log::info('=== SNACK WEBHOOK ===', [
+            'order_id' => $orderId,
+            'transaction_status' => $transactionStatus,
+        ]);
+
+        $order = SnackOrder::where('order_id', $orderId)->first();
+
+        if (!$order) {
+            Log::error('SnackOrder not found', ['order_id' => $orderId]);
+            return response()->json(['error' => 'SnackOrder not found'], 404);
+        }
+
+        $finalStatus = $this->determineSnackStatus((string) $transactionStatus, (string) $fraudStatus);
+
+        if ($finalStatus === 'paid' && $order->status !== 'paid') {
+            $order->update([
+                'status' => 'paid',
+                'paid_at' => now(),
+            ]);
+            Log::info('SnackOrder paid', ['order_id' => $orderId]);
+        } elseif (in_array($finalStatus, ['failed', 'cancelled']) && !in_array($order->status, ['paid', 'cancelled', 'failed'])) {
+            $order->update(['status' => $finalStatus]);
+            Log::info('SnackOrder failed/cancelled', ['order_id' => $orderId, 'status' => $finalStatus]);
+        }
+
+        return response()->json(['status' => 'ok'], 200);
+    }
+
+    private function determineSnackStatus(string $transactionStatus, string $fraudStatus): string
+    {
+        if ($transactionStatus == 'capture') {
+            return $fraudStatus == 'accept' ? 'paid' : 'pending';
+        } elseif ($transactionStatus == 'settlement') {
+            return 'paid';
+        } elseif ($transactionStatus == 'deny') {
+            return 'failed';
+        } elseif ($transactionStatus == 'cancel' || $transactionStatus == 'expire') {
+            return 'cancelled';
+        } elseif ($transactionStatus == 'failure') {
+            return 'failed';
+        }
+
+        return 'pending';
+    }
+
+    /**
+     * 
+     */
     private function sendBookingConfirmationEmail(Booking $booking): void
     {
         try {
@@ -283,3 +342,4 @@ class PaymentWebhookController extends Controller
         }
     }
 }
+

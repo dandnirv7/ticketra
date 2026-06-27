@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Get;
 
 class KursiResource extends Resource
 {
@@ -77,6 +78,8 @@ class KursiResource extends Resource
 
     public static function form(Form $form): Form
     {
+        $isCreatePage = request()->routeIs('filament.admin.resources.kursis.create');
+
         return $form
             ->schema([
                 Forms\Components\Section::make('Informasi Kursi')
@@ -95,19 +98,90 @@ class KursiResource extends Resource
                                 ->mapWithKeys(fn($s) => [$s->id => $s->nama . ' — ' . ($s->bioskop?->nama ?? '-')]))
                             ->columnSpan(2),
 
+                        Forms\Components\Toggle::make('is_bulk')
+                            ->label('Generate Massal (Bulk)')
+                            ->default(false)
+                            ->reactive()
+                            ->visible(fn($livewire) => $livewire instanceof Pages\CreateKursi)
+                            ->columnSpan(2)
+                            ->helperText('Aktifkan untuk generate banyak kursi sekaligus.'),
+
                         Forms\Components\TextInput::make('label_baris')
                             ->label('Label Baris')
-                            ->required()
-                            ->maxLength(10)
-                            ->placeholder('A, B, C, ...'),
+                            ->required(fn (Get $get) => !$get('is_bulk'))
+                            ->visible(fn (Get $get) => !$get('is_bulk'))
+                            ->maxLength(5)
+                            ->regex('/^[A-Za-z0-9]+$/')
+                            ->validationMessages([
+                                'regex' => 'Label baris hanya boleh berisi huruf dan angka (tanpa spasi, koma, atau karakter khusus).',
+                            ])
+                            ->placeholder('Contoh: A'),
 
                         Forms\Components\TextInput::make('nomor_kursi')
                             ->label('Nomor Kursi')
-                            ->required()
+                            ->required(fn (Get $get) => !$get('is_bulk'))
+                            ->visible(fn (Get $get) => !$get('is_bulk'))
                             ->numeric()
                             ->integer()
                             ->minValue(1)
-                            ->maxValue(999),
+                            ->maxValue(999)
+                            ->rules([
+                                fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
+                                    $studioId = $get('studio_id');
+                                    $labelBaris = $get('label_baris');
+                                    if (! $studioId || ! $labelBaris) {
+                                        return;
+                                    }
+
+                                    $cleanLabelBaris = strtoupper(trim(strip_tags($labelBaris)));
+
+                                    $query = \App\Models\Kursi::where('studio_id', $studioId)
+                                        ->where('label_baris', $cleanLabelBaris)
+                                        ->where('nomor_kursi', $value);
+
+                                    $record = request()->route('record');
+                                    if ($record) {
+                                        $query->where('id', '!=', $record);
+                                    }
+
+                                    if ($query->exists()) {
+                                        $fail('Kursi dengan Baris ' . $cleanLabelBaris . ' dan Nomor ' . $value . ' sudah terdaftar di studio terpilih.');
+                                    }
+                                },
+                            ]),
+
+                        Forms\Components\Select::make('baris_mulai')
+                            ->label('Baris Mulai')
+                            ->required(fn (Get $get) => $get('is_bulk'))
+                            ->visible(fn (Get $get) => $get('is_bulk'))
+                            ->options(array_combine(range('A', 'Z'), range('A', 'Z')))
+                            ->default('A'),
+
+                        Forms\Components\Select::make('baris_selesai')
+                            ->label('Baris Selesai')
+                            ->required(fn (Get $get) => $get('is_bulk'))
+                            ->visible(fn (Get $get) => $get('is_bulk'))
+                            ->options(array_combine(range('A', 'Z'), range('A', 'Z')))
+                            ->default('H')
+                            ->rules([
+                                fn (Get $get): \Closure => function (string $attribute, $value, \Closure $fail) use ($get) {
+                                    $mulai = $get('baris_mulai');
+                                    if ($mulai && ord($value) < ord($mulai)) {
+                                        $fail('Baris selesai harus sama atau setelah Baris Mulai.');
+                                    }
+                                }
+                            ]),
+
+                        Forms\Components\TextInput::make('jumlah_kursi_per_baris')
+                            ->label('Jumlah Kursi per Baris')
+                            ->required(fn (Get $get) => $get('is_bulk'))
+                            ->visible(fn (Get $get) => $get('is_bulk'))
+                            ->numeric()
+                            ->integer()
+                            ->minValue(1)
+                            ->maxValue(50)
+                            ->default(10)
+                            ->columnSpan(2),
 
                         Forms\Components\Select::make('tipe_kursi')
                             ->label('Tipe Kursi')
@@ -241,7 +315,6 @@ class KursiResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 
@@ -254,4 +327,14 @@ class KursiResource extends Resource
             'edit' => Pages\EditKursi::route('/{record}/edit'),
         ];
     }
+
+    public static function sanitizeFormData(array $data): array
+    {
+        if (isset($data['label_baris']) && is_string($data['label_baris'])) {
+            $data['label_baris'] = strtoupper(trim(strip_tags($data['label_baris'])));
+        }
+
+        return $data;
+    }
 }
+

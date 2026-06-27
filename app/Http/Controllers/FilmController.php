@@ -105,6 +105,7 @@ class FilmController extends Controller
                 'id' => $j->id,
                 'time' => $j->waktu_mulai->format('H:i'),
                 'price' => (float)$j->harga,
+                'is_past' => $j->waktu_mulai->lt(now()),
             ];
         }
 

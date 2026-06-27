@@ -17,6 +17,11 @@ class SeatSelectionController extends Controller
      */
     public function index(JadwalTayang $jadwalTayang)
     {
+        if ($jadwalTayang->waktu_mulai->lt(now())) {
+            return redirect()->route('film.show', $jadwalTayang->film_id)
+                ->with('error', 'Jadwal tayang ini sudah dimulai atau telah lewat.');
+        }
+
         $jadwalTayang->load([
             'film',
             'studio.bioskop',
@@ -34,7 +39,12 @@ class SeatSelectionController extends Controller
             ->pluck('kursi_id')
             ->toArray();
 
-        return view('seat-selection.index', compact('jadwalTayang', 'occupiedSeats'));
+        $snackSuggestions = \App\Models\Snack::where('status', 'active')
+            ->inRandomOrder()
+            ->limit(3)
+            ->get();
+
+        return view('seat-selection.index', compact('jadwalTayang', 'occupiedSeats', 'snackSuggestions'));
     }
 
     /**
@@ -42,7 +52,6 @@ class SeatSelectionController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -50,12 +59,25 @@ class SeatSelectionController extends Controller
      */
     public function store(StoreBookingRequest $request, JadwalTayang $jadwalTayang)
     {
+        if ($jadwalTayang->waktu_mulai->lt(now())) {
+            return redirect()->route('film.show', $jadwalTayang->film_id)
+                ->with('error', 'Jadwal tayang ini sudah dimulai atau telah lewat.');
+        }
+
         $user = auth()->user();
         $kursiIds = $request->input('kursi_ids');
         $totalPrice = count($kursiIds) * $jadwalTayang->harga;
 
+        $snackIds = $request->input('snack_ids', []);
+        $fnbTotal = 0;
+        $selectedSnacks = collect([]);
+        if (!empty($snackIds) && is_array($snackIds)) {
+            $selectedSnacks = \App\Models\Snack::whereIn('id', $snackIds)->get();
+            $fnbTotal = $selectedSnacks->sum('price');
+        }
+
         try {
-            $booking = DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice) {
+            $booking = DB::transaction(function () use ($user, $jadwalTayang, $kursiIds, $totalPrice, $fnbTotal) {
                 $lockedJadwal = JadwalTayang::where('id', $jadwalTayang->id)->lockForUpdate()->firstOrFail();
 
                 $existingStatuses = StatusKursi::whereIn('kursi_id', $kursiIds)
@@ -97,6 +119,7 @@ class SeatSelectionController extends Controller
                     'jadwal_tayang_id' => $lockedJadwal->id,
                     'status' => 'locked',
                     'total_price' => $totalPrice,
+                    'fnb_total' => $fnbTotal,
                     'locked_at' => now(),
                     'lock_expiry' => now()->addMinutes(10),
                 ]);
@@ -134,7 +157,6 @@ class SeatSelectionController extends Controller
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
@@ -142,7 +164,6 @@ class SeatSelectionController extends Controller
      */
     public function edit(string $id)
     {
-        //
     }
 
     /**
@@ -150,7 +171,6 @@ class SeatSelectionController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
     }
 
     /**
@@ -158,6 +178,6 @@ class SeatSelectionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
     }
 }
+

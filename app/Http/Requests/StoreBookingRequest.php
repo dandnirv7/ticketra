@@ -27,8 +27,17 @@ class StoreBookingRequest extends FormRequest
                 ]);
             }
         }
-    }
 
+        if ($this->has('snack_ids') && is_string($this->input('snack_ids'))) {
+            $decoded = json_decode($this->input('snack_ids'), true);
+
+            if (is_array($decoded)) {
+                $this->merge([
+                    'snack_ids' => $decoded
+                ]);
+            }
+        }
+    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -40,6 +49,8 @@ class StoreBookingRequest extends FormRequest
         return [
             'kursi_ids' => ['required', 'array', 'min:1', 'max:6'],
             'kursi_ids.*' => ['required', 'uuid', 'exists:kursis,id'],
+            'snack_ids' => ['sometimes', 'array', 'max:10'],
+            'snack_ids.*' => ['uuid', 'exists:snacks,id'],
         ];
     }
 

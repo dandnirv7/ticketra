@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
+use App\Models\SnackOrder;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Milon\Barcode\Facades\DNS1DFacade;
@@ -24,7 +25,12 @@ class BookingController extends Controller
                 'statusKursis.kursi'
             ])
             ->orderBy('created_at', 'desc')
-            ->paginate(10);
+            ->paginate(10, ['*'], 'page_tickets');
+
+        $snackOrders = SnackOrder::where('user_id', $userId)
+            ->with('items')
+            ->orderBy('created_at', 'desc')
+            ->paginate(10, ['*'], 'page_snacks');
 
         $stats = [
             'upcoming' => Booking::where('user_id', $userId)
@@ -44,7 +50,7 @@ class BookingController extends Controller
                 ->count(),
         ];
 
-        return view('bookings.index', compact('bookings', 'stats'));
+        return view('bookings.index', compact('bookings', 'snackOrders', 'stats'));
     }
 
 
@@ -68,6 +74,20 @@ class BookingController extends Controller
         $qrCode = DNS2DFacade::getBarcodeSVG($qrData, 'QRCODE', 4, 4);
 
         return view('bookings.show', compact('booking', 'qrCode'));
+    }
+
+    public function showSnack(SnackOrder $snackOrder)
+    {
+        if ($snackOrder->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $snackOrder->load('items');
+
+        $qrData = "TICKETRA_FNB:{$snackOrder->order_id}|{$snackOrder->user_id}";
+        $qrCode = DNS2DFacade::getBarcodeSVG($qrData, 'QRCODE', 4, 4);
+
+        return view('snacks.show', compact('snackOrder', 'qrCode'));
     }
 
 
@@ -141,3 +161,4 @@ class BookingController extends Controller
         return $pdf->download($filename);
     }
 }
+
