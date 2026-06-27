@@ -78,4 +78,38 @@ class BookingDuplicateSeatTest extends TestCase
             ->count();
         $this->assertEquals(1, $count);
     }
+
+    public function test_cannot_book_past_showtimes(): void
+    {
+        $user = User::factory()->create();
+        $bioskop = Bioskop::factory()->create();
+        $studio = Studio::factory()->create(['bioskop_id' => $bioskop->id]);
+        $film = Film::factory()->create();
+        
+        $jadwal = JadwalTayang::factory()->create([
+            'film_id' => $film->id,
+            'studio_id' => $studio->id,
+            'waktu_mulai' => now()->subHour(),
+            'waktu_selesai' => now()->addHour(),
+            'harga' => 50000,
+        ]);
+
+        $kursi = Kursi::factory()->create([
+            'studio_id' => $studio->id,
+            'label_baris' => 'A',
+            'nomor_kursi' => 1,
+        ]);
+
+        $this->actingAs($user);
+
+        $responseIndex = $this->get(route('jadwal.kursi', $jadwal->id));
+        $responseIndex->assertRedirect(route('film.show', $film->id));
+        $responseIndex->assertSessionHas('error', 'Jadwal tayang ini sudah dimulai atau telah lewat.');
+
+        $responseStore = $this->post(route('jadwal.kursi.store', $jadwal->id), [
+            'kursi_ids' => [$kursi->id],
+        ]);
+        $responseStore->assertRedirect(route('film.show', $film->id));
+        $responseStore->assertSessionHas('error', 'Jadwal tayang ini sudah dimulai atau telah lewat.');
+    }
 }
