@@ -2,6 +2,47 @@
 @tailwind components;
 @tailwind utilities;
 
+.hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+[x-cloak] { display: none !important; }
+
+@layer components {
+    .filter-pill {
+        padding: 0.625rem 1.25rem;
+        border-radius: 0.75rem;
+        border-width: 3px;
+        border-color: var(--border, #111827);
+        background-color: #ffffff;
+        font-weight: 800;
+        font-size: 0.75rem;
+        color: var(--border, #111827);
+        transition-property: all;
+        transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        transition-duration: 150ms;
+        cursor: pointer;
+        white-space: nowrap;
+        box-shadow: none;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+    .filter-pill:hover {
+        background-color: rgba(255, 243, 176, 0.2);
+        transform: translateY(-2px);
+        box-shadow: 3px 3px 0px var(--border, #111827);
+    }
+    .filter-pill.active {
+        background-color: var(--pastel-mint, #bef264);
+        transform: translate(-1px, -1px);
+        box-shadow: 3px 3px 0px var(--border, #111827);
+    }
+}
+
 @layer components {
     .neo-card {
         @apply overflow-hidden bg-white border-4 border-black rounded-2xl shadow-neo-lg;
@@ -331,3 +372,4 @@
     opacity: 0;
     transform: translate(-50%, -20px);
 }
+

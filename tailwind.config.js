@@ -9,6 +9,7 @@ export default {
         "./resources/views/**/*.blade.php",
         "./resources/views/**/*.html",
         "./resources/js/**/*.js",
+        "./app/Filament/**/*.php",
     ],
     theme: {
         extend: {

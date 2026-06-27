@@ -48,6 +48,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('payment.finish');
 
     Route::get('/bookings', [BookingController::class, 'index'])->name('bookings.index');
+    Route::get('/bookings/snack/{snackOrder}', [BookingController::class, 'showSnack'])->name('bookings.snack.show');
     Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
     Route::get('/bookings/{booking}/pdf', [BookingController::class, 'downloadPdf'])
         ->name('bookings.pdf');
@@ -57,6 +58,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/snacks', [SnacksController::class, 'index'])->name('snacks.index');
+    Route::post('/snacks/checkout', [SnacksController::class, 'checkout'])->name('snacks.checkout');
+    Route::get('/snacks/checkout/{snackOrder}', [SnacksController::class, 'showCheckout'])->name('snacks.checkout.show');
+    Route::get('/snacks/payment/success/{snackOrder}', [SnacksController::class, 'paymentSuccess'])->name('snacks.payment.success');
+    Route::get('/snacks/payment/pending/{snackOrder}', [SnacksController::class, 'paymentPending'])->name('snacks.payment.pending');
 });
 
 Route::post('/webhooks/midtrans', [App\Http\Controllers\PaymentWebhookController::class, 'handleMidtrans'])
