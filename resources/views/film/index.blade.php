@@ -12,9 +12,9 @@
     </x-slot>
 
     <div x-data="{
-        searchQuery: '',
-        activeTab: 'Semua',
-        sortBy: 'popular',
+        searchQuery: new URLSearchParams(window.location.search).get('q') || '',
+        activeTab: new URLSearchParams(window.location.search).get('tab') || 'Semua',
+        sortBy: new URLSearchParams(window.location.search).get('sort') || 'popular',
         toastMessage: '',
         showToast: false,
         triggerToast(msg) {
@@ -22,12 +22,34 @@
             this.showToast = true;
             setTimeout(() => this.showToast = false, 3000);
         },
+        setTab(tab) {
+            this.activeTab = tab;
+            const url = new URL(window.location);
+            if (tab === 'Semua') url.searchParams.delete('tab');
+            else url.searchParams.set('tab', tab);
+            window.history.replaceState({}, '', url);
+        },
+        setSort(sort) {
+            this.sortBy = sort;
+            const url = new URL(window.location);
+            url.searchParams.set('sort', sort);
+            window.history.replaceState({}, '', url);
+        },
         matchesSearch(title, genre, synopsis) {
             if (!this.searchQuery.trim()) return true;
             const q = this.searchQuery.toLowerCase();
             return title.toLowerCase().includes(q) || 
                    genre.toLowerCase().includes(q) || 
                    synopsis.toLowerCase().includes(q);
+        },
+        sortedMovies(movies) {
+            const arr = [...movies];
+            if (this.sortBy === 'rating') {
+                arr.sort((a, b) => b.rating - a.rating);
+            } else if (this.sortBy === 'latest') {
+                arr.sort((a, b) => new Date(b.tanggal_rilis) - new Date(a.tanggal_rilis));
+            }
+            return arr;
         }
     }" class="relative space-y-8">
 
@@ -101,7 +123,7 @@
             
             <div class="flex flex-wrap gap-2">
                 <template x-for="tab in ['Semua', 'Sedang Tayang', 'Akan Tayang']" :key="tab">
-                    <button @click="activeTab = tab"
+                    <button @click="setTab(tab)"
                         :class="activeTab === tab ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
                         class="px-4 py-2 rounded-xl border-[3px] border-border text-xs font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none"
                         x-text="tab">
@@ -109,21 +131,20 @@
                 </template>
             </div>
 
-            
             <div class="flex items-center gap-2" x-data="{ showSortDropdown: false }">
                 <span class="text-xs font-black text-foreground">Urutkan:</span>
                 <div class="relative">
                     <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
-                        class="flex items-center gap-2 px-4 py-2.5 bg-white border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                        class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                        <x-icon name="heroicon-s-arrows-up-down" class="w-4 h-4 text-border" />
                         <span x-text="sortBy === 'popular' ? 'Popularitas' : (sortBy === 'rating' ? 'Rating Tertinggi' : 'Terbaru')">Popularitas</span>
-                        <x-icon name="heroicon-s-chevron-down" class="w-3.5 h-3.5 text-border" />
                     </button>
                     <div x-show="showSortDropdown" x-transition.opacity
                         class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground"
                         style="display: none;">
-                        <button @click="sortBy = 'popular'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Popularitas</button>
-                        <button @click="sortBy = 'rating'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
-                        <button @click="sortBy = 'latest'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
+                        <button @click="setSort('popular'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Popularitas</button>
+                        <button @click="setSort('rating'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
+                        <button @click="setSort('latest'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
                     </div>
                 </div>
             </div>

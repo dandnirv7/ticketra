@@ -58,9 +58,12 @@
         method="POST"
         x-data='{
                     selected: [],
+                    selectedSnacks: [],
                     maxSeats: 6,
                     price: {{ $jadwalTayang->harga }},
                     seats: @json($jadwalTayang->studio->kursis),
+                    showSnackModal: false,
+                    snacks: @json($snackSuggestions),
 
                     toggleSeat(seatId) {
                         if (this.selected.includes(seatId)) {
@@ -74,8 +77,30 @@
                         }
                     },
 
+                    toggleSnack(snackId) {
+                        if (this.selectedSnacks.includes(snackId)) {
+                            this.selectedSnacks = this.selectedSnacks.filter(id => id !== snackId);
+                        } else {
+                            this.selectedSnacks.push(snackId);
+                        }
+                    },
+
+                    isSnackSelected(snackId) {
+                        return this.selectedSnacks.includes(snackId);
+                    },
+
+                    get snackTotal() {
+                        return this.snacks
+                            .filter(s => this.selectedSnacks.includes(s.id))
+                            .reduce((sum, s) => sum + Number(s.price), 0);
+                    },
+
                     get total() {
                         return this.selected.length * this.price;
+                    },
+
+                    get grandTotal() {
+                        return this.total + this.snackTotal;
                     },
 
                     get seatLabels() {
@@ -92,11 +117,19 @@
                             alert("Silakan pilih minimal 1 kursi!");
                             return;
                         }
+                        this.showSnackModal = true;
+                    },
 
+                    goToPayment() {
                         document.getElementById("kursi_ids_input").value =
                             JSON.stringify(this.selected);
-
+                        document.getElementById("snack_ids_input").value =
+                            JSON.stringify(this.selectedSnacks);
                         document.getElementById("bookingForm").submit();
+                    },
+
+                    goToSnacks() {
+                        window.location.href = "{{ route('snacks.index') }}";
                     }
                 }'>
         @csrf
@@ -105,6 +138,11 @@
           type="hidden"
           name="kursi_ids"
           id="kursi_ids_input">
+
+        <input
+          type="hidden"
+          name="snack_ids"
+          id="snack_ids_input">
 
         <div class="flex gap-4 mb-8 text-xs font-bold">
           <div class="flex items-center gap-2">
@@ -125,52 +163,129 @@
 
         @php
         $kursiPerBaris = $jadwalTayang->studio->kursis->groupBy('label_baris');
+        $cols = $kursiPerBaris->first()?->count() ?? 10;
         @endphp
 
-        <div class="flex flex-col gap-3">
-          @foreach($kursiPerBaris as $baris => $kursis)
-          <div class="flex items-center gap-2">
-            <span class="w-6 font-black text-center text-gray-900">
-              {{ $baris }}
-            </span>
+        <div class="overflow-x-auto pb-4">
+          <div class="flex flex-col items-center gap-3 mx-auto" style="width: fit-content;">
+            @foreach($kursiPerBaris as $baris => $kursis)
+            <div class="flex items-center justify-center gap-3">
+              <span class="w-5 text-xs font-black text-center text-gray-500 md:w-6">
+                {{ $baris }}
+              </span>
 
-            <div class="flex gap-2">
-              @foreach($kursis as $kursi)
-                @php
-                  $isOccupied = in_array($kursi->id, $occupiedSeats);
-                @endphp
-                @if($isOccupied)
-                  <button
-                    type="button"
-                    disabled
-                    class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg bg-red-300 text-gray-500 cursor-not-allowed shadow-none flex items-center justify-center text-[10px] font-bold"
-                    title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }} (Terisi)">
-                    {{ $kursi->nomor_kursi }}
-                  </button>
-                @else
-                  <button
-                    type="button"
-                    @click.prevent="toggleSeat('{{ $kursi->id }}')"
-                    :class="{
-                        'bg-green-300 hover:bg-green-400': !selected.includes('{{ $kursi->id }}'),
-                        'bg-yellow-300': selected.includes('{{ $kursi->id }}')
-                    }"
-                    class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg shadow-[3px_3px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center text-[10px] font-bold text-gray-900"
-                    title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }}">
-                    {{ $kursi->nomor_kursi }}
-                  </button>
-                @endif
-              @endforeach
+              <div class="grid gap-1.5 md:gap-2" style="grid-template-columns: repeat({{ $cols }}, minmax(0, 1fr));">
+                @foreach($kursis as $kursi)
+                  @php
+                    $isOccupied = in_array($kursi->id, $occupiedSeats);
+                  @endphp
+                  @if($isOccupied)
+                    <button
+                      type="button"
+                      disabled
+                      class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg bg-red-300 text-gray-500 cursor-not-allowed shadow-none flex items-center justify-center text-[10px] font-bold"
+                      title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }} (Terisi)">
+                      {{ $kursi->nomor_kursi }}
+                    </button>
+                  @else
+                    <button
+                      type="button"
+                      @click.prevent="toggleSeat('{{ $kursi->id }}')"
+                      :class="{
+                          'bg-green-300 hover:bg-green-400': !selected.includes('{{ $kursi->id }}'),
+                          'bg-yellow-300': selected.includes('{{ $kursi->id }}')
+                      }"
+                      class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg shadow-[3px_3px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center text-[10px] font-bold text-gray-900"
+                      title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }}">
+                      {{ $kursi->nomor_kursi }}
+                    </button>
+                  @endif
+                @endforeach
+              </div>
+
+              <span class="w-5 text-xs font-black text-center text-gray-500 md:w-6">
+                {{ $baris }}
+              </span>
             </div>
-
-            <span class="w-6 font-black text-center text-gray-900">
-              {{ $baris }}
-            </span>
+            @endforeach
           </div>
-          @endforeach
         </div>
 
-        <div class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t-4 border-black shadow-[0px_-5px_15px_-3px_rgba(0,0,0,0.1)]">
+        <div
+          x-show="showSnackModal"
+          x-cloak
+          class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
+          @click.away="showSnackModal = false"
+          x-transition.opacity>
+          <div class="w-full max-w-lg border-4 border-black rounded-2xl bg-white shadow-[10px_10px_0px_#000]" @click.stop>
+            <div class="p-6 text-center border-b-4 border-black bg-pastel-lemon rounded-t-2xl">
+              <div class="text-3xl mb-2">🍿</div>
+              <h3 class="text-xl font-black uppercase">Tambahkan Camilan?</h3>
+              <p class="mt-1 text-sm font-bold opacity-70">Pesan sekarang atau nanti di snack bar!</p>
+            </div>
+
+            <div class="p-6 space-y-3">
+              <template x-for="snack in snacks" :key="snack.id">
+                <button
+                  type="button"
+                  @click="toggleSnack(snack.id)"
+                  :class="{
+                      'border-accent-green bg-green-50 shadow-[3px_3px_0px_#059669]': isSnackSelected(snack.id),
+                      'border-black bg-slate-50 shadow-[3px_3px_0px_#000]': !isSnackSelected(snack.id)
+                  }"
+                  class="flex items-center gap-4 p-4 border-2 rounded-xl transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#000] w-full text-left">
+                  <span class="flex items-center justify-center w-12 h-12 text-2xl bg-white border-2 border-black rounded-lg shrink-0" x-text="snack.emoji"></span>
+                  <div class="flex-1 min-w-0">
+                    <p class="font-black text-gray-900" x-text="snack.name"></p>
+                    <p class="text-xs font-bold text-gray-500 truncate" x-text="snack.desc"></p>
+                  </div>
+                  <div class="flex flex-col items-end gap-1 shrink-0">
+                    <p class="font-black whitespace-nowrap text-accent-red" x-text="'Rp ' + Number(snack.price).toLocaleString('id-ID')"></p>
+                    <span
+                      x-show="isSnackSelected(snack.id)"
+                      class="text-[10px] font-extrabold text-accent-green uppercase tracking-wider">
+                      ✓ Dipilih
+                    </span>
+                  </div>
+                </button>
+              </template>
+            </div>
+
+            <div class="px-6 pb-4">
+              <div class="flex items-center justify-between p-4 border-2 border-black rounded-xl bg-pastel-lemon shadow-[3px_3px_0px_#000]">
+                <span class="text-xs font-extrabold uppercase tracking-widest">Total Belanja</span>
+                <span class="font-black text-accent-red" x-text="'Rp ' + grandTotal.toLocaleString('id-ID')"></span>
+              </div>
+            </div>
+
+            <div class="p-6 pt-0 space-y-3">
+              <button
+                type="button"
+                @click="goToPayment()"
+                class="w-full py-4 font-black text-center uppercase border-4 border-black rounded-xl bg-accent-green text-white shadow-[5px_5px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
+                Lanjutkan ke Pembayaran
+                <x-heroicon-o-arrow-right class="inline w-5 h-5 ml-1" />
+              </button>
+
+              <button
+                type="button"
+                @click="goToSnacks()"
+                class="w-full py-3 font-bold text-center uppercase border-2 border-black rounded-xl bg-white shadow-[3px_3px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
+                <x-heroicon-o-shopping-bag class="inline w-4 h-4 mr-1" />
+                Pesan Makanan
+              </button>
+
+              <button
+                type="button"
+                @click="showSnackModal = false"
+                class="w-full py-2 text-xs font-bold text-center text-gray-500 uppercase hover:text-gray-900 transition-colors">
+                Nanti Saja, Lewati
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-secondary-background border-t-4 border-border shadow-[0px_-5px_15px_-3px_rgba(0,0,0,0.08)]">
           <div class="flex flex-col items-center justify-between max-w-4xl gap-4 mx-auto sm:flex-row">
 
             <div class="w-full sm:w-auto">
@@ -211,3 +326,5 @@
     </div>
   </div>
 </x-app-layout>
+
+

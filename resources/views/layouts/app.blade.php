@@ -8,7 +8,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https:
 
     
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -20,8 +20,11 @@
 
     $isActive = fn($route) => request()->routeIs($route);
     $linkClass = fn($routes) => collect($routes)->contains(fn($r) => request()->routeIs($r))
-        ? 'flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2'
-        : 'flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2';
+        ? 'flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none'
+        : 'flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none';
+
+    $bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
+    $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
 <body class="font-base min-h-screen"
@@ -30,10 +33,10 @@
           showLocationDropdown: false,
       }">
 
-    <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto">
+    <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto pb-24 lg:pb-8">
 
         
-        <aside class="lg:w-64 lg:shrink-0">
+        <aside class="hidden lg:block lg:w-64 lg:shrink-0">
             <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
                 
@@ -100,8 +103,13 @@
         <div class="flex-1 min-w-0 flex flex-col gap-4">
 
             
-            <header class="flex items-center justify-between gap-4 py-2 px-1">
-                
+            <header class="flex items-center justify-between gap-3 py-2 px-1">
+
+                <button @click="$dispatch('toggle-mobile-menu')"
+                        class="lg:hidden w-10 h-10 bg-secondary-background border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors shrink-0">
+                    <x-icon name="heroicon-s-bars-3" class="w-5 h-5 text-border" />
+                </button>
+
                 <div class="flex-1">
                     @isset($header)
                         {{ $header }}
@@ -149,5 +157,9 @@
             </main>
         </div>
     </div>
+
+    <x-mobile-nav :bottomActive="$bottomActive" :bottomInactive="$bottomInactive" />
 </body>
 </html>
+
+

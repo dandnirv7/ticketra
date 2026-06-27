@@ -18,6 +18,7 @@
         selectedDate: '',
         toastMessage: '',
         showToast: false,
+        toastType: 'success',
         openTrailer: false,
         showAllCast: false,
         
@@ -41,10 +42,18 @@
             }
             
             this.selectedDate = this.dates[0].isoDate;
+
+            @if (session('success'))
+                this.triggerToast('{{ session('success') }}', 'success');
+            @endif
+            @if (session('error'))
+                this.triggerToast('{{ session('error') }}', 'error');
+            @endif
         },
         
-        triggerToast(msg) {
+        triggerToast(msg, type = 'success') {
             this.toastMessage = msg;
+            this.toastType = type;
             this.showToast = true;
             setTimeout(() => this.showToast = false, 3000);
         },
@@ -70,9 +79,15 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-[-20px]"
-            class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] bg-pastel-mint border-[3px] border-border px-6 py-3.5 rounded-xl font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs text-foreground flex items-center gap-2"
+            :class="toastType === 'error' ? 'bg-[#FFD1D1] border-red-500 text-red-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]' : 'bg-pastel-mint border-border text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
+            class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] border-[3px] px-6 py-3.5 rounded-xl font-bold text-xs flex items-center gap-2"
             style="display: none;">
-            <x-icon name="heroicon-s-check-circle" class="w-5 h-5 text-emerald-600" />
+            <template x-if="toastType === 'error'">
+                <x-icon name="heroicon-s-exclamation-triangle" class="w-5 h-5 text-red-600 shrink-0" />
+            </template>
+            <template x-if="toastType !== 'error'">
+                <x-icon name="heroicon-s-check-circle" class="w-5 h-5 text-emerald-600 shrink-0" />
+            </template>
             <span x-text="toastMessage"></span>
         </div>
 
@@ -220,7 +235,7 @@
                         <button @click="triggerToast('Sukses! Film {{ addslashes($film->judul) }} ditambahkan ke Wishlist.')"
                             class="w-full bg-white border-[3px] border-border rounded-[20px] p-4 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center gap-4 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all text-left group">
                             <div class="w-14 h-14 bg-[#FFC5C5] rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 border-[3px] border-border shadow-[2px_2px_0px_rgba(0,0,0,1)]">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8 text-[#FF5A5A]">
+                                <svg xmlns="http:
                                     <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
                                 </svg>
                             </div>
@@ -300,8 +315,10 @@
                                 
                                 <div class="flex flex-wrap gap-2.5">
                                     <template x-for="st in cinema.showtimes" :key="st.id">
-                                        <a :href="'/jadwal/' + st.id + '/kursi'"
-                                            class="px-4 py-2 bg-white hover:bg-accent-green hover:border-border border-2 border-border rounded-xl font-black text-xs transition-all shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px]"
+                                        <a :href="st.is_past ? 'javascript:void(0)' : '/jadwal/' + st.id + '/kursi'"
+                                            :class="st.is_past 
+                                                ? 'px-4 py-2 bg-gray-100 text-gray-400 border-2 border-border/30 rounded-xl font-black text-xs cursor-not-allowed opacity-50' 
+                                                : 'px-4 py-2 bg-white hover:bg-accent-green hover:border-border border-2 border-border rounded-xl font-black text-xs transition-all shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px]'"
                                             x-text="st.time">
                                         </a>
                                     </template>
@@ -518,7 +535,7 @@
             <div class="w-full bg-black aspect-video">
                 <template x-if="openTrailer">
                     <iframe class="w-full h-full"
-                        src="{{ $film->trailer_url ?: 'https://www.youtube.com/embed/Way9Dexny3w' }}"
+                        src="{{ $film->trailer_url ?: 'https:
                         title="YouTube video player"
                         frameborder="0"
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

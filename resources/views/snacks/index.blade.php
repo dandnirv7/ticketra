@@ -59,12 +59,61 @@
 
             Alpine.data('snacksComponent', () => ({
                 activeCat: 'Semua',
-                sortBy: 'populer',
+                sortBy: new URLSearchParams(window.location.search).get('sort') || 'populer',
                 cart: [],
                 showToast: false,
                 toastMsg: '',
+                toastType: 'success',
                 toastTimeout: null,
                 fnbItems: @json($fnbItems),
+
+                init() {
+                    const search = new URLSearchParams(window.location.search).get('q');
+                    if (search) {
+                        Alpine.store('snacks').searchQuery = search;
+                    }
+
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const kat = urlParams.get('kategori');
+                    if (kat) {
+                        const matched = ['popcorn', 'minuman', 'snack', 'combo'].find(c => c === kat.toLowerCase());
+                        if (matched) {
+                            this.activeCat = matched.charAt(0).toUpperCase() + matched.slice(1);
+                        } else {
+                            this.activeCat = 'Semua';
+                        }
+                    }
+
+                    this.$watch('activeCat', (value) => {
+                        const url = new URL(window.location);
+                        if (value === 'Semua') {
+                            url.searchParams.delete('kategori');
+                        } else {
+                            url.searchParams.set('kategori', value.toLowerCase());
+                        }
+                        window.history.replaceState({}, '', url);
+                    });
+
+                    this.$watch('sortBy', (value) => {
+                        const url = new URL(window.location);
+                        if (value === 'populer') {
+                            url.searchParams.delete('sort');
+                        } else {
+                            url.searchParams.set('sort', value);
+                        }
+                        window.history.replaceState({}, '', url);
+                    });
+
+                    this.$watch('$store.snacks.searchQuery', (value) => {
+                        const url = new URL(window.location);
+                        if (!value.trim()) {
+                            url.searchParams.delete('q');
+                        } else {
+                            url.searchParams.set('q', value.trim());
+                        }
+                        window.history.replaceState({}, '', url);
+                    });
+                },
 
                 get sortedItems() {
                     let filtered = this.fnbItems;
@@ -121,7 +170,7 @@
 
                 updateCart(item, delta) {
                     if (item.status === 'HABIS') {
-                        this.triggerAction(`Maaf, ${item.name} sedang habis.`);
+                        this.triggerAction(`Maaf, ${item.name} sedang habis.`, 'error');
                         return;
                     }
 
@@ -133,7 +182,7 @@
                         }
                     } else if (delta > 0) {
                         this.cart.push({ ...item, qty: 1 });
-                        this.triggerAction(`${item.name} ditambahkan!`);
+                        this.triggerAction(`${item.name} ditambahkan!`, 'success');
                     }
                 },
 
@@ -143,12 +192,17 @@
                 },
 
                 checkoutCart() {
-                    this.triggerAction(`Proses Checkout untuk ${this.totalCartItems} Item Snack Bar...`);
+                    document.getElementById('cartInput').value = JSON.stringify(this.cart.map(item => ({
+                        id: item.id,
+                        qty: item.qty
+                    })));
+                    document.getElementById('checkoutSnacksForm').submit();
                 },
 
-                triggerAction(msg) {
+                triggerAction(msg, type = 'success') {
                     if (this.toastTimeout) clearTimeout(this.toastTimeout);
                     this.toastMsg = msg;
+                    this.toastType = type;
                     this.showToast = true;
                     this.toastTimeout = setTimeout(() => {
                         this.showToast = false;
@@ -169,9 +223,15 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-[-20px]"
-            class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] bg-foreground text-white px-6 py-3.5 rounded-xl font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs flex items-center gap-2"
+            :class="toastType === 'error' ? 'bg-[#FFD1D1] border-red-500 text-red-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]' : 'bg-pastel-mint border-border text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
+            class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] border-[3px] px-6 py-3.5 rounded-xl font-bold text-xs flex items-center gap-2"
             style="display: none;">
-            <x-icon name="heroicon-s-information-circle" class="w-5 h-5 text-accent-yellow" />
+            <template x-if="toastType === 'error'">
+                <x-icon name="heroicon-s-exclamation-triangle" class="w-5 h-5 text-red-600 shrink-0" />
+            </template>
+            <template x-if="toastType !== 'error'">
+                <x-icon name="heroicon-s-check-circle" class="w-5 h-5 text-emerald-600 shrink-0" />
+            </template>
             <span x-text="toastMsg"></span>
         </div>
 
@@ -281,16 +341,21 @@
                     </template>
                 </div>
                 <div class="flex items-center gap-4 w-full md:w-auto">
-                    <div class="relative w-full md:w-64">
-                        <select
-                            x-model="sortBy"
-                            class="w-full appearance-none bg-white border-2 border-border px-5 py-3.5 rounded-full font-bold text-xs uppercase cursor-pointer outline-none shadow-[2px_2px_0px_var(--border)] focus:shadow-[4px_4px_0px_var(--border)] transition-shadow">
-                            <option value="populer">Terpopuler</option>
-                            <option value="murah">Harga Terendah</option>
-                            <option value="mahal">Harga Tertinggi</option>
-                        </select>
-                        <div class="absolute right-5 top-1/2 -translate-y-1/2 pointer-events-none">
-                            <x-icon name="heroicon-s-adjustments-horizontal" class="w-4 h-4 text-border" />
+                    <div class="relative w-full md:w-64" x-data="{ showSortDropdown: false }">
+                        <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
+                            class="w-full flex items-center justify-between gap-2 px-5 py-3.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold uppercase whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                            <div class="flex items-center gap-2">
+                                <x-icon name="heroicon-s-arrows-up-down" class="w-4 h-4 text-border" />
+                                <span x-text="sortBy === 'populer' ? 'Terpopuler' : (sortBy === 'murah' ? 'Harga Terendah' : 'Harga Tertinggi')">Terpopuler</span>
+                            </div>
+                            <x-icon name="heroicon-s-chevron-down" class="w-3 h-3 text-border" />
+                        </button>
+                        <div x-show="showSortDropdown" x-transition.opacity
+                            class="absolute right-0 mt-2 w-full bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground"
+                            style="display: none;">
+                            <button @click="sortBy = 'populer'; showSortDropdown = false" class="w-full text-left px-5 py-3 hover:bg-pastel-mint/30 transition-colors border-b-2 border-border/10">Terpopuler</button>
+                            <button @click="sortBy = 'murah'; showSortDropdown = false" class="w-full text-left px-5 py-3 hover:bg-pastel-mint/30 transition-colors border-b-2 border-border/10">Harga Terendah</button>
+                            <button @click="sortBy = 'mahal'; showSortDropdown = false" class="w-full text-left px-5 py-3 hover:bg-pastel-mint/30 transition-colors last:border-b-0 border-border/10">Harga Tertinggi</button>
                         </div>
                     </div>
                 </div>
@@ -523,15 +588,15 @@
             x-transition:leave-end="opacity-0 translate-y-24"
             class="fixed bottom-8 left-4 right-4 lg:left-[calc(50%+128px)] md:left-[calc(50%+128px)] md:-translate-x-1/2 md:w-full md:max-w-2xl z-50"
             style="display: none;">
-            <div class="bg-foreground border-4 border-border rounded-3xl p-4 md:p-5 shadow-[8px_8px_0px_rgba(0,0,0,1)] flex items-center justify-between">
+            <div class="bg-white border-4 border-border rounded-3xl p-4 md:p-5 shadow-[8px_8px_0px_rgba(0,0,0,1)] flex items-center justify-between">
                 <div class="flex items-center gap-4">
                     <div class="w-14 h-14 bg-accent-yellow border-4 border-border rounded-2xl flex items-center justify-center shadow-[4px_4px_0px_var(--border)] relative transform -rotate-3 hover:rotate-0 transition-transform">
                         <x-icon name="heroicon-s-shopping-bag" class="w-6 h-6 text-foreground" />
                         <span class="absolute -top-3 -right-3 bg-accent-red text-white text-[12px] font-black w-7 h-7 flex items-center justify-center rounded-full border-2 border-border shadow-[2px_2px_0px_var(--border)]" x-text="totalCartItems"></span>
                     </div>
                     <div>
-                        <p class="text-white/60 text-[10px] font-extrabold uppercase tracking-widest mb-0.5">Total Belanja</p>
-                        <p class="text-white font-price font-black text-2xl md:text-3xl leading-none">
+                        <p class="text-foreground/60 text-[10px] font-extrabold uppercase tracking-widest mb-0.5">Total Belanja</p>
+                        <p class="text-foreground font-price font-black text-2xl md:text-3xl leading-none">
                             Rp <span x-text="totalCartPrice.toLocaleString('id-ID')"></span>
                         </p>
                     </div>
@@ -542,5 +607,9 @@
             </div>
         </div>
 
+        <form id="checkoutSnacksForm" action="{{ route('snacks.checkout') }}" method="POST" class="hidden">
+            @csrf
+            <input type="hidden" name="cart" id="cartInput">
+        </form>
     </div>
 </x-app-layout>

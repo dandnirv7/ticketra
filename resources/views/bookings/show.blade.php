@@ -77,21 +77,21 @@
               Detail Film
             </h3>
 
-            <div class="flex gap-4">
+            <div class="flex flex-col sm:flex-row gap-4">
               <img src="{{ $booking->jadwalTayang->film->poster_url }}"
                 alt="{{ $booking->jadwalTayang->film->judul }}"
-                class="object-cover w-24 border-4 border-black rounded-lg h-36 shadow-neo-sm">
+                class="object-cover w-24 h-36 border-4 border-black rounded-lg shadow-neo-sm mx-auto sm:mx-0 shrink-0">
 
-              <div class="flex-1">
-                <h4 class="mb-2 text-xl font-black">{{ $booking->jadwalTayang->film->judul }}</h4>
-                <div class="flex flex-wrap gap-2 mb-3">
+              <div class="flex-1 text-center sm:text-left">
+                <h4 class="mb-2 text-xl font-black text-black">{{ $booking->jadwalTayang->film->judul }}</h4>
+                <div class="flex flex-wrap justify-center sm:justify-start gap-2 mb-3">
                   <span class="text-xs neo-badge-blue">{{ $booking->jadwalTayang->film->genre }}</span>
                   <span class="flex flex-row items-center justify-center gap-1 text-xs text-center neo-badge-yellow">
                     <x-heroicon-o-star class="w-3 h-3" />
                     {{ $booking->jadwalTayang->film->rating }}</span>
                   <span class="text-xs neo-badge-green">{{ $booking->jadwalTayang->film->durasi_menit }} menit</span>
                 </div>
-                <p class="text-sm text-gray-600">{{ $booking->jadwalTayang->film->sinopsis }}</p>
+                <p class="text-sm text-gray-600 font-medium">{{ $booking->jadwalTayang->film->sinopsis }}</p>
               </div>
             </div>
           </div>
@@ -102,7 +102,7 @@
               Jadwal Tayang
             </h3>
 
-            <div class="grid grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div class="neo-info-pink">
                 <p class="neo-subtitle">Bioskop</p>
                 <p class="neo-text">{{ $booking->jadwalTayang->studio->bioskop->nama }}</p>
