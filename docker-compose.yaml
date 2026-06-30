@@ -94,6 +94,21 @@ services:
       timeout: 3s
       retries: 5
 
+  phpmyadmin:
+    image: phpmyadmin:5.2
+    container_name: ticketra-phpmyadmin
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    environment:
+      PMA_HOST: mysql
+      UPLOAD_LIMIT: 64M
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - ticketra-net
+
 networks:
   ticketra-net:
     driver: bridge
