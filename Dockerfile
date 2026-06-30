@@ -20,6 +20,15 @@ FROM composer:2 AS vendor
 
 WORKDIR /app
 
+# Install required PHP extensions before composer
+RUN apk add --no-cache \
+        icu-dev \
+        libpng-dev \
+        libjpeg-turbo-dev \
+        freetype-dev \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) intl gd
+
 COPY composer.json composer.lock ./
 RUN composer install \
         --no-dev \
