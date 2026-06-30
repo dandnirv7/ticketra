@@ -16,7 +16,7 @@ RUN npm run build
 
 
 # ---------- Stage 2: install PHP dependencies ----------
-FROM composer:2 AS vendor
+FROM composer:2.8 AS vendor
 
 WORKDIR /app
 
@@ -42,7 +42,7 @@ RUN composer dump-autoload --optimize --no-dev
 
 
 # ---------- Stage 3: production runtime ----------
-FROM php:8.3-fpm-alpine AS production
+FROM php:8.4-fpm-alpine AS production
 
 # System deps + PHP extensions
 RUN apk add --no-cache \
