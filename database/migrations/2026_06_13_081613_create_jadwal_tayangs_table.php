@@ -17,8 +17,8 @@ return new class extends Migration
             $table->foreignUuid('film_id')->constrained('films')->restrictOnDelete();
             $table->foreignUuid('studio_id')->constrained('studios')->cascadeOnDelete();
 
-            $table->timestamp('waktu_mulai');
-            $table->timestamp('waktu_selesai');
+            $table->timestamp('waktu_mulai')->nullable();
+            $table->timestamp('waktu_selesai')->nullable();
             $table->decimal('harga', 12, 2);
 
             $table->string('status', 20)->default('terjadwal')->index();
