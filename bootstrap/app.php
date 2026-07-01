@@ -27,6 +27,12 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->report(function (\Illuminate\Routing\Exceptions\InvalidSignatureException $e) {
+            \Log::error('Signature verification failed', [
+                'url' => request()->fullUrl(),
+                'headers' => request()->headers->all(),
+            ]);
+        });
         $exceptions->shouldRenderJsonWhen(
             fn(Request $request) => $request->is('api/*'),
         );
