@@ -91,6 +91,6 @@ class BioskopStudioKursiSeeder extends Seeder
             }
         }
 
-        $this->command?->info("✅ Bioskop: ".count($bioskops)." bioskop, {$studios->count()} studio siap");
+        $this->command?->info("Bioskop: ".count($bioskops)." bioskop, {$studios->count()} studio siap");
     }
 }

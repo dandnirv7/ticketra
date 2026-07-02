@@ -19,22 +19,22 @@ class JadwalTayangSeeder extends Seeder
         $films = Film::where('sedang_tayang', true)->get();
 
         if ($films->isEmpty()) {
-            $this->command?->warn('⚠️ Tidak ada film dengan status sedang_tayang=true. Menggunakan semua film yang ada.');
+            $this->command?->warn('Tidak ada film dengan status sedang_tayang=true. Menggunakan semua film yang ada.');
             $films = Film::all();
         }
 
         if ($films->isEmpty()) {
-            $this->command?->error('❌ Database kosong dari film. Jalankan FilmIndonesiaSeeder dulu!');
+            $this->command?->error('Database kosong dari film. Jalankan FilmIndonesiaSeeder dulu!');
             return;
         }
 
         $studios = Studio::all();
         if ($studios->isEmpty()) {
-            $this->command?->error('❌ Database kosong dari studio. Jalankan BioskopStudioKursiSeeder dulu!');
+            $this->command?->error('Database kosong dari studio. Jalankan BioskopStudioKursiSeeder dulu!');
             return;
         }
 
-        $this->command?->info("🎬 Membuat Jadwal Tayang untuk {$films->count()} film di {$studios->count()} studio...");
+        $this->command?->info("Membuat Jadwal Tayang untuk {$films->count()} film di {$studios->count()} studio...");
 
         $timeSlots = ['10:00', '12:45', '15:30', '18:15', '21:00'];
 
@@ -89,7 +89,7 @@ class JadwalTayangSeeder extends Seeder
             }
         }
 
-        $this->command?->info("✅ Sukses membuat {$createdCount} jadwal tayang.");
+        $this->command?->info("Sukses membuat {$createdCount} jadwal tayang.");
     }
 
     private function resolveHarga(string $tipe, bool $isWeekend): float

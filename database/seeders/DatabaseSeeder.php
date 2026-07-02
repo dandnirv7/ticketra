@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'User',
                 'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]
         );
 
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
             [
                 'name' => 'Dandi',
                 'password' => bcrypt('password'),
+                'email_verified_at' => now(),
             ]
         );
 
@@ -43,7 +45,7 @@ class DatabaseSeeder extends Seeder
         
         $legacyFilmCount = \App\Models\Film::whereNull('slug')->count();
         if ($legacyFilmCount > 0) {
-            $this->command?->warn("🗑️  Menghapus {$legacyFilmCount} film legacy (tanpa slug) dari seeder lama...");
+            $this->command?->warn("Menghapus {$legacyFilmCount} film legacy (tanpa slug) dari seeder lama...");
             \App\Models\Film::whereNull('slug')->delete();
         }
 
