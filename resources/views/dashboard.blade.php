@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Beranda &middot; Ticketra.</title>
 
-    <link href="https:
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Archivo:wght@400;500;600;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
@@ -14,9 +14,6 @@
 @php
 $avatarInitial = strtoupper(substr($user->name ?? 'A', 0, 1));
 $hasBio = $bioskopFavorit !== null;
-
-$bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
-$bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
 <body class="min-h-screen font-base"
@@ -58,46 +55,46 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
           }
       }">
 
-    <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto pb-24 lg:pb-8">
+    <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto">
 
-        <aside class="hidden lg:block lg:w-64 lg:shrink-0">
+        <aside class="lg:w-64 lg:shrink-0">
             <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
-                <a href="{{ route('landing') }}" class="flex gap-2 items-center text-2xl font-extrabold tracking-tight font-heading">
+                <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight font-heading">
                     <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
                     Ticketra<span class="text-accent-green">.</span>
                 </a>
 
                 <nav class="flex flex-col gap-1.5 text-sm font-bold tracking-wide">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                         Beranda
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-building-storefront" class="w-5 h-5 text-border" />
                         Bioskop
                     </a>
-                    <a href="{{ route('film.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="{{ route('film.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-film" class="w-5 h-5 text-border" />
                         Film
                     </a>
-                    <a href="{{ route('bookings.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="{{ route('bookings.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-border" />
                         Tiket Saya
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-tag" class="w-5 h-5 text-border" />
                         Promo
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                         Snack Bar
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-heart" class="w-5 h-5 text-border" />
                         Wishlist
                     </a>
-                    <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
+                    <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-user" class="w-5 h-5 text-border" />
                         Profil
                     </a>
@@ -108,25 +105,24 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>
                     </div>
-                    <x-icon name="heroicon-s-ticket" class="absolute right-2 bottom-2 w-8 h-8 text-border/25 transform rotate-12" />
+                    <x-icon name="heroicon-s-ticket" class="absolute w-8 h-8 transform right-2 bottom-2 text-border/25 rotate-12" />
                 </div>
             </div>
         </aside>
 
-        <div class="flex flex-col flex-1 gap-4 min-w-0">
+        <div class="flex flex-col flex-1 min-w-0 gap-4">
 
-            <header class="flex items-center justify-between gap-2 px-1 py-2">
+            <header class="flex flex-col items-stretch justify-between gap-4 px-1 py-2 sm:flex-row sm:items-center">
 
-                <button @click="$dispatch('toggle-mobile-menu')"
-                        class="lg:hidden w-10 h-10 bg-secondary-background border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors shrink-0">
-                    <x-icon name="heroicon-s-bars-3" class="w-5 h-5 text-border" />
-                </button>
-
-                <div class="hidden lg:block flex-1">
-                    <h2 class="text-xl font-heading font-black text-foreground">Ticketra.</h2>
+                <div class="relative flex-1 max-w-md">
+                    <input type="text" x-model.debounce.300ms="searchQuery" placeholder="Cari film, bioskop, atau promo..." class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
+                    <div class="absolute -translate-y-1/2 right-4 top-1/2 text-foreground">
+                        <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
+                    </div>
                 </div>
 
-                <div class="flex items-center justify-end gap-3 shrink-0 ml-auto">
+                <div class="flex items-center justify-end gap-3">
+
                     <div class="relative">
                         <button @click="showLocationDropdown = !showLocationDropdown" @click.away="showLocationDropdown = false"
                             class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
@@ -159,16 +155,28 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
             <div class="flex-1 border-[3px] border-border rounded-[24px] bg-slate-50 p-6 md:p-8 space-y-6 shadow-[8px_8px_0px_var(--border)]">
 
                 <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
-                    <div class="flex flex-col lg:grid lg:grid-cols-2 lg:gap-6 items-center">
-
-                        <div class="lg:col-span-2 w-full mb-4">
+                    <div class="grid items-center gap-6 lg:grid-cols-2">
+                        <div class="relative z-10 space-y-4 md:space-y-5">
                             <span class="inline-flex items-center gap-1 px-3 py-1 bg-border text-white rounded-full text-[9px] font-extrabold uppercase tracking-wider">
-                                <x-icon name="heroicon-s-fire" class="w-3 h-3 text-accent-red fill-current" /> Trending Now
+                                <x-icon name="heroicon-s-fire" class="w-3 h-3 fill-current text-accent-red" /> Trending Now
                             </span>
+                            <h1 class="text-4xl md:text-5xl font-heading font-black leading-[0.95] uppercase tracking-tight max-w-lg">
+                                <span x-text="heroFilms[heroSlide]?.title ?? ''"></span>
+                            </h1>
+                            <p class="max-w-md text-sm font-medium leading-relaxed text-foreground/80" x-text="truncateWords(heroFilms[heroSlide]?.synopsis ?? '', 40)"></p>
+                            <div class="flex flex-wrap gap-3 pt-1">
+                                <a :href="'/film/' + heroFilms[heroSlide]?.id" class="brutal-btn bg-accent-yellow !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                    <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
+                                    Pesan Tiket
+                                </a>
+                                <a :href="'/film/' + heroFilms[heroSlide]?.id + '#trailer-section'" class="brutal-btn bg-white hover:bg-pastel-sky/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                    <x-icon name="heroicon-s-play" class="w-4 h-4 fill-current text-border" />
+                                    Tonton Trailer
+                                </a>
+                            </div>
                         </div>
 
-                        <div class="relative w-full h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-border shadow-[8px_8px_0px_0px_var(--border)] bg-foreground/10 order-1 lg:order-2 mb-4 lg:mb-0"
-                             @mouseenter="pauseHero()" @mouseleave="init()">
+                        <div class="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-border shadow-[8px_8px_0px_0px_var(--border)] bg-foreground/10">
                             @foreach ($heroFilms as $i => $film)
                             <div x-show="heroSlide === {{ $i }}" x-transition.opacity.duration.500ms
                                 class="absolute inset-0"
@@ -183,33 +191,16 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                             <div class="flex absolute bottom-3 left-1/2 gap-1.5 items-center -translate-x-1/2">
                                 @for ($i = 0; $i < count($heroFilms); $i++)
-                                    <button @click="heroGo({{ $i }})" :class="heroSlide === {{ $i }} ? 'w-6 bg-border' : 'w-2 bg-border/40 hover:bg-border/70'" class="h-2 rounded-full transition-all focus:outline-none"></button>
-                                @endfor
-                            </div>
-                        </div>
-
-                        <div class="relative z-10 space-y-4 md:space-y-5 order-2 lg:order-1 w-full">
-                            <h1 class="text-4xl md:text-5xl font-heading font-black leading-[0.95] uppercase tracking-tight max-w-lg">
-                                <span x-text="heroFilms[heroSlide]?.title ?? ''"></span>
-                            </h1>
-                            <p class="max-w-md text-sm font-medium leading-relaxed text-foreground/80" x-text="truncateWords(heroFilms[heroSlide]?.synopsis ?? '', 40)"></p>
-                            <div class="flex flex-wrap gap-3 pt-1">
-                                <a :href="'/film/' + heroFilms[heroSlide]?.id" class="brutal-btn bg-accent-yellow !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 inline-flex items-center gap-2">
-                                    <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
-                                    Pesan Tiket
-                                </a>
-                                <a :href="'/film/' + heroFilms[heroSlide]?.id + '#trailer-section'" class="brutal-btn bg-white hover:bg-pastel-sky/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 inline-flex items-center gap-2">
-                                    <x-icon name="heroicon-s-play" class="w-4 h-4 fill-current text-border" />
-                                    Tonton Trailer
-                                </a>
+                                    <button @click="heroGo({{ $i }})" :class="heroSlide === {{ $i }} ? 'w-6 bg-border' : 'w-2 bg-border/40 hover:bg-border/70'" class="h-2 transition-all rounded-full focus:outline-none"></button>
+                                    @endfor
                             </div>
                         </div>
                     </div>
                 </section>
 
                 <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-mint p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] group">
-                        <div class="flex gap-2 justify-between items-start">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-mint p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                        <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Bioskop</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Lihat bioskop favoritmu</p>
@@ -225,8 +216,8 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="{{ route('bookings.index') }}" class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] group">
-                        <div class="flex gap-2 justify-between items-start">
+                    <a href="{{ route('bookings.index') }}" class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                        <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Tiket Saya</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Cek tiket & riwayat kamu</p>
@@ -242,8 +233,8 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-pink p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] group">
-                        <div class="flex gap-2 justify-between items-start">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-pink p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                        <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Promo</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Temukan promo menarik hari ini</p>
@@ -259,8 +250,8 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-[#E6F3FF] p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] group">
-                        <div class="flex gap-2 justify-between items-start">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-[#E6F3FF] p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                        <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Snack Bar</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Pesan camilan sebelum nonton</p>
@@ -277,14 +268,13 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                     </a>
                 </section>
 
-                <section class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-5">
-
-                    <div class="flex flex-col gap-3 justify-between md:flex-row md:items-center">
-                        <h2 class="flex gap-2 items-center text-xl font-extrabold tracking-wide uppercase md:text-2xl text-foreground">
+                <section class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-6">
+                    <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
+                        <h2 class="flex items-center gap-2 text-xl font-extrabold tracking-wide uppercase md:text-2xl text-foreground">
                             Sedang Tayang
                             <span class="w-2.5 h-2.5 rounded-full border animate-pulse bg-accent-red border-border"></span>
                         </h2>
-                        <div class="flex gap-2 items-center">
+                        <div class="flex items-center gap-2">
                             <button class="w-8 h-8 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-pastel-sky/20 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-border">
                                 <x-icon name="heroicon-s-chevron-left" class="w-4 h-4 text-border" />
                             </button>
@@ -294,17 +284,9 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </div>
 
-                    <div class="relative">
-                        <input type="text" x-model.debounce.300ms="searchQuery" placeholder="Cari film, genre, atau sinopsis..."
-                               class="w-full bg-white border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 shadow-[2px_2px_0px_var(--border)]" />
-                        <div class="absolute right-4 top-1/2 -translate-y-1/2 text-foreground pointer-events-none">
-                            <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
-                        </div>
-                    </div>
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 border-b-[3px] border-border/10 pb-4">
 
-                    <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-
-                        <div class="flex items-center gap-2 overflow-x-auto hide-scrollbar pb-1 flex-1">
+                        <div class="flex flex-wrap gap-2">
                             <template x-for="genreObj in [
                                 { label: 'Semua', value: 'All' },
                                 { label: 'Aksi', value: 'Action' },
@@ -315,16 +297,14 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 { label: 'Sci-Fi', value: 'Sci-Fi' }
                             ]" :key="genreObj.value">
                                 <button @click="activeGenre = genreObj.value"
-                                    :class="activeGenre === genreObj.value
-                                        ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_var(--border)] translate-x-[-1px] translate-y-[-1px]'
-                                        : 'bg-white text-border hover:bg-pastel-lemon/20 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
-                                    class="shrink-0 px-4 py-2 border-[3px] border-border rounded-xl text-[10px] font-extrabold uppercase tracking-wide transition-all shadow-none active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2"
+                                    :class="activeGenre === genreObj.value ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
+                                    class="px-3.5 py-1.5 rounded-xl border-2 border-border text-[10px] font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2"
                                     x-text="genreObj.label">
                                 </button>
                             </template>
                         </div>
 
-                        <div class="flex gap-2 items-center shrink-0" x-data="{ showSortDropdown: false }">
+                        <div class="flex items-center gap-2" x-data="{ showSortDropdown: false }">
                             <span class="text-xs font-black text-foreground">Urutkan:</span>
                             <div class="relative">
                                 <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
@@ -352,24 +332,24 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                             <template x-if="filteredMovies().length > 0">
                                 <div class="md:col-span-2 lg:col-span-2 border-[3px] border-border rounded-[20px] relative overflow-hidden min-h-[320px] shadow-[4px_4px_0px_var(--border)] group flex flex-col justify-between">
-                                    <img :src="filteredMovies()[0].poster" :alt="filteredMovies()[0].title" class="object-cover absolute inset-0 w-full h-full transition-transform duration-500 group-hover:scale-105" />
+                                    <img :src="filteredMovies()[0].poster" :alt="filteredMovies()[0].title" class="absolute inset-0 object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
                                     <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/40"></div>
 
-                                    <div class="flex relative z-10 flex-col flex-1 justify-between p-5 h-full md:p-6">
-                                        <div class="flex gap-2 items-center">
+                                    <div class="relative z-10 flex flex-col justify-between flex-1 h-full p-5 md:p-6">
+                                        <div class="flex items-center gap-2">
                                             <span class="px-3 py-1 bg-pastel-pink text-border border-2 border-border rounded-full text-[9px] font-extrabold uppercase tracking-wide">Terlaris</span>
                                             <span class="px-2.5 py-1 bg-accent-yellow text-border border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="'★ ' + filteredMovies()[0].rating"></span>
                                             <span class="px-2 py-1 bg-slate-200 text-border border-2 border-border rounded-lg text-[9px] font-extrabold tracking-wider">IMAX</span>
                                         </div>
 
                                         <div class="mt-12 space-y-2">
-                                            <h3 class="text-xl font-black tracking-tight leading-tight text-white uppercase md:text-2xl" x-text="filteredMovies()[0].title"></h3>
+                                            <h3 class="text-xl font-black leading-tight tracking-tight text-white uppercase md:text-2xl" x-text="filteredMovies()[0].title"></h3>
                                             <p class="text-xs font-semibold leading-snug text-white/90 line-clamp-2" x-text="filteredMovies()[0].synopsis"></p>
                                         </div>
 
-                                        <div class="flex justify-between items-center mt-4">
+                                        <div class="flex items-center justify-between mt-4">
                                             <span class="px-3 py-1 bg-white text-border border-2 border-border rounded-lg text-[10px] font-extrabold" x-text="filteredMovies()[0].duration"></span>
-                                            <a :href="'/film/' + filteredMovies()[0].id" class="brutal-btn bg-accent-green text-border !py-2.5 !px-5 text-xs shadow-[2px_2px_0px_var(--border)] border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 inline-flex items-center gap-2">
+                                            <a :href="'/film/' + filteredMovies()[0].id" class="brutal-btn bg-accent-green text-border !py-2.5 !px-5 text-xs shadow-[2px_2px_0px_var(--border)] border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                                                 Beli Tiket
                                             </a>
                                         </div>
@@ -378,7 +358,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             </template>
 
                             <template x-if="filteredMovies().length > 1">
-                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group hidden md:flex">
+                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
                                     <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
                                         <img :src="filteredMovies()[1].poster" :alt="filteredMovies()[1].title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
                                         <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
@@ -386,14 +366,15 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                             <span x-text="filteredMovies()[1].rating"></span>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col flex-1 gap-2 justify-between p-4">
+                                    <div class="flex flex-col justify-between flex-1 gap-2 p-4">
                                         <div>
                                             <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="filteredMovies()[1].title" x-text="filteredMovies()[1].title"></h3>
                                             <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="filteredMovies()[1].genre"></p>
                                         </div>
-                                        <div class="flex justify-between items-center pt-2">
+                                        <div class="flex items-center justify-between pt-2">
                                             <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="filteredMovies()[1].duration"></span>
                                             <a :href="'/film/' + filteredMovies()[1].id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border hover:underline">
+                                                
                                             </a>
                                         </div>
                                     </div>
@@ -401,7 +382,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             </template>
 
                             <template x-if="filteredMovies().length > 2">
-                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group hidden md:flex">
+                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
                                     <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
                                         <img :src="filteredMovies()[2].poster" :alt="filteredMovies()[2].title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
                                         <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
@@ -409,12 +390,12 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                             <span x-text="filteredMovies()[2].rating"></span>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col flex-1 gap-2 justify-between p-4">
+                                    <div class="flex flex-col justify-between flex-1 gap-2 p-4">
                                         <div>
                                             <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="filteredMovies()[2].title" x-text="filteredMovies()[2].title"></h3>
                                             <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="filteredMovies()[2].genre"></p>
                                         </div>
-                                        <div class="flex justify-between items-center pt-2">
+                                        <div class="flex items-center justify-between pt-2">
                                             <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="filteredMovies()[2].duration"></span>
                                             <a :href="'/film/' + filteredMovies()[2].id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border">
                                                 Beli Tiket <span class="font-bold">&gt;</span>
@@ -425,34 +406,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             </template>
                         </div>
 
-                        <div x-show="filteredMovies().length > 1"
-                             class="flex md:hidden overflow-x-auto gap-4 snap-x snap-mandatory pb-2 hide-scrollbar -mx-1 px-1">
-                            <template x-for="(film, idx) in filteredMovies().slice(1)" :key="film.id">
-                                <div class="snap-start shrink-0 w-[calc(50vw-2.5rem)] min-w-[160px] max-w-[220px] border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
-                                    <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
-                                        <img :src="film.poster" :alt="film.title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
-                                        <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
-                                            <x-icon name="heroicon-s-star" class="w-3 h-3 fill-current text-accent-yellow" />
-                                            <span x-text="film.rating"></span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col flex-1 gap-2 justify-between p-3">
-                                        <div>
-                                            <h3 class="text-xs font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="film.title" x-text="film.title"></h3>
-                                            <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-0.5" x-text="film.genre"></p>
-                                        </div>
-                                        <div class="flex justify-between items-center pt-2">
-                                            <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="film.duration"></span>
-                                            <a :href="'/film/' + film.id" class="flex items-center gap-1 text-[9px] font-black text-emerald-600 hover:underline">
-                                                Beli <span class="font-bold">&gt;</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
-
-                        <div x-show="filteredMovies().length > 3" class="hidden md:grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-4">
+                        <div x-show="filteredMovies().length > 3" class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-4">
                             <template x-for="film in filteredMovies().slice(3, 7)" :key="film.id">
                                 <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
                                     <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
@@ -462,12 +416,12 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                             <span x-text="film.rating"></span>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col flex-1 gap-2 justify-between p-4">
+                                    <div class="flex flex-col justify-between flex-1 gap-2 p-4">
                                         <div>
                                             <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="film.title" x-text="film.title"></h3>
                                             <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="film.genre"></p>
                                         </div>
-                                        <div class="flex justify-between items-center pt-2">
+                                        <div class="flex items-center justify-between pt-2">
                                             <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="film.duration"></span>
                                             <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border">
                                                 Beli Tiket <span class="font-bold">&gt;</span>
@@ -481,6 +435,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 </section>
 
                 <section class="grid grid-cols-1 gap-6 md:grid-cols-2">
+
                     <div class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
                         <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                             <x-icon name="heroicon-s-shopping-bag" class="w-7 h-7 text-border" />
@@ -509,12 +464,13 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 </section>
 
                 <section class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+
                     <div class="space-y-6">
 
                         <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)]">
-                            <div class="flex justify-between items-start mb-4">
+                            <div class="flex items-start justify-between mb-4">
                                 <div>
-                                    <h2 class="flex gap-2 items-center text-lg font-extrabold md:text-xl text-foreground">
+                                    <h2 class="flex items-center gap-2 text-lg font-extrabold md:text-xl text-foreground">
                                         Snack Bar
                                     </h2>
                                     <p class="text-[11px] font-medium text-foreground/60 mt-1">Pre-order sekarang, langsung ambil tanpa antre!</p>
@@ -522,24 +478,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 <a href="#" class="text-xs font-bold underline decoration-2 hover:text-main">Lihat Semua</a>
                             </div>
 
-                            <div class="flex md:hidden gap-4 overflow-x-auto snap-x snap-mandatory pb-2 hide-scrollbar">
-                                @foreach (array_slice($snacks, 0, 6) as $snack)
-                                <div class="snap-start shrink-0 w-[calc(50vw-3rem)] min-w-[160px] max-w-[220px] border-[3px] border-border rounded-xl bg-white p-3 flex flex-col justify-between shadow-[2px_2px_0px_var(--border)]">
-                                    <div>
-                                        <div class="aspect-square bg-[#E6F3FF] border-2 border-border rounded-lg flex items-center justify-center text-4xl mb-2 select-none">
-                                            {{ $snack['emoji'] }}
-                                        </div>
-                                        <p class="text-[10px] font-black uppercase leading-tight line-clamp-2 min-h-[28px] text-foreground">{{ $snack['name'] }}</p>
-                                        <p class="mt-1 text-xs font-extrabold text-accent-red">Rp {{ number_format($snack['price'], 0, ',', '.') }}</p>
-                                    </div>
-                                    <button class="w-7 h-7 bg-accent-green text-border border-2 border-border rounded-full flex items-center justify-center mt-3 self-end hover:scale-105 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all focus:outline-none">
-                                        <x-icon name="heroicon-s-plus" class="w-4 h-4 text-border" />
-                                    </button>
-                                </div>
-                                @endforeach
-                            </div>
-
-                            <div class="hidden md:grid grid-cols-1 gap-4 sm:grid-cols-3">
+                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
                                 @foreach (array_slice($snacks, 0, 3) as $snack)
                                 <div class="border-[3px] border-border rounded-xl bg-white p-3 flex flex-col justify-between shadow-[2px_2px_0px_var(--border)] relative">
                                     <div>
@@ -559,7 +498,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                         <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-4">
                             <h2 class="text-lg font-extrabold md:text-xl text-foreground">Bioskop Favorit</h2>
-                            <div class="flex flex-col gap-5 items-stretch md:flex-row">
+                            <div class="flex flex-col items-stretch gap-5 md:flex-row">
                                 <div class="flex-1 border-[3px] border-border rounded-xl bg-pastel-pink/10 p-4 space-y-3 shadow-[2px_2px_0px_var(--border)] flex flex-col justify-between">
                                     <div class="space-y-1.5">
                                         <p class="text-base font-extrabold leading-tight text-foreground">{{ $bioskopFavorit->nama ?? 'CGV Grand Indonesia' }}</p>
@@ -568,18 +507,21 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                             {{ $bioskopFavorit->kota ?? 'Jakarta Pusat' }}
                                         </p>
                                     </div>
+
                                     <div class="text-[10px] font-black uppercase text-foreground/50 tracking-wider">
                                         IMAX &bull; 4DX &bull; Velvet
                                     </div>
-                                    <div class="flex justify-between items-center pt-1">
+
+                                    <div class="flex items-center justify-between pt-1">
                                         <span class="text-[10px] font-bold text-foreground/50 flex items-center gap-1">📍 2.1 km</span>
                                         <button class="w-8 h-8 bg-white border-2 border-border rounded-full flex items-center justify-center hover:scale-110 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all">
                                             <x-icon name="heroicon-s-heart" class="w-4 h-4 text-accent-red fill-accent-red" />
                                         </button>
                                     </div>
                                 </div>
+
                                 <div class="w-full md:w-1/2 h-40 border-[3px] border-border rounded-xl overflow-hidden shadow-[2px_2px_0px_var(--border)] shrink-0">
-                                    <img src="https:
+                                    <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=400&h=300" alt="Bioskop" class="object-cover w-full h-full" />
                                 </div>
                             </div>
                         </div>
@@ -588,39 +530,18 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                     <div class="space-y-6">
 
                         <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-4">
-                            <div class="flex justify-between items-start">
+                            <div class="flex items-start justify-between">
                                 <div>
-                                    <h2 class="flex gap-2 items-center text-lg font-extrabold md:text-xl text-foreground">
-                                        Akan Tayang
-                                    </h2>
+                                    <h2 class="text-lg font-extrabold md:text-xl text-foreground">Akan Tayang</h2>
                                     <p class="text-[11px] font-medium text-foreground/60 mt-1">Jangan lewatkan film yang akan datang</p>
                                 </div>
                                 <a href="#" class="text-xs font-bold underline decoration-2 hover:text-main">Lihat Semua</a>
                             </div>
 
-                            <div class="flex md:hidden overflow-x-auto gap-4 snap-x snap-mandatory pb-2 hide-scrollbar">
-                                @foreach ($comingSoon as $film)
-                                <div class="snap-start shrink-0 w-[calc(50vw-2.5rem)] min-w-[180px] border-[3px] border-border rounded-xl bg-white p-3 flex flex-col gap-3 shadow-[2px_2px_0px_var(--border)]">
-                                    <div class="overflow-hidden w-full aspect-[3/4] rounded-lg border-2 border-border">
-                                        <img src="{{ $film['poster'] }}" alt="{{ $film['title'] }}" class="object-cover w-full h-full" />
-                                    </div>
-                                    <div class="space-y-1">
-                                        <h3 class="text-xs font-black uppercase leading-tight line-clamp-1 text-foreground">{{ $film['title'] }}</h3>
-                                        <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider">{{ $film['genre'] }}</p>
-                                        <p class="text-[10px] font-extrabold text-emerald-600">{{ strtoupper($film['tanggal_rilis'] ?? 'Coming Soon') }}</p>
-                                    </div>
-                                    <button class="w-full px-3 py-2 bg-white border-2 border-border rounded-xl text-[10px] font-extrabold hover:bg-slate-50 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all flex items-center justify-center gap-1.5 focus:outline-none focus:ring-2 focus:ring-border mt-auto">
-                                        <x-icon name="heroicon-s-bell" class="w-3.5 h-3.5 text-border" />
-                                        Ingatkan
-                                    </button>
-                                </div>
-                                @endforeach
-                            </div>
-
-                            <div class="hidden md:block space-y-3">
+                            <div class="space-y-3">
                                 @foreach ($comingSoon as $film)
                                 <div class="border-[3px] border-border rounded-xl bg-white p-3 flex items-center gap-3 shadow-[2px_2px_0px_var(--border)] transition-all hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[3px_3px_0px_var(--border)]">
-                                    <div class="overflow-hidden w-14 rounded-lg border-2 h-18 border-border shrink-0">
+                                    <div class="overflow-hidden border-2 rounded-lg w-14 h-18 border-border shrink-0">
                                         <img src="{{ $film['poster'] }}" alt="{{ $film['title'] }}" class="object-cover w-full h-full" />
                                     </div>
                                     <div class="flex-1 min-w-0">
@@ -638,10 +559,11 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
 
                         <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-4" x-data="{ selectedSeat: 'A10' }">
-                            <div class="flex justify-between items-start">
+                            <div class="flex items-start justify-between">
                                 <h2 class="text-lg font-extrabold md:text-xl text-foreground">Kursi Favoritmu</h2>
                                 <a href="#" class="text-xs font-bold underline decoration-2 hover:text-main">Lihat Semua <span class="font-bold">&gt;</span></a>
                             </div>
+
                             <div class="grid grid-cols-7 gap-2.5">
                                 @foreach ($favoriteSeats as $seat)
                                 <button @click="selectedSeat = '{{ $seat }}'"
@@ -662,7 +584,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 <footer class="border-[3px] border-border rounded-[20px] bg-white p-6 md:p-8 shadow-[4px_4px_0px_var(--border)]">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
                         <div class="space-y-3 md:col-span-5">
-                            <div class="flex gap-2 items-center text-2xl font-black tracking-tight font-heading text-foreground">
+                            <div class="flex items-center gap-2 text-2xl font-black tracking-tight font-heading text-foreground">
                                 <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
                                 Ticketra<span class="text-accent-green">.</span>
                             </div>
@@ -689,11 +611,16 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         <div class="md:col-span-3">
                             <h4 class="mb-4 text-xs font-extrabold tracking-wider uppercase text-foreground">Ikuti Kami</h4>
                             <div class="flex gap-3">
-                                <a href="#" class="flex justify-center items-center w-9 h-9 font-black text-white rounded-full border-2 transition-transform bg-border border-border hover:scale-105 focus:outline-none">f</a>
-                                <a href="#" class="flex justify-center items-center w-9 h-9 font-bold text-white rounded-full border-2 transition-transform bg-border border-border hover:scale-105 focus:outline-none">
-                                    <x-icon name="heroicon-s-tv" class="w-4 h-4" />
+                                <a href="#" class="flex items-center justify-center font-black text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
+                                    f
                                 </a>
-                                <a href="#" class="flex justify-center items-center w-9 h-9 font-bold text-white rounded-full border-2 transition-transform bg-border border-border hover:scale-105 focus:outline-none">▶</a>
+                                <a href="#" class="flex items-center justify-center font-bold text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
+                                    
+                                     <x-icon name="heroicon-s-tv" class="w-4 h-4" />
+                                </a>
+                                <a href="#" class="flex items-center justify-center font-bold text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
+                                    ▶
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -704,8 +631,6 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
             </div>
         </div>
     </div>
-
-    <x-mobile-nav :bottomActive="$bottomActive" :bottomInactive="$bottomInactive" />
 </body>
 
 <script>
@@ -723,5 +648,3 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 </script>
 
 </html>
-
-
