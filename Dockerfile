@@ -39,7 +39,7 @@ COPY --from=vendor /app/vendor /var/www/html/vendor
 
 COPY resources/ resources/
 COPY public/ public/
-COPY vite.config.js tailwind.config.js postcss.config.js ./
+COPY vite.config.js tailwind.config.js tailwind.admin.config.js postcss.config.js ./
 
 RUN npm run build
 
