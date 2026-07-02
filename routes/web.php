@@ -8,22 +8,44 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SeatSelectionController;
+use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\SnacksController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [LandingController::class, 'index'])->name('landing');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+Route::get('/', [LandingController::class, 'index'])
+    ->name('landing')
+    ->metadata([
+        'seo_title' => 'Ticketra. - Bebas Antre, Nonton Asyik | Pesan Tiket Bioskop Online',
+        'seo_description' => 'Pesan tiket bioskop instan, pilih kursi favorit, dan kumpulkan promo eksklusif tanpa antre.',
+    ]);
 
 Route::get('/auth', function () {
     return view('auth');
-})->name('auth.page');
+})->name('auth.page')
+    ->metadata([
+        'seo_title' => 'Masuk / Daftar - Ticketra',
+        'seo_description' => 'Masuk atau daftar akun Ticketra untuk mulai memesan tiket bioskop online.',
+    ]);
 
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard');
 
-    Route::get('/film', [FilmController::class, 'index'])->name('film.index');
-    Route::get('/film/{film}', [FilmController::class, 'show'])->name('film.show');
+    Route::get('/film', [FilmController::class, 'index'])
+        ->name('film.index')
+        ->metadata([
+            'seo_title' => 'Film Sedang & Akan Tayang di Bioskop - Ticketra',
+            'seo_description' => 'Lihat daftar film terbaru dan akan tayang di bioskop favoritmu.',
+        ]);
+
+    Route::get('/film/{film}', [FilmController::class, 'show'])
+        ->name('film.show')
+        ->metadata([
+            'seo_type' => 'movie',
+        ]);
 
     Route::resource('jadwal', JadwalTayangController::class)->parameters([
         'jadwal' => 'jadwalTayang'

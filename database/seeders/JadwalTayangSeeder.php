@@ -34,55 +34,70 @@ class JadwalTayangSeeder extends Seeder
             return;
         }
 
-        $this->command?->info('🎬 Membuat Jadwal Tayang untuk ' . $films->count() . ' film di ' . $studios->count() . ' studio...');
+        $this->command?->info("🎬 Membuat Jadwal Tayang untuk {$films->count()} film di {$studios->count()} studio...");
 
-        $timeSlots = ['11:00', '13:30', '16:00', '18:30', '21:00'];
+        $timeSlots = ['10:00', '12:45', '15:30', '18:15', '21:00'];
 
-        $startDate = Carbon::today();
-        $totalDays = 5;
+        $today = Carbon::today();
 
         $createdCount = 0;
 
-        for ($day = 0; $day < $totalDays; $day++) {
-            $currentDate = $startDate->copy()->addDays($day);
+        for ($day = -1; $day <= 6; $day++) {
+            $currentDate = $today->copy()->addDays($day);
+            $isPast = $day < 0;
+            $label = $isPast ? 'kemarin' : ($day === 0 ? 'hari ini' : "H+{$day}");
 
             foreach ($studios as $studio) {
                 $harga = $this->resolveHarga($studio->tipe, $currentDate->isWeekend());
 
-                $shuffledFilms = $films->shuffle();
-                $filmIndex = 0;
+                $slotsForStudio = collect($timeSlots)->map(function ($slot) use ($currentDate) {
+                    return Carbon::parse($currentDate->format('Y-m-d') . ' ' . $slot);
+                });
 
-                foreach ($timeSlots as $slot) {
-                    $film = $shuffledFilms[$filmIndex % $shuffledFilms->count()];
-                    
-                    $waktuMulai = Carbon::parse($currentDate->format('Y-m-d') . ' ' . $slot);
+                $availableSlots = $slotsForStudio->filter(function ($waktuMulai) {
+                    return $waktuMulai->copy()->addMinutes(150) >= Carbon::now();
+                });
+
+                if ($availableSlots->isEmpty() && !$isPast) {
+                    continue;
+                }
+
+                $showingsTotal = $isPast ? count($timeSlots) : $availableSlots->count();
+                $rotatedFilms = $films->shuffle();
+
+                for ($i = 0; $i < $showingsTotal; $i++) {
+                    $film = $rotatedFilms[$i % $rotatedFilms->count()];
+
+                    $slotTime = $isPast
+                        ? $slotsForStudio[$i]
+                        : $availableSlots->values()[$i];
+
                     $durasi = ($film->durasi_menit > 0) ? $film->durasi_menit : 120;
-                    $waktuSelesai = $waktuMulai->copy()->addMinutes($durasi + 20);
+                    $waktuSelesai = $slotTime->copy()->addMinutes($durasi + 20);
 
                     JadwalTayang::create([
                         'film_id' => $film->id,
                         'studio_id' => $studio->id,
-                        'waktu_mulai' => $waktuMulai,
+                        'waktu_mulai' => $slotTime,
                         'waktu_selesai' => $waktuSelesai,
                         'harga' => $harga,
-                        'status' => 'terjadwal',
+                        'status' => $isPast ? 'selesai' : 'terjadwal',
                     ]);
 
                     $createdCount++;
-                    $filmIndex++;
                 }
             }
         }
 
-        $this->command?->info("✅ Sukses membuat {$createdCount} jadwal tayang baru.");
+        $this->command?->info("✅ Sukses membuat {$createdCount} jadwal tayang.");
     }
 
     private function resolveHarga(string $tipe, bool $isWeekend): float
     {
         $tipe = strtolower($tipe);
-        
+
         $hargaBase = 35000;
-        
+
         if (str_contains($tipe, 'imax')) {
             $hargaBase = 60000;
         } elseif (str_contains($tipe, '4dx')) {
@@ -100,4 +115,3 @@ class JadwalTayangSeeder extends Seeder
         return (float) $hargaBase;
     }
 }
-

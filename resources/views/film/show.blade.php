@@ -1,3 +1,54 @@
+@section('title', $film->judul . ' - Detail Film & Jadwal Tayang | Ticketra.')
+
+@section('seo')
+@php use Illuminate\Support\Str; @endphp
+<meta name="description" content="Nonton {{ $film->judul }} di bioskop. {{ Str::limit($film->sinopsis, 120) }}. Pesan tiket online dan pilih kursi favoritmu di Ticketra.">
+<link rel="canonical" href="{{ url('/film/' . $film->id) }}">
+
+<meta property="og:site_name" content="Ticketra.">
+<meta property="og:locale" content="id_ID">
+<meta property="og:type" content="movie">
+<meta property="og:title" content="{{ $film->judul }} - Detail Film & Jadwal Tayang | Ticketra.">
+<meta property="og:description" content="{{ Str::limit($film->sinopsis, 160) }}">
+<meta property="og:url" content="{{ url('/film/' . $film->id) }}">
+<meta property="og:image" content="{{ $film->poster_url }}">
+<meta property="og:image:width" content="400">
+<meta property="og:image:height" content="600">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $film->judul }} - Detail Film & Jadwal Tayang | Ticketra.">
+<meta name="twitter:description" content="{{ Str::limit($film->sinopsis, 160) }}">
+<meta name="twitter:image" content="{{ $film->poster_url }}">
+
+<script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "Movie",
+    "name": "{{ $film->judul }}",
+    "image": "{{ $film->poster_url }}",
+    "description": {{ json_encode($film->sinopsis, JSON_UNESCAPED_UNICODE) }},
+    "datePublished": "{{ $film->tanggal_rilis?->format('Y-m-d') ?? '' }}",
+    "duration": "PT{{ $film->durasi_menit }}M",
+    "genre": "{{ $film->genre }}",
+    "director": { "@@type": "Person", "name": "{{ $film->sutradara ?? '' }}" },
+    "actor": { "@@type": "Person", "name": "{{ Str::of($film->pemain ?? '')->limit(60) }}" },
+    "aggregateRating": {
+        "@@type": "AggregateRating",
+        "ratingValue": "{{ number_format($film->rating, 1) }}",
+        "bestRating": "10",
+        "worstRating": "1",
+        "ratingCount": "1200"
+    },
+    "offers": {
+        "@@type": "Offer",
+        "availability": "https://schema.org/InStock",
+        "url": "{{ url('/film/' . $film->id) }}",
+        "priceCurrency": "IDR"
+    }
+}
+</script>
+@stop
+
 <x-app-layout>
     <x-slot name="header">
         <div class="relative flex-1 max-w-md">
@@ -156,9 +207,9 @@
                                 <div class="flex items-center gap-1.5 px-3 py-1 bg-white border-2 border-border rounded-xl text-xs font-extrabold shadow-[2px_2px_0px_rgba(0,0,0,1)]">
                                     <x-icon name="heroicon-s-star" class="w-4 h-4 fill-current text-accent-yellow" />
                                     <span>{{ number_format($film->rating ?: 8.0, 1) }}</span>
-                                    <span class="inline-block px-1.5 py-0.5 bg-accent-yellow border border-border text-[9px] font-black rounded ml-1 tracking-tighter">IMDb</span>
-                                    <span class="text-foreground/50 text-[10px] ml-0.5">/10</span>
+                                    <span class="text-foreground/50 text-[10px]">/10</span>
                                 </div>
+                                <span class="inline-block px-1 py-0.5 bg-accent-yellow border border-border text-[9px] font-black rounded tracking-tighter">IMDb</span>
                             </div>
 
                             

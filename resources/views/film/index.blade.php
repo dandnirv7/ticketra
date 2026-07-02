@@ -1,3 +1,21 @@
+@section('title', 'Film Sedang & Akan Tayang di Bioskop - Ticketra.')
+
+@section('seo')
+<meta name="description" content="Lihat daftar film terbaru dan akan tayang di bioskop favoritmu. Pesan tiket online dengan mudah dan cepat hanya di Ticketra.">
+<link rel="canonical" href="{{ url('/film') }}">
+
+<meta property="og:site_name" content="Ticketra.">
+<meta property="og:locale" content="id_ID">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Film Sedang & Akan Tayang di Bioskop - Ticketra.">
+<meta property="og:description" content="Lihat daftar film terbaru dan akan tayang di bioskop favoritmu. Pesan tiket online dengan mudah dan cepat hanya di Ticketra.">
+<meta property="og:url" content="{{ url('/film') }}">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Film Sedang & Akan Tayang di Bioskop - Ticketra.">
+<meta name="twitter:description" content="Lihat daftar film terbaru dan akan tayang di bioskop favoritmu. Pesan tiket online dengan mudah dan cepat hanya di Ticketra.">
+@stop
+
 <x-app-layout>
     <x-slot name="header">
         <div class="relative flex-1 max-w-md">
