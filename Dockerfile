@@ -1,21 +1,6 @@
 # syntax=docker/dockerfile:1.6
 
-# ---------- Stage 1: build frontend assets ----------
-FROM node:22-alpine AS frontend
-
-WORKDIR /var/www/html
-
-COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts
-
-COPY resources/ resources/
-COPY public/ public/
-COPY vite.config.js tailwind.config.js postcss.config.js ./
-
-RUN npm run build
-
-
-# ---------- Stage 2: install PHP dependencies ----------
+# ---------- Stage 1: install PHP dependencies ----------
 FROM composer:2.8 AS vendor
 
 WORKDIR /app
@@ -39,6 +24,24 @@ RUN composer install \
 
 COPY . .
 RUN composer dump-autoload --optimize --no-dev
+
+
+# ---------- Stage 2: build frontend assets ----------
+FROM node:22-alpine AS frontend
+
+WORKDIR /var/www/html
+
+COPY package.json package-lock.json ./
+RUN npm ci --ignore-scripts
+
+# Copy vendor directory from vendor stage so Vite can access Filament assets
+COPY --from=vendor /app/vendor /var/www/html/vendor
+
+COPY resources/ resources/
+COPY public/ public/
+COPY vite.config.js tailwind.config.js postcss.config.js ./
+
+RUN npm run build
 
 
 # ---------- Stage 3: production runtime ----------
