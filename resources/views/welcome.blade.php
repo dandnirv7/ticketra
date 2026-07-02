@@ -3,7 +3,56 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ticketra. - Bebas Antre, Nonton Asyik</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>Ticketra. - Bebas Antre, Nonton Asyik | Pesan Tiket Bioskop Online</title>
+
+    <x-favicons />
+
+    <meta name="description" content="Pesan tiket bioskop instan, pilih kursi favorit, dan kumpulkan promo eksklusif tanpa antre. Booking online bioskop di Jakarta, Bogor, Depok, Tangerang, Bekasi.">
+    <link rel="canonical" href="{{ url('/') }}">
+
+    <meta property="og:site_name" content="Ticketra.">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Ticketra. - Bebas Antre, Nonton Asyik | Pesan Tiket Bioskop Online">
+    <meta property="og:description" content="Pesan tiket bioskop instan, pilih kursi favorit, dan kumpulkan promo eksklusif tanpa antre. Booking online bioskop di Jakarta, Bogor, Depok, Tangerang, Bekasi.">
+    <meta property="og:url" content="{{ url('/') }}">
+    <meta property="og:image" content="{{ url('/images/og-default.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ticketra. - Bebas Antre, Nonton Asyik | Pesan Tiket Bioskop Online">
+    <meta name="twitter:description" content="Pesan tiket bioskop instan, pilih kursi favorit, dan kumpulkan promo eksklusif tanpa antre. Booking online bioskop di Jakarta, Bogor, Depok, Tangerang, Bekasi.">
+
+    <script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "Organization",
+    "name": "Ticketra.",
+    "url": "{{ config('app.url') }}",
+    "description": "Pesan tiket bioskop instan, pilih kursi favorit, dan kumpulkan promo eksklusif tanpa antre. Booking online bioskop di Jakarta, Bogor, Depok, Tangerang, Bekasi.",
+    "foundingDate": "2024",
+    "areaServed": { "@@type": "Country", "name": "Indonesia" }
+}
+</script>
+    <script type="application/ld+json">
+{
+    "@@context": "https://schema.org",
+    "@@type": "WebSite",
+    "name": "Ticketra.",
+    "url": "{{ config('app.url') }}",
+    "potentialAction": {
+        "@@type": "SearchAction",
+        "target": {
+            "@@type": "EntryPoint",
+            "urlTemplate": "{{ url('/film') }}?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+    }
+}
+</script>
 
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 

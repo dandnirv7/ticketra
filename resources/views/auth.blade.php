@@ -4,7 +4,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Ticketra. - Autentikasi</title>
+    <title>Masuk / Daftar - Ticketra.</title>
+
+    <x-favicons />
+
+    <meta name="description" content="Masuk atau daftar akun Ticketra untuk mulai memesan tiket bioskop online dengan mudah dan cepat. Nikmati promo eksklusif untuk pengguna baru.">
+    <link rel="canonical" href="{{ url('/auth') }}">
+
+    <meta property="og:site_name" content="Ticketra.">
+    <meta property="og:locale" content="id_ID">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Masuk / Daftar - Ticketra.">
+    <meta property="og:description" content="Masuk atau daftar akun Ticketra untuk mulai memesan tiket bioskop online.">
+    <meta property="og:url" content="{{ url('/auth') }}">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Masuk / Daftar - Ticketra.">
+    <meta name="twitter:description" content="Masuk atau daftar akun Ticketra untuk mulai memesan tiket bioskop online.">
 
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800;900&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
 
