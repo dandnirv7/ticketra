@@ -18,7 +18,7 @@
     <meta property="og:title" content="Ticketra. - Bebas Antre, Nonton Asyik | Pesan Tiket Bioskop Online">
     <meta property="og:description" content="Pesan tiket bioskop instan, pilih kursi favorit, dan kumpulkan promo eksklusif tanpa antre. Booking online bioskop di Jakarta, Bogor, Depok, Tangerang, Bekasi.">
     <meta property="og:url" content="{{ url('/') }}">
-    <meta property="og:image" content="{{ url('/images/og-default.png') }}">
+    <meta property="og:image" content="{{ url('/images/og-image.png') }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
 
