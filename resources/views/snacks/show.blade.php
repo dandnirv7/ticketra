@@ -16,11 +16,11 @@
 
             <div class="absolute top-6 right-6">
                 @if($snackOrder->status === 'paid')
-                    <span class="px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider bg-pastel-mint border-2 border-black rounded-lg shadow-[2px_2px_0px_#000] text-accent-green">
+                    <span class="px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider bg-background border-2 border-black rounded-lg shadow-[2px_2px_0px_#000] text-accent-green">
                         ✅ Lunas
                     </span>
                 @else
-                    <span class="px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider bg-pastel-lemon border-2 border-black rounded-lg shadow-[2px_2px_0px_#000] text-amber-700">
+                    <span class="px-3.5 py-1.5 text-[10px] font-black uppercase tracking-wider bg-accent/20 border-2 border-black rounded-lg shadow-[2px_2px_0px_#000] text-amber-700">
                         ⏳ {{ strtoupper($snackOrder->status) }}
                     </span>
                 @endif
@@ -33,7 +33,7 @@
             </div>
 
             @if($snackOrder->status === 'paid')
-            <div class="flex flex-col items-center justify-center bg-pastel-lemon/20 border-4 border-black p-6 rounded-2xl shadow-[4px_4px_0px_#000] mb-8 text-center">
+            <div class="flex flex-col items-center justify-center bg-accent/20/20 border-4 border-black p-6 rounded-2xl shadow-[4px_4px_0px_#000] mb-8 text-center">
                 <div class="bg-white p-4 border-4 border-black rounded-xl shadow-[3px_3px_0px_#000]">
                     {!! $qrCode !!}
                 </div>
@@ -41,11 +41,11 @@
                 <p class="text-xs font-bold text-gray-600 mt-1 max-w-sm">Tunjukkan QR Code ini ke petugas Snack Bar Fast Lane di bioskop terdekat.</p>
             </div>
             @else
-            <div class="border-4 border-black bg-pastel-pink/10 p-6 rounded-2xl shadow-[4px_4px_0px_#000] mb-8 text-center">
+            <div class="border-4 border-black bg-brand/20/10 p-6 rounded-2xl shadow-[4px_4px_0px_#000] mb-8 text-center">
                 <x-icon name="heroicon-s-exclamation-triangle" class="w-12 h-12 text-accent-red mx-auto mb-3" />
                 <h3 class="text-lg font-black uppercase text-black">QR Code Belum Tersedia</h3>
                 <p class="text-xs font-bold text-gray-600 mt-1">Silakan selesaikan pembayaran terlebih dahulu untuk menampilkan QR Code penukaran.</p>
-                <a href="{{ route('snacks.checkout.show', $snackOrder->id) }}" class="brutal-btn !py-2.5 !px-6 text-xs mt-4 inline-block bg-pastel-lemon">
+                <a href="{{ route('snacks.checkout.show', $snackOrder->id) }}" class="brutal-btn !py-2.5 !px-6 text-xs mt-4 inline-block bg-accent/20">
                     Bayar Sekarang
                 </a>
             </div>

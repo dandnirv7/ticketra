@@ -32,10 +32,10 @@
         $currentView = 'login';
     }
     $views = [
-        'login' => ['bg' => 'bg-pastel-sky', 'icon' => 'heroicon-s-shopping-bag', 'title' => 'Welcome Back!', 'desc' => 'Kursi strategis dan snack favoritmu sudah menanti. Yuk masuk!'],
-        'register' => ['bg' => 'bg-pastel-pink', 'icon' => 'heroicon-s-ticket', 'title' => 'Join The Club', 'desc' => 'Daftar sekarang dan nikmati promo pengguna baru hingga 50%.'],
-        'forgot' => ['bg' => 'bg-pastel-lemon', 'icon' => 'heroicon-s-question-mark-circle', 'title' => 'Lupa Sandi?', 'desc' => 'Tenang, gak perlu panik. Masukkan emailmu dan kami kirim tautan reset.'],
-        'verify' => ['bg' => 'bg-pastel-lavender', 'icon' => 'heroicon-s-envelope-open', 'title' => 'Cek Emailmu', 'desc' => 'Kami sudah mengirim tautan verifikasi ke kotak masukmu.'],
+        'login' => ['bg' => 'bg-secondary', 'icon' => 'heroicon-s-shopping-bag', 'title' => 'Welcome Back!', 'desc' => 'Kursi strategis dan snack favoritmu sudah menanti. Yuk masuk!'],
+        'register' => ['bg' => 'bg-brand/20', 'icon' => 'heroicon-s-ticket', 'title' => 'Join The Club', 'desc' => 'Daftar sekarang dan nikmati promo pengguna baru hingga 50%.'],
+        'forgot' => ['bg' => 'bg-accent/20', 'icon' => 'heroicon-s-question-mark-circle', 'title' => 'Lupa Sandi?', 'desc' => 'Tenang, gak perlu panik. Masukkan emailmu dan kami kirim tautan reset.'],
+        'verify' => ['bg' => 'bg-brand/20', 'icon' => 'heroicon-s-envelope-open', 'title' => 'Cek Emailmu', 'desc' => 'Kami sudah mengirim tautan verifikasi ke kotak masukmu.'],
     ];
     $v = $views[$currentView];
 @endphp
@@ -116,7 +116,7 @@
 
             
             <div class="w-full md:w-7/12 p-8 md:p-12 relative bg-white">
-                <a href="{{ url('/') }}" class="absolute top-6 right-6 md:top-8 md:right-8 text-xs font-black uppercase underline decoration-2 hover:text-main flex items-center gap-1 transition-colors">
+                <a href="{{ url('/') }}" class="absolute top-6 right-6 md:top-8 md:right-8 text-xs font-black uppercase underline decoration-2 hover:text-primary flex items-center gap-1 transition-colors">
                     <x-icon name="heroicon-s-arrow-left" class="w-4 h-4" /> Beranda
                 </a>
 
@@ -162,14 +162,14 @@
                                 </label>
                             </div>
 
-                            <button type="submit" class="brutal-btn bg-lime-neon w-full !py-4 text-lg mt-2">
+                            <button type="submit" class="brutal-btn bg-accent w-full !py-4 text-lg mt-2">
                                 Masuk <x-icon name="heroicon-s-arrow-right-end-on-rectangle" class="w-5 h-5" />
                             </button>
                         </form>
 
                         <p class="text-center text-sm font-bold text-gray-500 mt-6">
                             Belum punya akun?
-                            <a href="#" @click.prevent="goTo('register')" class="text-auth-foreground underline decoration-2 hover:text-main">Daftar di sini</a>
+                            <a href="#" @click.prevent="goTo('register')" class="text-auth-foreground underline decoration-2 hover:text-primary">Daftar di sini</a>
                         </p>
                     </div>
 
@@ -220,14 +220,14 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="brutal-btn bg-pastel-pink w-full !py-4 text-lg mt-2">
+                            <button type="submit" class="brutal-btn bg-brand/20 w-full !py-4 text-lg mt-2">
                                 Daftar <x-icon name="heroicon-s-user-plus" class="w-5 h-5" />
                             </button>
                         </form>
 
                         <p class="text-center text-sm font-bold text-gray-500 mt-6">
                             Sudah punya akun?
-                            <a href="#" @click.prevent="goTo('login')" class="text-auth-foreground underline decoration-2 hover:text-main">Masuk di sini</a>
+                            <a href="#" @click.prevent="goTo('login')" class="text-auth-foreground underline decoration-2 hover:text-primary">Masuk di sini</a>
                         </p>
                     </div>
 
@@ -252,7 +252,7 @@
                                 @error('email')<p class="text-xs font-bold text-accent-red mt-1 ml-1">{{ $message }}</p>@enderror
                             </div>
 
-                            <button type="submit" class="brutal-btn bg-pastel-lemon w-full !py-4 text-lg mt-4">
+                            <button type="submit" class="brutal-btn bg-accent/20 w-full !py-4 text-lg mt-4">
                                 Kirim Tautan Reset <x-icon name="heroicon-s-paper-airplane" class="w-5 h-5" />
                             </button>
                         </form>
@@ -261,7 +261,7 @@
                     
                     <div x-show="view === 'verify'" x-transition.opacity class="space-y-6 w-full" style="display: none;">
                         <div class="text-center">
-                            <div class="w-20 h-20 mx-auto border-[3px] border-border rounded-3xl bg-pastel-mint shadow-[4px_4px_0px_var(--border)] flex items-center justify-center mb-6">
+                            <div class="w-20 h-20 mx-auto border-[3px] border-border rounded-3xl bg-background shadow-[4px_4px_0px_var(--border)] flex items-center justify-center mb-6">
                                 <x-icon name="heroicon-s-envelope-open" class="w-10 h-10 text-accent-green" />
                             </div>
                             <h3 class="text-2xl uppercase mb-2">Cek Emailmu!</h3>
@@ -272,12 +272,12 @@
                             <form action="{{ route('verification.send') }}" method="POST" class="mb-4">
                                 @csrf
                                 <input type="hidden" name="email" value="{{ request('email') ?? old('email') }}">
-                                <button type="submit" class="brutal-btn bg-pastel-sky w-full !py-3 text-sm">
+                                <button type="submit" class="brutal-btn bg-secondary w-full !py-3 text-sm">
                                     Kirim Ulang Email <x-icon name="heroicon-s-arrow-path" class="w-4 h-4" />
                                 </button>
                             </form>
 
-                            <a href="#" @click.prevent="goTo('login')" class="block w-full mt-4 text-sm font-bold text-auth-foreground underline decoration-2 hover:text-main cursor-pointer">
+                            <a href="#" @click.prevent="goTo('login')" class="block w-full mt-4 text-sm font-bold text-auth-foreground underline decoration-2 hover:text-primary cursor-pointer">
                                 Kembali ke halaman Masuk
                             </a>
                         </div>

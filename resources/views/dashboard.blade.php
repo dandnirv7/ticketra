@@ -14,7 +14,7 @@
 @php
 $avatarInitial = strtoupper(substr($user->name ?? 'A', 0, 1));
 $hasBio = $bioskopFavorit !== null;
-$bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
+$bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-background border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
 $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
@@ -88,7 +88,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
     <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto">
 
         <aside class="hidden lg:block lg:w-64 lg:shrink-0">
-            <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
+            <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-surface p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
                 <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight font-heading">
                     <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
@@ -96,7 +96,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 </a>
 
                 <nav class="flex flex-col gap-1.5 text-sm font-bold tracking-wide">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-background border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                         Beranda
                     </a>
@@ -125,7 +125,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                     </form>
                 </nav>
 
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
+                <div class="border-[3px] border-border rounded-[20px] bg-brand/20 p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                     <div class="pr-12">
                         <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>
@@ -139,7 +139,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
             <header class="flex items-center justify-between gap-3 px-1 py-2">
                 <button @click="$dispatch('toggle-mobile-menu')"
-                        class="lg:hidden w-10 h-10 bg-secondary-background border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors shrink-0">
+                        class="lg:hidden w-10 h-10 bg-surface border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-accent/20/20 transition-colors shrink-0">
                     <x-icon name="heroicon-s-bars-3" class="w-5 h-5 text-border" />
                 </button>
 
@@ -150,7 +150,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 <div class="flex items-center justify-end gap-3 shrink-0">
                     <div class="relative">
                         <button @click="showLocationDropdown = !showLocationDropdown" @click.away="showLocationDropdown = false"
-                            class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                            class="flex items-center gap-2 px-4 py-2.5 bg-surface border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-accent/20/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                             <x-icon name="heroicon-s-map-pin" class="w-4 h-4 text-border" />
                             <span x-text="selectedLocation">Jakarta</span>
                             <x-icon name="heroicon-s-chevron-down" class="w-3 h-3 text-border" />
@@ -159,19 +159,19 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground">
                             <template x-for="loc in ['Jakarta', 'Bogor', 'Depok', 'Tangerang', 'Bekasi']">
                                 <button @click="selectedLocation = loc; showLocationDropdown = false"
-                                    class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10 last:border-b-0"
+                                    class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-background/30 border-border/10 last:border-b-0"
                                     x-text="loc">
                                 </button>
                             </template>
                         </div>
                     </div>
 
-                    <button class="relative w-11 h-11 bg-secondary-background border-[3px] border-border rounded-full flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                    <button class="relative w-11 h-11 bg-surface border-[3px] border-border rounded-full flex items-center justify-center hover:bg-accent/20/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-bell" class="w-5 h-5 text-border" />
                         <span class="absolute top-2 right-2 w-2.5 h-2.5 rounded-full border-2 bg-accent-red border-border"></span>
                     </button>
 
-                    <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
+                    <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
                         {{ $user->avatar_emoji ?? '🍿' }}
                     </a>
                 </div>
@@ -179,7 +179,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
             <div class="flex-1 border-[3px] border-border rounded-[24px] bg-slate-50 p-6 md:p-8 space-y-6 shadow-[8px_8px_0px_var(--border)]">
 
-                <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
+                <section class="brutal-card bg-brand/20 p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
                     <div class="flex flex-col items-stretch gap-6 lg:grid lg:grid-cols-2">
                         <!-- 1. Trending Now -->
                         <div class="relative z-10 lg:col-start-1 lg:row-start-1">
@@ -216,11 +216,11 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             </h1>
                             <p class="max-w-md text-sm font-medium leading-relaxed text-foreground/80" x-text="truncateWords(heroFilms[heroSlide]?.synopsis ?? '', 40)"></p>
                             <div class="flex flex-wrap gap-3 pt-1">
-                                <a :href="'/film/' + heroFilms[heroSlide]?.id" class="brutal-btn bg-accent-yellow !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                <a :href="'/film/' + heroFilms[heroSlide]?.id" class="brutal-btn bg-accent !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                                     <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
                                     Pesan Tiket
                                 </a>
-                                <a :href="'/film/' + heroFilms[heroSlide]?.id + '#trailer-section'" class="brutal-btn bg-white hover:bg-pastel-sky/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                <a :href="'/film/' + heroFilms[heroSlide]?.id + '#trailer-section'" class="brutal-btn bg-white hover:bg-secondary/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                                     <x-icon name="heroicon-s-play" class="w-4 h-4 fill-current text-border" />
                                     Tonton Trailer
                                 </a>
@@ -230,7 +230,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 </section>
 
                 <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-mint p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-background p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Bioskop</h3>
@@ -247,7 +247,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="{{ route('bookings.index') }}" class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="{{ route('bookings.index') }}" class="border-[3px] border-border rounded-[20px] bg-accent/20 p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Tiket Saya</h3>
@@ -264,7 +264,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-pink p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-brand/20 p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Promo</h3>
@@ -306,7 +306,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             <span class="w-2.5 h-2.5 rounded-full border animate-pulse bg-accent-red border-border"></span>
                         </h2>
                         <div class="relative w-full max-w-md">
-                            <input type="text" x-model.debounce.300ms="searchQuery" placeholder="Cari film, bioskop, atau promo..." class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
+                            <input type="text" x-model.debounce.300ms="searchQuery" placeholder="Cari film, bioskop, atau promo..." class="w-full bg-surface border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
                             <div class="absolute -translate-y-1/2 right-4 top-1/2 text-foreground">
                                 <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
                             </div>
@@ -326,7 +326,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 { label: 'Sci-Fi', value: 'Sci-Fi' }
                             ]" :key="genreObj.value">
                                 <button @click="activeGenre = genreObj.value"
-                                    :class="activeGenre === genreObj.value ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
+                                    :class="activeGenre === genreObj.value ? 'bg-primary text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
                                     class="px-3.5 py-1.5 rounded-xl border-2 border-border text-[10px] font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2"
                                     x-text="genreObj.label">
                                 </button>
@@ -337,15 +337,15 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             <span class="text-xs font-black text-foreground">Urutkan:</span>
                             <div class="relative">
                                 <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
-                                    class="flex items-center gap-2 px-4 py-2.5 bg-white border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                    class="flex items-center gap-2 px-4 py-2.5 bg-white border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-accent/20/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                                     <span x-text="activeSort === 'populer' ? 'Terpopuler' : (activeSort === 'rating' ? 'Rating Tertinggi' : 'Terbaru')">Terpopuler</span>
                                     <x-icon name="heroicon-s-chevron-down" class="w-3.5 h-3.5 text-border" />
                                 </button>
                                 <div x-show="showSortDropdown" x-transition.opacity
                                     class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground">
-                                    <button @click="activeSort = 'populer'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Terpopuler</button>
-                                    <button @click="activeSort = 'rating'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
-                                    <button @click="activeSort = 'terbaru'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
+                                    <button @click="activeSort = 'populer'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-background/30 border-border/10">Terpopuler</button>
+                                    <button @click="activeSort = 'rating'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-background/30 border-border/10">Rating Tertinggi</button>
+                                    <button @click="activeSort = 'terbaru'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-background/30">Terbaru</button>
                                 </div>
                             </div>
                         </div>
@@ -364,8 +364,8 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                                     <div class="relative z-10 flex flex-col justify-between flex-1 h-full p-5 md:p-6">
                                         <div class="flex items-center gap-2">
-                                            <span class="px-3 py-1 bg-pastel-pink text-border border-2 border-border rounded-full text-[9px] font-extrabold uppercase tracking-wide">Terlaris</span>
-                                            <span class="px-2.5 py-1 bg-accent-yellow text-border border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="'★ ' + filteredMovies()[0].rating"></span>
+                                            <span class="px-3 py-1 bg-brand/20 text-border border-2 border-border rounded-full text-[9px] font-extrabold uppercase tracking-wide">Terlaris</span>
+                                            <span class="px-2.5 py-1 bg-accent text-border border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="'★ ' + filteredMovies()[0].rating"></span>
                                             <span class="px-2 py-1 bg-slate-200 text-border border-2 border-border rounded-lg text-[9px] font-extrabold tracking-wider">IMAX</span>
                                         </div>
 
@@ -376,7 +376,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                                         <div class="flex items-center justify-between mt-4">
                                             <span class="px-3 py-1 bg-white text-border border-2 border-border rounded-lg text-[10px] font-extrabold" x-text="filteredMovies()[0].duration"></span>
-                                            <a :href="'/film/' + filteredMovies()[0].id" class="brutal-btn bg-accent-green text-border !py-2.5 !px-5 text-xs shadow-[2px_2px_0px_var(--border)] border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                            <a :href="'/film/' + filteredMovies()[0].id" class="brutal-btn bg-primary text-border !py-2.5 !px-5 text-xs shadow-[2px_2px_0px_var(--border)] border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                                                 Beli Tiket
                                             </a>
                                         </div>
@@ -415,7 +415,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                 <section class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
-                    <div class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
+                    <div class="border-[3px] border-border rounded-[20px] bg-accent/20 p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
                         <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                             <x-icon name="heroicon-s-shopping-bag" class="w-7 h-7 text-border" />
                         </div>
@@ -428,7 +428,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </a>
                     </div>
 
-                    <div class="border-[3px] border-border rounded-[20px] bg-pastel-peach p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
+                    <div class="border-[3px] border-border rounded-[20px] bg-brand/20 p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
                         <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                             <x-icon name="heroicon-s-credit-card" class="w-7 h-7 text-border" />
                         </div>
@@ -467,7 +467,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                         <p class="text-[10px] font-black uppercase leading-tight line-clamp-2 min-h-[28px] text-foreground">{{ $snack['name'] }}</p>
                                         <p class="mt-1 text-xs font-extrabold text-accent-red">Rp {{ number_format($snack['price'], 0, ',', '.') }}</p>
                                     </div>
-                                    <button class="w-7 h-7 bg-accent-green text-border border-2 border-border rounded-full flex items-center justify-center mt-3 self-end hover:scale-105 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all focus:outline-none">
+                                    <button class="w-7 h-7 bg-primary text-border border-2 border-border rounded-full flex items-center justify-center mt-3 self-end hover:scale-105 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all focus:outline-none">
                                         <x-icon name="heroicon-s-plus" class="w-4 h-4 text-border" />
                                     </button>
                                 </div>
@@ -479,7 +479,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             <h2 class="text-lg font-extrabold md:text-xl text-foreground">Bioskop Favorit</h2>
                             @if($bioskopFavorit)
                             <div class="flex flex-col items-stretch gap-5 md:flex-row">
-                                <div class="flex-1 border-[3px] border-border rounded-xl bg-pastel-pink/10 p-4 space-y-3 shadow-[2px_2px_0px_var(--border)] flex flex-col justify-between">
+                                <div class="flex-1 border-[3px] border-border rounded-xl bg-brand/20/10 p-4 space-y-3 shadow-[2px_2px_0px_var(--border)] flex flex-col justify-between">
                                     <div class="space-y-1.5">
                                         <p class="text-base font-extrabold leading-tight text-foreground">{{ $bioskopFavorit->nama }}</p>
                                         <p class="text-[11px] font-bold text-foreground/60 flex items-center gap-1">
@@ -557,7 +557,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                     class="aspect-square border-2 border-border rounded-xl text-[11px] font-black flex items-center justify-center relative transition-all shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none">
                                     {{ $seat }}
                                     @if ($loop->first)
-                                    <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-accent-yellow border-2 border-border rounded-full flex items-center justify-center text-[8px] text-foreground shadow-[1px_1px_0px_var(--border)] font-bold">★</span>
+                                    <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-accent border-2 border-border rounded-full flex items-center justify-center text-[8px] text-foreground shadow-[1px_1px_0px_var(--border)] font-bold">★</span>
                                     @endif
                                 </button>
                                 @endforeach

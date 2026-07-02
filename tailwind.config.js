@@ -14,34 +14,19 @@ export default {
     theme: {
         extend: {
             colors: {
-                background: "oklch(0.96 0.01 155)",
-                "auth-background": "oklch(97% 0.02 130)",
-                foreground: "oklch(20% 0.02 260)",
-                "auth-foreground": "#111827",
-                border: "oklch(25% 0.02 260)",
-                "auth-border": "#111827",
-                ring: "oklch(45% 0.05 140)",
+                background: "oklch(96% 0.03 155)", // mint lembut
+                surface: "#ffffff",
+                primary: "oklch(78% 0.15 140)",   // medium green
+                brand: "oklch(82% 0.08 290)",     // lavender
+                secondary: "oklch(84% 0.06 220)", // sky
+                accent: "oklch(90% 0.12 90)",     // lemon
+                foreground: "oklch(20% 0.02 260)",// slate dark
+                border: "oklch(25% 0.02 260)",    // border dark
                 overlay: "rgba(0, 0, 0, 0.7)",
-                "secondary-background": "oklch(100% 0 0)",
-                "main-foreground": "oklch(18% 0.02 260)",
-                main: "oklch(78% 0.15 140)",
-                "pastel-mint": "oklch(92% 0.08 165)",
-                "pastel-sky": "oklch(92% 0.07 220)",
-                "pastel-lavender": "oklch(92% 0.06 290)",
-                "pastel-lemon": "oklch(95% 0.09 95)",
-                "pastel-peach": "oklch(92% 0.08 45)",
-                "pastel-pink": "#fbcfe8",
-                "accent-green": "oklch(80% 0.12 145)",
-                "accent-yellow": "oklch(85% 0.12 90)",
-                "accent-red": "oklch(80% 0.14 25)",
-                "lime-neon": "#bef264",
-                "neo-pink": "#FFB6C1",
-                "neo-blue": "#B6D7FF",
-                "neo-yellow": "#FFF3B0",
-                "neo-green": "#B6FFB6",
-                "neo-purple": "#D4B6FF",
-                "neo-orange": "#FFD4B6",
-                "neo-cream": "#FFF8E7",
+                "accent-red": "oklch(65% 0.18 25)", // semantic danger
+                "auth-foreground": "#111827",
+                "auth-background": "oklch(97% 0.02 130)",
+                "auth-border": "#111827",
             },
             fontFamily: {
                 base: ['"Archivo"', "sans-serif"],

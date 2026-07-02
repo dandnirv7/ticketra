@@ -29,11 +29,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <div class="brutal-box bg-white p-6 md:p-8 relative">
                 @if ($snackOrder->status === 'locked')
-                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-pastel-lemon border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10">
+                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-accent/20 border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10">
                         ⏳ Menunggu Pembayaran
                     </span>
                 @elseif ($snackOrder->status === 'paid')
-                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-pastel-mint text-accent-green -rotate-6 z-10">
+                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-background text-accent-green -rotate-6 z-10">
                         ✅ Lunas
                     </span>
                 @else
@@ -48,7 +48,7 @@
                     <div class="flex flex-col items-start justify-between gap-1 pb-4 border-b-2 border-dashed md:flex-row md:items-center border-border/30">
                         <div>
                             <p class="text-[10px] font-extrabold uppercase tracking-widest opacity-50">ID Pesanan F&B</p>
-                            <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl text-main-foreground font-mono">{{ $snackOrder->order_id }}</p>
+                            <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl text-foreground font-mono">{{ $snackOrder->order_id }}</p>
                         </div>
                     </div>
 

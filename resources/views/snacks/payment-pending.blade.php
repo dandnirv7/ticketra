@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="max-w-2xl mx-auto text-center px-4">
-        <div class="brutal-box bg-pastel-lemon p-6 sm:p-10 md:p-14">
+        <div class="brutal-box bg-accent/20 p-6 sm:p-10 md:p-14">
             <div class="w-20 h-20 mx-auto mb-6 bg-white border-4 border-black rounded-full flex items-center justify-center shadow-[4px_4px_0px_rgba(0,0,0,1)]">
                 <x-icon name="heroicon-s-clock" class="w-10 h-10 text-amber-600" />
             </div>

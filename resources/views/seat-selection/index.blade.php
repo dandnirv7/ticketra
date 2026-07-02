@@ -16,14 +16,14 @@
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
       @if (session('success'))
-          <div class="px-4 py-3 mb-6 font-bold text-gray-900 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl bg-pastel-mint flex items-center gap-3">
+          <div class="px-4 py-3 mb-6 font-bold text-gray-900 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl bg-background flex items-center gap-3">
               <x-icon name="heroicon-s-check-circle" class="w-5 h-5 text-border shrink-0" />
               <div>{{ session('success') }}</div>
           </div>
       @endif
 
       @if (session('error'))
-          <div class="px-4 py-3 mb-6 font-bold text-gray-900 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl bg-pastel-peach flex items-center gap-3">
+          <div class="px-4 py-3 mb-6 font-bold text-gray-900 border-4 border-black shadow-[6px_6px_0px_0px_#000] rounded-xl bg-brand/20 flex items-center gap-3">
               <x-icon name="heroicon-s-exclamation-triangle" class="w-5 h-5 text-border shrink-0" />
               <div>{{ session('error') }}</div>
           </div>
@@ -218,7 +218,7 @@
           @click.away="showSnackModal = false"
           x-transition.opacity>
           <div class="w-full max-w-lg border-4 border-black rounded-2xl bg-white shadow-[10px_10px_0px_#000]" @click.stop>
-            <div class="p-6 text-center border-b-4 border-black bg-pastel-lemon rounded-t-2xl">
+            <div class="p-6 text-center border-b-4 border-black bg-accent/20 rounded-t-2xl">
               <div class="text-3xl mb-2">🍿</div>
               <h3 class="text-xl font-black uppercase">Tambahkan Camilan?</h3>
               <p class="mt-1 text-sm font-bold opacity-70">Pesan sekarang atau nanti di snack bar!</p>
@@ -252,7 +252,7 @@
             </div>
 
             <div class="px-6 pb-4">
-              <div class="flex items-center justify-between p-4 border-2 border-black rounded-xl bg-pastel-lemon shadow-[3px_3px_0px_#000]">
+              <div class="flex items-center justify-between p-4 border-2 border-black rounded-xl bg-accent/20 shadow-[3px_3px_0px_#000]">
                 <span class="text-xs font-extrabold uppercase tracking-widest">Total Belanja</span>
                 <span class="font-black text-accent-red" x-text="'Rp ' + grandTotal.toLocaleString('id-ID')"></span>
               </div>
@@ -262,7 +262,7 @@
               <button
                 type="button"
                 @click="goToPayment()"
-                class="w-full py-4 font-black text-center uppercase border-4 border-black rounded-xl bg-accent-green text-white shadow-[5px_5px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
+                class="w-full py-4 font-black text-center uppercase border-4 border-black rounded-xl bg-primary text-white shadow-[5px_5px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
                 Lanjutkan ke Pembayaran
                 <x-heroicon-o-arrow-right class="inline w-5 h-5 ml-1" />
               </button>
@@ -285,7 +285,7 @@
           </div>
         </div>
 
-        <div class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-secondary-background border-t-4 border-border shadow-[0px_-5px_15px_-3px_rgba(0,0,0,0.08)]">
+        <div class="fixed bottom-0 left-0 right-0 z-50 p-4 bg-surface border-t-4 border-border shadow-[0px_-5px_15px_-3px_rgba(0,0,0,0.08)]">
           <div class="flex flex-col items-center justify-between max-w-4xl gap-4 mx-auto sm:flex-row">
 
             <div class="w-full sm:w-auto">

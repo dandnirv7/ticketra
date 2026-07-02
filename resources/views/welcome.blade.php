@@ -123,14 +123,14 @@
         
         <header class="grid items-center gap-12 px-4 pt-32 pb-16 mx-auto max-w-7xl md:pt-40 md:pb-24 lg:grid-cols-2">
             <div class="space-y-8 relative z-10">
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-pastel-lemon border-2 border-border rounded-full font-bold text-sm shadow-sm">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-accent/20 border-2 border-border rounded-full font-bold text-sm shadow-sm">
                     <span class="w-2 h-2 bg-accent-red rounded-full animate-pulse border border-border"></span>
                     Bioskop Kini dalam Genggaman
                 </div>
 
                 <h1 class="text-5xl md:text-7xl leading-[1.1]">
                     Lewati Antrean,<br>
-                    <span class="bg-main px-2 inline-block -rotate-2 border-2 border-border mt-3 text-white shadow-sm">Amankan Kursimu.</span>
+                    <span class="bg-primary px-2 inline-block -rotate-2 border-2 border-border mt-3 text-white shadow-sm">Amankan Kursimu.</span>
                 </h1>
 
                 <p class="text-lg md:text-xl font-medium opacity-80 max-w-md leading-relaxed">
@@ -164,8 +164,8 @@
 
             
             <div class="relative hidden lg:flex justify-center items-center perspective-1000">
-                <div class="absolute w-[80%] h-[80%] bg-pastel-lavender border-2 border-border rounded-[2rem] transform rotate-6 shadow-lg translate-x-4"></div>
-                <div class="absolute w-[80%] h-[80%] bg-pastel-mint border-2 border-border rounded-[2rem] transform -rotate-3 shadow-lg -translate-x-4"></div>
+                <div class="absolute w-[80%] h-[80%] bg-brand/20 border-2 border-border rounded-[2rem] transform rotate-6 shadow-lg translate-x-4"></div>
+                <div class="absolute w-[80%] h-[80%] bg-background border-2 border-border rounded-[2rem] transform -rotate-3 shadow-lg -translate-x-4"></div>
 
                 <div class="relative w-full max-w-[340px] z-20 transform hover:-translate-y-4 hover:rotate-2 transition-all duration-500 group cursor-pointer">
                     <div class="brutal-box bg-white border-b-0 rounded-b-none p-6 shadow-[8px_0px_0px_var(--border)]">
@@ -176,7 +176,7 @@
                             <span class="font-heading font-extrabold text-xl flex items-center gap-1">
                                 <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-main" /> Ticketra.
                             </span>
-                            <span class="text-[10px] font-bold bg-pastel-lemon border border-border px-2 py-1 rounded">E-TICKET</span>
+                            <span class="text-[10px] font-bold bg-accent/20 border border-border px-2 py-1 rounded">E-TICKET</span>
                         </div>
 
                         <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=400&h=600" class="w-full h-40 object-cover border-2 border-border rounded-lg mb-4 grayscale-[10%] group-hover:grayscale-0 transition-all">
@@ -187,7 +187,7 @@
 
                     <div class="h-0 border-t-4 border-dashed border-border bg-white mx-1 relative z-0"></div>
 
-                    <div class="brutal-box bg-pastel-sky border-t-0 rounded-t-none p-6 shadow-[8px_8px_0px_var(--border)]">
+                    <div class="brutal-box bg-secondary border-t-0 rounded-t-none p-6 shadow-[8px_8px_0px_var(--border)]">
                         <div class="grid grid-cols-3 gap-2 text-sm font-bold mb-5 bg-white p-3 rounded-lg border-2 border-border">
                             <div>
                                 <div class="text-[10px] text-gray-500 uppercase">TGL</div>
@@ -224,29 +224,29 @@
         </header>
 
         
-        <section id="fitur" class="bg-secondary-background border-y-2 border-border py-16 md:py-24 relative z-10">
+        <section id="fitur" class="bg-surface border-y-2 border-border py-16 md:py-24 relative z-10">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-5xl mb-4">Kenapa Harus <span class="bg-main text-white px-2 border-2 border-border transform -rotate-1 inline-block">Ticketra?</span></h2>
+                    <h2 class="text-3xl md:text-5xl mb-4">Kenapa Harus <span class="bg-primary text-white px-2 border-2 border-border transform -rotate-1 inline-block">Ticketra?</span></h2>
                     <p class="font-medium opacity-80 max-w-2xl mx-auto text-lg">Tinggalkan cara lama. Kami mendesain platform ini agar pengalaman nonton bioskopmu jadi semulus sutra.</p>
                 </div>
 
                 <div class="grid md:grid-cols-3 gap-8">
-                    <div class="brutal-box p-8 bg-pastel-sky flex flex-col hover:-translate-y-2 transition-transform">
+                    <div class="brutal-box p-8 bg-secondary flex flex-col hover:-translate-y-2 transition-transform">
                         <div class="w-14 h-14 bg-white border-2 border-border rounded-full flex items-center justify-center mb-6 shadow-sm">
                             <x-icon name="heroicon-s-bolt" class="w-7 h-7 text-accent-red" />
                         </div>
                         <h3 class="text-2xl mb-3">Tanpa Antre, Tanpa Kertas</h3>
                         <p class="font-medium opacity-80 text-base">Pesan dari rumah, dapatkan E-Ticket seketika. Cukup scan barcode langsung di pintu studio. Sayangi waktumu dan bumi.</p>
                     </div>
-                    <div class="brutal-box p-8 bg-pastel-peach flex flex-col md:mt-8 hover:-translate-y-2 transition-transform">
+                    <div class="brutal-box p-8 bg-brand/20 flex flex-col md:mt-8 hover:-translate-y-2 transition-transform">
                         <div class="w-14 h-14 bg-white border-2 border-border rounded-full flex items-center justify-center mb-6 shadow-sm">
                             <x-icon name="heroicon-s-cube" class="w-7 h-7 text-accent-green" />
                         </div>
                         <h3 class="text-2xl mb-3">Pilih Kursi Strategis</h3>
                         <p class="font-medium opacity-80 text-base">Denah kursi real-time di semua layar. Amankan posisi tengah (sweet spot) dengan cepat sebelum didahului penonton lain.</p>
                     </div>
-                    <div class="brutal-box p-8 bg-pastel-lavender flex flex-col md:mt-16 hover:-translate-y-2 transition-transform">
+                    <div class="brutal-box p-8 bg-brand/20 flex flex-col md:mt-16 hover:-translate-y-2 transition-transform">
                         <div class="w-14 h-14 bg-white border-2 border-border rounded-full flex items-center justify-center mb-6 shadow-sm">
                             <x-icon name="heroicon-s-shield-check" class="w-7 h-7 text-accent-yellow" />
                         </div>
@@ -267,7 +267,7 @@
 
                     @foreach ($steps as $i => $step)
                         <div class="relative z-10 flex flex-col items-center text-center group">
-                            <div class="w-16 h-16 bg-main text-white font-extrabold text-2xl flex items-center justify-center rounded-full border-4 border-border shadow-md mb-6 group-hover:scale-110 transition-transform">
+                            <div class="w-16 h-16 bg-primary text-white font-extrabold text-2xl flex items-center justify-center rounded-full border-4 border-border shadow-md mb-6 group-hover:scale-110 transition-transform">
                                 {{ $i + 1 }}
                             </div>
                             <div class="brutal-box bg-white p-5 w-full">
@@ -281,7 +281,7 @@
         </section>
 
         
-        <section id="promo" class="bg-secondary-background border-y-2 border-border py-16 overflow-hidden relative z-10">
+        <section id="promo" class="bg-surface border-y-2 border-border py-16 overflow-hidden relative z-10">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex items-center justify-between mb-10">
                     <h2 class="text-3xl md:text-4xl flex items-center gap-3">
@@ -300,7 +300,7 @@
                             </div>
                             <div class="mt-8 flex items-center justify-between">
                                 <div class="font-bold text-sm bg-white/60 px-3 py-1.5 rounded border border-border/30">Kode: <span class="uppercase tracking-wider font-mono">{{ $promo['code'] }}</span></div>
-                                <button class="w-10 h-10 bg-white border-2 border-border rounded-full flex items-center justify-center hover:scale-110 hover:bg-main hover:text-white transition-all shadow-sm" aria-label="Salin kode">
+                                <button class="w-10 h-10 bg-white border-2 border-border rounded-full flex items-center justify-center hover:scale-110 hover:bg-primary hover:text-white transition-all shadow-sm" aria-label="Salin kode">
                                     <x-icon name="heroicon-s-document-duplicate" class="w-4 h-4" />
                                 </button>
                             </div>
@@ -312,7 +312,7 @@
 
         
         <section id="now-showing" class="max-w-7xl mx-auto px-4 py-16 md:py-24 overflow-hidden relative">
-            <div class="brutal-box p-6 bg-pastel-lemon mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+            <div class="brutal-box p-6 bg-accent/20 mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
                 <div>
                     <h3 class="text-2xl font-bold mb-1">Pilih Lokasimu</h3>
                     <p class="text-sm font-medium opacity-80">Tentukan bioskop favoritmu sebelum memilih film.</p>
@@ -335,8 +335,8 @@
                     <p class="font-medium mt-2 text-lg text-main">Lokasi Terpilih: <span class="font-bold underline decoration-wavy" x-text="selectedCinema.name"></span></p>
                 </div>
                 <div class="flex gap-2">
-                    <button @click="activeDayTab = 'today'" :class="activeDayTab === 'today' ? 'bg-main text-white shadow-sm' : 'bg-white text-gray-500 hover:bg-pastel-sky hover:text-main-foreground'" class="px-5 py-2.5 border-2 border-border rounded-full font-bold text-sm transition-colors cursor-pointer">Hari Ini</button>
-                    <button @click="activeDayTab = 'tomorrow'" :class="activeDayTab === 'tomorrow' ? 'bg-main text-white shadow-sm' : 'bg-white text-gray-500 hover:bg-pastel-sky hover:text-main-foreground'" class="px-5 py-2.5 border-2 border-border rounded-full font-bold text-sm transition-colors cursor-pointer">Besok</button>
+                    <button @click="activeDayTab = 'today'" :class="activeDayTab === 'today' ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-500 hover:bg-secondary hover:text-foreground'" class="px-5 py-2.5 border-2 border-border rounded-full font-bold text-sm transition-colors cursor-pointer">Hari Ini</button>
+                    <button @click="activeDayTab = 'tomorrow'" :class="activeDayTab === 'tomorrow' ? 'bg-primary text-white shadow-sm' : 'bg-white text-gray-500 hover:bg-secondary hover:text-foreground'" class="px-5 py-2.5 border-2 border-border rounded-full font-bold text-sm transition-colors cursor-pointer">Besok</button>
                 </div>
             </div>
 
@@ -346,7 +346,7 @@
                         <div class="relative aspect-[2/3] border-b-2 border-border overflow-hidden bg-gray-100 cursor-pointer"
                              onclick="window.location.href = '{{ route('film.show', $movie['id']) }}'">
                             <img src="{{ $movie['poster'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
-                            <div class="absolute top-3 right-3 bg-accent-yellow border-2 border-border rounded-full px-2 py-1 text-sm font-bold flex items-center gap-1 shadow-sm">
+                            <div class="absolute top-3 right-3 bg-accent border-2 border-border rounded-full px-2 py-1 text-sm font-bold flex items-center gap-1 shadow-sm">
                                 <x-icon name="heroicon-s-star" class="w-4 h-4 fill-main-foreground" /> {{ $movie['rating'] }}
                             </div>
                         </div>
@@ -360,7 +360,7 @@
                                 <div class="flex items-center gap-1.5 text-sm font-medium opacity-80">
                                     <x-icon name="heroicon-s-clock" class="w-4 h-4" /> {{ $movie['duration'] }}
                                 </div>
-                                <div class="text-xs font-bold px-2 py-0.5 bg-pastel-lavender rounded border border-border">{{ $movie['ageRating'] }}</div>
+                                <div class="text-xs font-bold px-2 py-0.5 bg-brand/20 rounded border border-border">{{ $movie['ageRating'] }}</div>
                             </div>
                             <a href="{{ route('film.show', $movie['id']) }}" class="brutal-btn w-full mt-auto text-sm !py-2.5 text-center">
                                 Pesan Sekarang
@@ -372,7 +372,7 @@
         </section>
 
         
-        <section id="testimoni" class="bg-pastel-sky border-y-2 border-border py-16 md:py-24 relative z-10">
+        <section id="testimoni" class="bg-secondary border-y-2 border-border py-16 md:py-24 relative z-10">
             <div class="max-w-7xl mx-auto px-4">
                 <h2 class="text-3xl md:text-5xl text-center mb-16">Kata Mereka Tentang <span class="bg-white px-2 border-2 border-border transform rotate-1 inline-block">Ticketra</span></h2>
 
@@ -386,7 +386,7 @@
                             </div>
                             <p class="font-medium text-lg mb-6 flex-1">"{{ $testi['quote'] }}"</p>
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-pastel-mint border-2 border-border rounded-full flex items-center justify-center font-extrabold text-auth-foreground">
+                                <div class="w-12 h-12 bg-background border-2 border-border rounded-full flex items-center justify-center font-extrabold text-auth-foreground">
                                     {{ strtoupper(substr($testi['name'], 0, 1)) }}
                                 </div>
                                 <div>
@@ -408,7 +408,7 @@
                     <div class="brutal-box bg-white overflow-hidden transition-all duration-300">
                         <button type="button" @click="toggleFaq({{ $index }})" class="w-full text-left p-5 flex justify-between items-center font-bold text-lg focus:outline-none cursor-pointer">
                             <span>{{ $faq['q'] }}</span>
-                            <span :class="openFaq === {{ $index }} ? 'rotate-180' : ''" class="bg-pastel-sky p-1 border-2 border-border rounded-full transition-transform duration-300">
+                            <span :class="openFaq === {{ $index }} ? 'rotate-180' : ''" class="bg-secondary p-1 border-2 border-border rounded-full transition-transform duration-300">
                                 <x-icon name="heroicon-s-chevron-down" class="w-5 h-5" />
                             </span>
                         </button>
@@ -423,7 +423,7 @@
         
         <section id="cta" class="relative z-10 py-10 pb-24">
             <div class="max-w-5xl px-4 mx-auto">
-                <div class="brutal-box bg-main p-8 md:p-16 text-center transform hover:scale-[1.02] transition-transform duration-300">
+                <div class="brutal-box bg-primary p-8 md:p-16 text-center transform hover:scale-[1.02] transition-transform duration-300">
                     <h2 class="mb-6 text-4xl text-white md:text-5xl">Siap Untuk Pengalaman Nonton Terbaik?</h2>
                     <p class="font-medium text-white/90 text-lg mb-8 max-w-2xl mx-auto">Daftar sekarang, dapatkan diskon 50% untuk film pertamamu, dan katakan selamat tinggal pada antrean loket selamanya.</p>
                     <a href="{{ route('auth.page', ['view' => 'register']) }}" class="brutal-btn brutal-btn-secondary text-lg !py-4 !px-10 inline-flex">
@@ -434,7 +434,7 @@
         </section>
 
         
-        <footer class="bg-secondary-background border-t-4 border-x-0 border-b-0 border-border rounded-t-[3rem] md:rounded-t-[5rem] mt-auto relative z-10 pt-16 md:pt-20">
+        <footer class="bg-surface border-t-4 border-x-0 border-b-0 border-border rounded-t-[3rem] md:rounded-t-[5rem] mt-auto relative z-10 pt-16 md:pt-20">
             <div class="max-w-7xl mx-auto px-6 pb-12">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
                     <div class="md:col-span-2">
@@ -444,13 +444,13 @@
                         </div>
                         <p class="font-medium opacity-80 max-w-sm mb-8 text-lg">Aplikasi pemesanan tiket bioskop #1 yang membebaskanmu dari antrean panjang. Pilih kursi, bayar, dan nikmati filmnya.</p>
                         <div class="flex gap-4">
-                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-main hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="Instagram">
+                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-primary hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="Instagram">
                                 <x-icon name="heroicon-s-camera" class="w-5 h-5" />
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-main hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="Twitter">
+                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-primary hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="Twitter">
                                 <x-icon name="heroicon-s-chat-bubble-left" class="w-5 h-5" />
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-main hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="YouTube">
+                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-primary hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="YouTube">
                                 <x-icon name="heroicon-s-play" class="w-5 h-5" />
                             </a>
                         </div>

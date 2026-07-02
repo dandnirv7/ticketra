@@ -103,11 +103,15 @@
         getFilteredCinemas() {
             if (!this.showtimesData[this.selectedDate]) return [];
             
+            const loc = this.$root.closest('[x-data]')?.__x?.$data?.selectedLocation || new URLSearchParams(window.location.search).get('location') || 'Jakarta';
             const allCinemas = [];
-            Object.values(this.showtimesData[this.selectedDate]).forEach(cityCinemas => {
-                Object.values(cityCinemas).forEach(cinema => {
-                    allCinemas.push(cinema);
-                });
+            
+            Object.entries(this.showtimesData[this.selectedDate]).forEach(([city, cityCinemas]) => {
+                if (city.toLowerCase().includes(loc.toLowerCase()) || loc === 'All') {
+                    Object.values(cityCinemas).forEach(cinema => {
+                        allCinemas.push(cinema);
+                    });
+                }
             });
             return allCinemas;
         }
@@ -121,7 +125,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-[-20px]"
-            :class="toastType === 'error' ? 'bg-[#FFD1D1] border-red-500 text-red-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]' : 'bg-pastel-mint border-border text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
+            :class="toastType === 'error' ? 'bg-[#FFD1D1] border-red-500 text-red-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]' : 'bg-background border-border text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
             class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] border-[3px] px-6 py-3.5 rounded-xl font-bold text-xs flex items-center gap-2"
             style="display: none;">
             <template x-if="toastType === 'error'">
@@ -200,7 +204,7 @@
                                     <span>{{ number_format($film->rating ?: 8.0, 1) }}</span>
                                     <span class="text-foreground/50 text-[10px]">/10</span>
                                 </div>
-                                <span class="inline-block px-1 py-0.5 bg-accent-yellow border border-border text-[9px] font-black rounded tracking-tighter">IMDb</span>
+                                <span class="inline-block px-1 py-0.5 bg-accent border border-border text-[9px] font-black rounded tracking-tighter">IMDb</span>
                             </div>
 
                             
@@ -286,12 +290,12 @@
 
                         
                         <a href="#pilih-jadwal"
-                            class="w-full text-center py-4 bg-accent-green hover:bg-accent-green/90 border-[3px] border-border rounded-[20px] text-xs font-black text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all uppercase tracking-wider block">
+                            class="w-full text-center py-4 bg-primary hover:bg-primary/90 border-[3px] border-border rounded-[20px] text-xs font-black text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all uppercase tracking-wider block">
                             Pesan Tiket
                         </a>
 
                         
-                        <div class="border-[3px] border-border rounded-[20px] bg-accent-yellow p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center text-center">
+                        <div class="border-[3px] border-border rounded-[20px] bg-accent p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center text-center">
                             <p class="text-2xl font-black leading-none font-heading text-foreground">1.2M+</p>
                             <p class="text-[9px] font-bold text-foreground/75 leading-normal mt-2 uppercase tracking-wider">
                                 penonton sudah<br>menonton film ini
@@ -318,7 +322,7 @@
                         <div class="flex gap-2">
                             <template x-for="date in dates" :key="date.isoDate">
                                 <button @click="selectedDate = date.isoDate"
-                                    :class="selectedDate === date.isoDate ? 'bg-accent-green text-border border-border translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_rgba(0,0,0,1)]' : 'bg-white text-border hover:bg-slate-50 active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
+                                    :class="selectedDate === date.isoDate ? 'bg-primary text-border border-border translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_rgba(0,0,0,1)]' : 'bg-white text-border hover:bg-slate-50 active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
                                     class="px-5 py-3.5 rounded-[16px] border-[3px] border-border text-center flex flex-col items-center justify-center min-w-[100px] transition-all focus:outline-none">
                                     <span class="text-[10px] font-extrabold uppercase tracking-wide opacity-60" x-text="date.dayName"></span>
                                     <span class="text-sm font-black mt-0.5" x-text="date.dateStr"></span>
@@ -349,7 +353,7 @@
                                     
                                     <div class="flex flex-wrap gap-1.5">
                                         <template x-for="fmt in cinema.formats" :key="fmt">
-                                            <span class="px-2 py-0.5 bg-pastel-sky border-2 border-border text-[9px] font-black rounded" x-text="fmt"></span>
+                                            <span class="px-2 py-0.5 bg-secondary border-2 border-border text-[9px] font-black rounded" x-text="fmt"></span>
                                         </template>
                                     </div>
                                 </div>
@@ -360,7 +364,7 @@
                                         <a :href="st.is_past ? 'javascript:void(0)' : '/jadwal/' + st.id + '/kursi'"
                                             :class="st.is_past 
                                                 ? 'px-4 py-2 bg-gray-100 text-gray-400 border-2 border-border/30 rounded-xl font-black text-xs cursor-not-allowed opacity-50' 
-                                                : 'px-4 py-2 bg-white hover:bg-accent-green hover:border-border border-2 border-border rounded-xl font-black text-xs transition-all shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px]'"
+                                                : 'px-4 py-2 bg-white hover:bg-primary hover:border-border border-2 border-border rounded-xl font-black text-xs transition-all shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px]'"
                                             x-text="st.time">
                                         </a>
                                     </template>
@@ -388,7 +392,7 @@
 
                     <div class="space-y-3.5 text-xs font-bold text-foreground">
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-mint border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-background border-border shrink-0">
                                 <x-icon name="heroicon-s-calendar" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -398,7 +402,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-sky border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-secondary border-border shrink-0">
                                 <x-icon name="heroicon-s-language" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -408,7 +412,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-peach border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-brand/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-globe-alt" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -418,7 +422,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-lemon border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-accent/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-clock" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -428,7 +432,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-lavender border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-brand/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-building-office" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -438,7 +442,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-pink border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-brand/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-shield-check" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -517,7 +521,7 @@
 
             <div class="grid grid-cols-1 gap-6 md:grid-cols-4">
                 <div class="flex items-start gap-3">
-                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-pastel-lemon border-border shrink-0">
+                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-accent/20 border-border shrink-0">
                         <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
                     </div>
                     <div>
@@ -527,7 +531,7 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-pastel-mint border-border shrink-0">
+                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-background border-border shrink-0">
                         <x-icon name="heroicon-s-shield-check" class="w-4 h-4 text-border" />
                     </div>
                     <div>
@@ -537,7 +541,7 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-pastel-sky border-border shrink-0">
+                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-secondary border-border shrink-0">
                         <x-icon name="heroicon-s-phone" class="w-4 h-4 text-border" />
                     </div>
                     <div>
@@ -547,7 +551,7 @@
                 </div>
 
                 <div class="flex items-start gap-3">
-                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-pastel-pink border-border shrink-0">
+                    <div class="flex items-center justify-center border-2 rounded-lg w-9 h-9 bg-brand/20 border-border shrink-0">
                         <x-icon name="heroicon-s-arrow-path" class="w-4 h-4 text-border" />
                     </div>
                     <div>
@@ -567,7 +571,7 @@
         <div @click.away="openTrailer = false"
             class="relative w-full max-w-3xl bg-white border-[4px] border-border rounded-[24px] shadow-[8px_8px_0px_rgba(0,0,0,1)] overflow-hidden">
             
-            <div class="flex items-center justify-between p-4 border-b-[3px] border-border bg-pastel-sky">
+            <div class="flex items-center justify-between p-4 border-b-[3px] border-border bg-secondary">
                 <h3 class="text-sm font-black uppercase font-heading text-foreground">TRAILER: {{ $film->judul }}</h3>
                 <button @click="openTrailer = false" class="w-8 h-8 bg-white border-2 border-border rounded-full flex items-center justify-center hover:scale-105 active:translate-y-[1px] focus:outline-none">
                     <x-icon name="heroicon-s-x-mark" class="w-4 h-4 text-border" />

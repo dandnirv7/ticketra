@@ -7,7 +7,8 @@
     $totalPrice = (float) $booking->total_price;
     $serviceFee = (float) ($booking->service_fee ?? 0);
     $fnbTotal = (float) ($booking->fnb_total ?? 0);
-    $grandTotal = $totalPrice + $serviceFee + $fnbTotal;
+    $discountAmount = (float) ($booking->discount_amount ?? 0);
+    $grandTotal = max(0, $totalPrice + $serviceFee + $fnbTotal - $discountAmount);
 @endphp
 
 <x-app-layout>
@@ -51,7 +52,7 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6">
             @if ($isPayable && $booking->lock_expiry && count($seats) > 0)
-            <div class="px-4 py-3 mb-6 text-center border-2 border-black rounded-full shadow-[3px_3px_0px_#000] bg-pastel-lemon">
+            <div class="px-4 py-3 mb-6 text-center border-2 border-black rounded-full shadow-[3px_3px_0px_#000] bg-accent/20">
                 <p class="text-sm font-bold text-gray-700 md:text-base">
                     Kursi telah dikunci secara eksklusif. Pesanan otomatis dibatalkan dalam
                     <strong class="ml-1 text-lg font-price text-accent-red" x-text="countdown || '--:--'"></strong>.
@@ -76,11 +77,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 <div class="brutal-box bg-white p-6 md:p-8 relative">
                     @if ($isPayable)
-                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-pastel-lemon border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10">
+                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-accent/20 border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10">
                             ⏳ Menunggu Pembayaran
                         </span>
                     @elseif ($booking->status === 'confirmed')
-                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-pastel-mint text-accent-green -rotate-6 z-10">
+                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-background text-accent-green -rotate-6 z-10">
                             ✅ Lunas
                         </span>
                     @else
@@ -96,7 +97,7 @@
                         <div class="flex flex-col items-start justify-between gap-1 pb-4 border-b-2 border-dashed md:flex-row md:items-center border-border/30">
                             <div>
                                 <p class="text-[10px] font-extrabold uppercase tracking-widest opacity-50">ID Booking Anda</p>
-                                <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl text-main-foreground font-mono">{{ $booking->booking_id }}</p>
+                                <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl text-foreground font-mono">{{ $booking->booking_id }}</p>
                             </div>
                         </div>
 
@@ -122,7 +123,7 @@
 
                         <div class="flex flex-col justify-between gap-1 md:flex-row">
                             <span class="text-xs font-bold uppercase opacity-70 tracking-wide md:w-24 shrink-0">Kursi</span>
-                            <span class="font-extrabold text-right uppercase text-main-foreground">{{ implode(', ', $seats) }}</span>
+                            <span class="font-extrabold text-right uppercase text-foreground">{{ implode(', ', $seats) }}</span>
                         </div>
 
                         <div class="flex flex-col justify-between gap-1 md:flex-row">
@@ -135,7 +136,7 @@
                         <div class="flex flex-col items-start justify-between gap-1 pb-4 border-b-2 border-dashed md:flex-row md:items-center border-border/30">
                             <div>
                                 <p class="text-[10px] font-extrabold uppercase tracking-widest opacity-50">ID Transaksi F&B</p>
-                                <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl text-main-foreground font-mono">{{ $booking->booking_id }}</p>
+                                <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl text-foreground font-mono">{{ $booking->booking_id }}</p>
                             </div>
                         </div>
 
@@ -177,6 +178,12 @@
                                 <span>Camilan (F&B)</span>
                                 <span>Rp {{ number_format($fnbTotal, 0, ',', '.') }}</span>
                             </div>
+                            @if ($discountAmount > 0)
+                            <div class="flex justify-between text-accent-green">
+                                <span>Diskon Promo ({{ $booking->promo?->code }})</span>
+                                <span>-Rp {{ number_format($discountAmount, 0, ',', '.') }}</span>
+                            </div>
+                            @endif
                             <div class="flex items-center justify-between pt-4 mt-3 border-t-2 border-dashed border-border">
                                 <span class="text-xs font-extrabold uppercase tracking-widest">Total Pembayaran</span>
                                 <span class="font-price text-3xl font-extrabold text-accent-red">Rp {{ number_format($grandTotal, 0, ',', '.') }}</span>

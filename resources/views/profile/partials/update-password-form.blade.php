@@ -53,7 +53,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button class="brutal-btn bg-accent-green text-border select-none">
+            <x-primary-button class="brutal-btn bg-primary text-border select-none">
                 {{ __('Simpan Kata Sandi') }}
             </x-primary-button>
 

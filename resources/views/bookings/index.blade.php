@@ -122,7 +122,7 @@
 
       @else
       <div class="py-12 text-center">
-        <div class="inline-flex items-center justify-center w-20 h-20 mb-4 bg-pastel-sky border-4 border-black rounded-full shadow-[3px_3px_0px_var(--border)]">
+        <div class="inline-flex items-center justify-center w-20 h-20 mb-4 bg-secondary border-4 border-black rounded-full shadow-[3px_3px_0px_var(--border)]">
           <x-heroicon-o-clipboard-document-list class="w-10 h-10 text-black" />
         </div>
         <h3 class="mb-2 text-xl font-black uppercase">Belum ada tiket</h3>
@@ -134,7 +134,7 @@
       @endif
     </div>
 
-    <div class="p-6 neo-card bg-pastel-peach border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)]">
+    <div class="p-6 neo-card bg-brand/20 border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)]">
       <h3 class="flex items-center gap-2 mb-6 text-xl font-black uppercase text-black">
         <x-heroicon-o-shopping-bag class="w-6 h-6 text-black" />
         Pesanan Camilan
@@ -175,7 +175,7 @@
 
             <div class="flex gap-2">
               @if(in_array($order->status, ['draft', 'locked']))
-              <a href="{{ route('snacks.checkout.show', $order->id) }}" class="brutal-btn !py-1.5 !px-3 !text-xs bg-pastel-lemon">
+              <a href="{{ route('snacks.checkout.show', $order->id) }}" class="brutal-btn !py-1.5 !px-3 !text-xs bg-accent/20">
                 Bayar
               </a>
               @endif
@@ -197,7 +197,7 @@
         <x-heroicon-o-shopping-bag class="w-10 h-10 text-gray-400 mx-auto mb-3" />
         <p class="text-sm font-black uppercase text-gray-700">Belum ada pesanan camilan</p>
         <p class="text-xs text-gray-500 font-bold mt-1 px-4">Kamu bisa memesan camilan langsung untuk diambil di bioskop.</p>
-        <a href="{{ route('snacks.index') }}" class="brutal-btn !py-2 !px-4 !text-xs mt-4 inline-block bg-pastel-mint">
+        <a href="{{ route('snacks.index') }}" class="brutal-btn !py-2 !px-4 !text-xs mt-4 inline-block bg-background">
           Pesan Camilan
         </a>
       </div>

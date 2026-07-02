@@ -202,7 +202,7 @@
     }
     body::selection,
     ::selection {
-        @apply bg-main text-main-foreground;
+        @apply bg-primary text-white;
     }
     h1,
     h2,
@@ -225,16 +225,16 @@
 
 @layer components {
     .brutal-box {
-        @apply relative z-10 border-2 shadow-sm bg-secondary-background border-border rounded-base;
+        @apply relative z-10 border-2 shadow-sm bg-surface border-border rounded-base;
     }
     .brutal-card {
-        @apply relative z-10 transition-all duration-300 border-2 shadow-md bg-secondary-background border-border rounded-base;
+        @apply relative z-10 transition-all duration-300 border-2 shadow-md bg-surface border-border rounded-base;
     }
     .brutal-card:hover {
         @apply -translate-x-[2px] -translate-y-[2px] shadow-lg;
     }
     .brutal-btn {
-        @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold transition-all duration-200 border-2 shadow-sm cursor-pointer font-heading text-main-foreground bg-main border-border rounded-base;
+        @apply inline-flex items-center justify-center gap-2 px-6 py-3 font-bold transition-all duration-200 border-2 shadow-sm cursor-pointer font-heading text-white bg-primary border-border rounded-base;
     }
     .brutal-btn:not(:disabled):hover {
         @apply translate-x-[2px] translate-y-[2px];
@@ -248,17 +248,17 @@
         @apply opacity-50 cursor-not-allowed;
     }
     .brutal-btn-secondary {
-        @apply bg-white hover:bg-pastel-sky;
+        @apply bg-white hover:bg-secondary;
     }
 
     .seat {
         @apply flex items-center justify-center w-8 h-8 text-xs font-bold transition-all border-2 rounded-t-lg rounded-b-sm cursor-pointer border-border md:w-10 md:h-10;
     }
     .seat-available {
-        @apply bg-secondary-background hover:bg-pastel-sky hover:-translate-y-1;
+        @apply bg-surface hover:bg-secondary hover:-translate-y-1;
     }
     .seat-selected {
-        @apply scale-105 shadow-sm bg-accent-green text-main-foreground;
+        @apply scale-105 shadow-sm bg-primary text-white;
     }
     .seat-occupied {
         @apply text-gray-500 bg-gray-300 border-gray-400 cursor-not-allowed opacity-60 hover:translate-y-0;

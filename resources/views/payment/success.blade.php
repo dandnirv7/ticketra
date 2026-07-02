@@ -7,7 +7,7 @@
 
     <div class="max-w-2xl mx-auto py-8">
         <div class="brutal-box bg-white p-8 md:p-12 text-center">
-            <div class="inline-flex items-center justify-center w-20 h-20 mb-6 border-4 border-border rounded-full shadow-[6px_6px_0px_0px_#000] bg-pastel-mint">
+            <div class="inline-flex items-center justify-center w-20 h-20 mb-6 border-4 border-border rounded-full shadow-[6px_6px_0px_0px_#000] bg-background">
                 <x-icon name="heroicon-s-check" class="w-12 h-12 text-accent-green" />
             </div>
 
@@ -16,7 +16,7 @@
                 Pembayaran Anda telah berhasil diproses. E-ticket akan dikirim ke email Anda.
             </p>
 
-            <div class="brutal-box bg-pastel-lemon p-5 mb-8 text-left">
+            <div class="brutal-box bg-accent/20 p-5 mb-8 text-left">
                 <p class="text-[10px] font-extrabold uppercase opacity-50 tracking-widest">ID Booking</p>
                 <p class="mt-1 text-2xl font-black tracking-wider md:text-3xl font-mono">{{ $booking->booking_id }}</p>
             </div>

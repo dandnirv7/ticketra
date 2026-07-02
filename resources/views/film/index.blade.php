@@ -94,7 +94,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-[-20px]"
-            class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] bg-pastel-mint border-[3px] border-border px-6 py-3.5 rounded-xl font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs text-foreground flex items-center gap-2"
+            class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] bg-background border-[3px] border-border px-6 py-3.5 rounded-xl font-bold shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs text-foreground flex items-center gap-2"
             style="display: none;">
             <x-icon name="heroicon-s-check-circle" class="w-5 h-5 text-emerald-600" />
             <span x-text="toastMessage"></span>
@@ -105,7 +105,7 @@
 
         
         @if($heroMovie)
-        <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[24px] shadow-[8px_8px_0px_var(--border)]">
+        <section class="brutal-card bg-brand/20 p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[24px] shadow-[8px_8px_0px_var(--border)]">
             <div class="grid items-center gap-6 lg:grid-cols-12">
                 <div class="relative z-10 space-y-4 md:space-y-5 lg:col-span-8">
                     <span class="inline-flex items-center gap-1 px-3 py-1 bg-border text-white rounded-full text-[9px] font-extrabold uppercase tracking-wider">
@@ -118,11 +118,11 @@
                         {{ Str::limit($heroMovie->sinopsis, 180) }}
                     </p>
                     <div class="flex flex-wrap gap-3 pt-1">
-                        <a href="{{ route('film.show', $heroMovie->id) }}" class="brutal-btn bg-accent-green !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-[3px] border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                        <a href="{{ route('film.show', $heroMovie->id) }}" class="brutal-btn bg-primary !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-[3px] border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                             <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
                             Lihat Detail
                         </a>
-                        <a href="{{ route('film.show', $heroMovie->id) }}#trailer-section" class="brutal-btn bg-white hover:bg-pastel-sky/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-[3px] border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 border-dashed">
+                        <a href="{{ route('film.show', $heroMovie->id) }}#trailer-section" class="brutal-btn bg-white hover:bg-secondary/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-[3px] border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 border-dashed">
                             <x-icon name="heroicon-s-play" class="w-4 h-4 fill-current text-border" />
                             Tonton Trailer
                         </a>
@@ -132,10 +132,10 @@
                 
                 <div class="relative flex justify-center lg:col-span-4">
                     <div class="relative w-64 cursor-pointer h-96 group" @click="window.location.href = '{{ route('film.show', $heroMovie->id) }}'">
-                        <div class="absolute inset-0 bg-accent-yellow border-[3px] border-border rounded-[24px] transform rotate-3 shadow-[6px_6px_0px_var(--border)] transition-transform group-hover:rotate-0"></div>
+                        <div class="absolute inset-0 bg-accent border-[3px] border-border rounded-[24px] transform rotate-3 shadow-[6px_6px_0px_var(--border)] transition-transform group-hover:rotate-0"></div>
                         <div class="absolute inset-0 bg-white border-[3px] border-border rounded-[24px] overflow-hidden shadow-[6px_6px_0px_var(--border)] transition-transform group-hover:-translate-y-1">
                             <img src="{{ $heroMovie->poster_url }}" alt="{{ $heroMovie->judul }}" class="object-cover w-full h-full" />
-                            <div class="absolute top-4 right-4 px-3 py-1 bg-accent-yellow border-2 border-border rounded-full text-xs font-bold flex items-center gap-1 shadow-[2px_2px_0px_var(--border)]">
+                            <div class="absolute top-4 right-4 px-3 py-1 bg-accent border-2 border-border rounded-full text-xs font-bold flex items-center gap-1 shadow-[2px_2px_0px_var(--border)]">
                                 <x-icon name="heroicon-s-star" class="w-4 h-4 fill-current text-border" />
                                 <span>{{ number_format($heroMovie->rating, 1) }}</span>
                             </div>
@@ -152,7 +152,7 @@
             <div class="flex flex-wrap gap-2">
                 <template x-for="tab in ['Semua', 'Sedang Tayang', 'Akan Tayang']" :key="tab">
                     <button @click="setTab(tab)"
-                        :class="activeTab === tab ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
+                        :class="activeTab === tab ? 'bg-primary text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
                         class="px-4 py-2 rounded-xl border-[3px] border-border text-xs font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none"
                         x-text="tab">
                     </button>
@@ -164,16 +164,16 @@
                     <span class="text-xs font-black text-foreground">Urutkan:</span>
                     <div class="relative">
                         <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
-                            class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                            class="flex items-center gap-2 px-4 py-2.5 bg-surface border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-accent/20/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                             <x-icon name="heroicon-s-arrows-up-down" class="w-4 h-4 text-border" />
                             <span x-text="sortBy === 'popular' ? 'Popularitas' : (sortBy === 'rating' ? 'Rating Tertinggi' : 'Terbaru')">Popularitas</span>
                         </button>
                         <div x-show="showSortDropdown" x-transition.opacity
                             class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground"
                             style="display: none;">
-                            <button @click="setSort('popular'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Popularitas</button>
-                            <button @click="setSort('rating'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
-                            <button @click="setSort('latest'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
+                            <button @click="setSort('popular'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-background/30 border-border/10">Popularitas</button>
+                            <button @click="setSort('rating'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-background/30 border-border/10">Rating Tertinggi</button>
+                            <button @click="setSort('latest'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-background/30">Terbaru</button>
                         </div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@
                     <input type="text"
                         x-model.debounce.300ms="searchQuery"
                         placeholder="Cari film atau genre..."
-                        class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
+                        class="w-full bg-surface border-[3px] border-border rounded-full pl-5 pr-12 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
                     <div class="absolute -translate-y-1/2 right-4 top-1/2 text-border">
                         <x-icon name="heroicon-s-magnifying-glass" class="w-4 h-4 text-border" />
                     </div>
@@ -194,7 +194,7 @@
         <div x-show="!hasAnyMovies()"
             class="text-center py-24 bg-white border-[3px] border-border border-dashed rounded-[2rem]"
             style="display: none;">
-            <div class="w-20 h-20 bg-pastel-sky border-[3px] border-border rounded-full flex items-center justify-center mx-auto mb-4 text-4xl transform rotate-12 shadow-[3px_3px_0px_var(--border)]">🍿</div>
+            <div class="w-20 h-20 bg-secondary border-[3px] border-border rounded-full flex items-center justify-center mx-auto mb-4 text-4xl transform rotate-12 shadow-[3px_3px_0px_var(--border)]">🍿</div>
             <h3 class="text-3xl mb-2 font-heading font-black uppercase tracking-tight">Ups, Film Gak Ketemu</h3>
             <p class="font-medium opacity-70 text-lg">Coba cari judul film, genre, atau sinopsis lainnya.</p>
         </div>
@@ -239,7 +239,7 @@
 
                         <div class="flex items-center justify-between pt-2 border-t border-border/10">
                             <a href="{{ route('film.show', $movie->id) }}"
-                                class="w-full px-3 font-semibold text-sm py-2 bg-accent-green text-border border-2 border-border rounded-lg flex items-center justify-center hover:scale-105 transition-transform shadow-[1.5px_1.5px_0px_var(--border)] focus:outline-none gap-1">
+                                class="w-full px-3 font-semibold text-sm py-2 bg-primary text-border border-2 border-border rounded-lg flex items-center justify-center hover:scale-105 transition-transform shadow-[1.5px_1.5px_0px_var(--border)] focus:outline-none gap-1">
                                 <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
                                 <span>
                                     Pesan Tiket
@@ -275,7 +275,7 @@
                         <div class="flex justify-between items-center pt-1.5 border-t border-border/10">
                             <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[8px] font-extrabold">{{ $movie->durasi_menit }}m</span>
                             <a href="{{ route('film.show', $movie->id) }}"
-                                class="flex items-center justify-center border-2 rounded-full shadow-sm w-7 h-7 bg-accent-green text-border border-border">
+                                class="flex items-center justify-center border-2 rounded-full shadow-sm w-7 h-7 bg-primary text-border border-border">
                                 <x-icon name="heroicon-s-plus" class="w-3.5 h-3.5 text-border" />
                             </a>
                         </div>
@@ -289,7 +289,7 @@
         <section x-show="hasAnyMovies() && (activeTab === 'Semua' || activeTab === 'Akan Tayang')" class="space-y-6">
             <div class="flex items-center gap-2 pb-2">
                 <h2 class="text-2xl font-black tracking-tight uppercase text-foreground">AKAN TAYANG</h2>
-                <span class="px-3 py-1 bg-pastel-sky border-2 border-border rounded-full text-[9px] font-extrabold text-foreground uppercase tracking-wider shadow-sm">UPCOMING</span>
+                <span class="px-3 py-1 bg-secondary border-2 border-border rounded-full text-[9px] font-extrabold text-foreground uppercase tracking-wider shadow-sm">UPCOMING</span>
             </div>
 
             
@@ -305,7 +305,7 @@
                         <img src="{{ $movie->poster_url }}" alt="{{ $movie->judul }}" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
 
                         
-                        <div class="absolute top-3 left-3 px-2 py-1 bg-pastel-lavender border-2 border-border rounded-lg text-[8px] font-extrabold shadow-[1.5px_1.5px_0px_var(--border)]">
+                        <div class="absolute top-3 left-3 px-2 py-1 bg-brand/20 border-2 border-border rounded-lg text-[8px] font-extrabold shadow-[1.5px_1.5px_0px_var(--border)]">
                             <span>AKAN TAYANG</span>
                         </div>
                     </div>
@@ -344,7 +344,7 @@
                     <div class="relative aspect-[2/3] overflow-hidden border-b-[3px] border-border bg-slate-100"
                         @click="window.location.href = '{{ route('film.show', $movie->id) }}'">
                         <img src="{{ $movie->poster_url }}" alt="{{ $movie->judul }}" class="object-cover w-full h-full" />
-                        <div class="absolute top-2 left-2 px-2 py-0.5 bg-pastel-lavender border border-border rounded text-[7px] font-extrabold">
+                        <div class="absolute top-2 left-2 px-2 py-0.5 bg-brand/20 border border-border rounded text-[7px] font-extrabold">
                             <span>AKAN TAYANG</span>
                         </div>
                     </div>
@@ -372,7 +372,7 @@
 
         
         <section class="grid grid-cols-1 gap-6 pt-4 md:grid-cols-2">
-            <div class="border-[3px] border-border rounded-[24px] bg-pastel-lemon p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)] relative">
+            <div class="border-[3px] border-border rounded-[24px] bg-accent/20 p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)] relative">
                 <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                     <x-icon name="heroicon-s-shopping-bag" class="w-7 h-7 text-border" />
                 </div>
@@ -389,7 +389,7 @@
                 </div>
             </div>
 
-            <div class="border-[3px] border-border rounded-[24px] bg-pastel-peach p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)] relative">
+            <div class="border-[3px] border-border rounded-[24px] bg-brand/20 p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)] relative">
                 <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                     <x-icon name="heroicon-s-credit-card" class="w-7 h-7 text-border" />
                 </div>

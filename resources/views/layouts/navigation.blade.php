@@ -1,8 +1,8 @@
-<nav x-data="{ open: false }" class="bg-neo-cream border-b-4 border-black">
+<nav x-data="{ open: false }" class="bg-surface border-b-4 border-black">
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-20">
             <div class="flex items-center gap-4">
-                <a href="{{ route('dashboard') }}" class="flex items-center justify-center p-2 bg-neo-pink border-4 border-black rounded-xl shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-hover transition-all">
+                <a href="{{ route('dashboard') }}" class="flex items-center justify-center p-2 bg-brand/20 border-4 border-black rounded-xl shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-hover transition-all">
                     <x-application-logo class="block w-auto h-8 text-gray-900 fill-current" />
                 </a>
 
@@ -56,7 +56,7 @@
             </div>
 
             <div class="flex items-center -me-2 sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-900 bg-neo-yellow border-4 border-black rounded-xl shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-hover focus:outline-none transition-all">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 text-gray-900 bg-accent border-4 border-black rounded-xl shadow-neo-sm hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-neo-hover focus:outline-none transition-all">
                     <svg class="w-6 h-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                         <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                         <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />

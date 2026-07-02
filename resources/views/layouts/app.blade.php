@@ -23,24 +23,32 @@
 
     $isActive = fn($route) => request()->routeIs($route);
     $linkClass = fn($routes) => collect($routes)->contains(fn($r) => request()->routeIs($r))
-        ? 'flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none'
+        ? 'flex items-center gap-3 px-4 py-3 bg-background border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none'
         : 'flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none';
 
-    $bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
+    $bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-background border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
     $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
 <body class="font-base min-h-screen"
       x-data="{
-          selectedLocation: 'Jakarta',
+          selectedLocation: new URLSearchParams(window.location.search).get('location') || localStorage.getItem('ticketra_location') || 'Jakarta',
           showLocationDropdown: false,
+          changeLocation(loc) {
+              this.selectedLocation = loc;
+              this.showLocationDropdown = false;
+              localStorage.setItem('ticketra_location', loc);
+              const url = new URL(window.location);
+              url.searchParams.set('location', loc);
+              window.location.href = url.toString();
+          }
       }">
 
     <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto pb-24 lg:pb-8">
 
         
         <aside class="hidden lg:block lg:w-64 lg:shrink-0">
-            <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
+            <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-surface p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
                 
                 <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-heading font-extrabold tracking-tight">
@@ -86,7 +94,7 @@
                 </nav>
 
                 
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
+                <div class="border-[3px] border-border rounded-[20px] bg-brand/20 p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                     <div class="pr-12">
                         <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user?->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>
@@ -103,7 +111,7 @@
             <header class="flex items-center justify-between gap-3 py-2 px-1">
 
                 <button @click="$dispatch('toggle-mobile-menu')"
-                        class="lg:hidden w-10 h-10 bg-secondary-background border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors shrink-0">
+                        class="lg:hidden w-10 h-10 bg-surface border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-accent/20/20 transition-colors shrink-0">
                     <x-icon name="heroicon-s-bars-3" class="w-5 h-5 text-border" />
                 </button>
 
@@ -119,7 +127,7 @@
                     
                     <div class="relative">
                         <button @click="showLocationDropdown = !showLocationDropdown" @click.away="showLocationDropdown = false"
-                                class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                class="flex items-center gap-2 px-4 py-2.5 bg-surface border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-accent/20/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                             <x-icon name="heroicon-s-map-pin" class="w-4 h-4 text-border" />
                             <span x-text="selectedLocation">Jakarta</span>
                             <x-icon name="heroicon-s-chevron-down" class="w-3 h-3 text-border" />
@@ -127,8 +135,8 @@
                         <div x-show="showLocationDropdown" x-transition.opacity
                              class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground">
                             <template x-for="loc in ['Jakarta', 'Bogor', 'Depok', 'Tangerang', 'Bekasi']">
-                                <button @click="selectedLocation = loc; showLocationDropdown = false"
-                                        class="w-full text-left px-4 py-2.5 hover:bg-pastel-mint/30 transition-colors border-b-2 border-border/10 last:border-b-0"
+                                <button @click="changeLocation(loc)"
+                                        class="w-full text-left px-4 py-2.5 hover:bg-background/30 transition-colors border-b-2 border-border/10 last:border-b-0"
                                         x-text="loc">
                                 </button>
                             </template>
@@ -136,13 +144,13 @@
                     </div>
 
                     
-                    <button class="relative w-11 h-11 bg-secondary-background border-[3px] border-border rounded-full flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                    <button class="relative w-11 h-11 bg-surface border-[3px] border-border rounded-full flex items-center justify-center hover:bg-accent/20/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-bell" class="w-5 h-5 text-border" />
                         <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-accent-red rounded-full border-2 border-border"></span>
                     </button>
 
                     
-                    <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
+                    <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
                         {{ $user->avatar_emoji ?? '🍿' }}
                     </a>
                 </div>

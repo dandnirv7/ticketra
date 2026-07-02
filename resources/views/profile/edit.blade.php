@@ -9,17 +9,17 @@
         
         <div class="flex overflow-x-auto whitespace-nowrap snap-x scroll-smooth pb-2 gap-2.5 border-b-[3px] border-border/10">
             <button @click="activeTab = 'overview'" 
-                :class="activeTab === 'overview' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
+                :class="activeTab === 'overview' ? 'bg-background text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
                 class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Ringkasan
             </button>
             <button @click="activeTab = 'edit'" 
-                :class="activeTab === 'edit' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
+                :class="activeTab === 'edit' ? 'bg-background text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
                 class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Ubah Profil
             </button>
             <button @click="activeTab = 'security'" 
-                :class="activeTab === 'security' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
+                :class="activeTab === 'security' ? 'bg-background text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
                 class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Keamanan
             </button>
@@ -35,7 +35,7 @@
             
             <div class="brutal-card p-6 md:p-8 bg-white flex flex-col md:flex-row items-center gap-6 md:gap-8">
                 <div class="relative">
-                    <div class="w-24 h-24 rounded-full bg-accent-yellow border-[4px] border-border flex items-center justify-center text-5xl shadow-[4px_4px_0px_rgba(0,0,0,1)] select-none">
+                    <div class="w-24 h-24 rounded-full bg-accent border-[4px] border-border flex items-center justify-center text-5xl shadow-[4px_4px_0px_rgba(0,0,0,1)] select-none">
                         {{ $user->avatar_emoji ?? '🍿' }}
                     </div>
                 </div>
@@ -70,21 +70,21 @@
 
             
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-mint p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
+                <div class="border-[3px] border-border rounded-[20px] bg-background p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
                     <div>
                         <p class="text-[10px] font-black uppercase text-border/60 tracking-wider">Total Transaksi</p>
                         <p class="text-3xl font-black text-border mt-1">{{ $bookingsCount }}</p>
                     </div>
                     <x-icon name="heroicon-s-shopping-bag" class="w-8 h-8 text-border mt-4 self-end" />
                 </div>
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
+                <div class="border-[3px] border-border rounded-[20px] bg-accent/20 p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
                     <div>
                         <p class="text-[10px] font-black uppercase text-border/60 tracking-wider">Tiket Sukses</p>
                         <p class="text-3xl font-black text-border mt-1">{{ $confirmedCount }}</p>
                     </div>
                     <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-border mt-4 self-end" />
                 </div>
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
+                <div class="border-[3px] border-border rounded-[20px] bg-brand/20 p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col justify-between">
                     <div>
                         <p class="text-[10px] font-black uppercase text-border/60 tracking-wider">Poin Loyalitas</p>
                         <p class="text-3xl font-black text-border mt-1">{{ $loyaltyPoints }} Pts</p>
@@ -118,11 +118,11 @@
                                             Order #{{ $booking->booking_id }}
                                         </span>
                                         @if($booking->status === 'confirmed')
-                                            <span class="px-2 py-0.5 text-[9px] font-black border-2 border-border rounded bg-accent-green text-border uppercase tracking-wider">
+                                            <span class="px-2 py-0.5 text-[9px] font-black border-2 border-border rounded bg-primary text-border uppercase tracking-wider">
                                                 Lunas
                                             </span>
                                         @elseif($booking->status === 'pending_payment')
-                                            <span class="px-2 py-0.5 text-[9px] font-black border-2 border-border rounded bg-accent-yellow text-border uppercase tracking-wider">
+                                            <span class="px-2 py-0.5 text-[9px] font-black border-2 border-border rounded bg-accent text-border uppercase tracking-wider">
                                                 Pending
                                             </span>
                                         @else
@@ -146,7 +146,7 @@
                                         Rp {{ number_format($booking->total_harga, 0, ',', '.') }}
                                     </p>
                                     @if($booking->status === 'confirmed' || $booking->status === 'pending_payment')
-                                        <a href="{{ route('bookings.show', $booking->id) }}" class="brutal-btn bg-accent-yellow !py-1.5 !px-3 text-[10px] shadow-[2px_2px_0px_rgba(0,0,0,1)] border-2 border-border rounded-lg select-none">
+                                        <a href="{{ route('bookings.show', $booking->id) }}" class="brutal-btn bg-accent !py-1.5 !px-3 text-[10px] shadow-[2px_2px_0px_rgba(0,0,0,1)] border-2 border-border rounded-lg select-none">
                                             Detail Tiket
                                         </a>
                                     @endif
@@ -158,7 +158,7 @@
                     <div class="border-2 border-dashed border-border/20 rounded-xl p-8 text-center space-y-3">
                         <x-icon name="heroicon-s-film" class="w-10 h-10 text-gray-300 mx-auto" />
                         <p class="text-xs font-bold text-gray-400">Belum ada pemesanan tiket bioskop.</p>
-                        <a href="{{ route('film.index') }}" class="brutal-btn bg-accent-yellow !py-2 !px-4 text-xs shadow-[2px_2px_0px_rgba(0,0,0,1)] border-2 border-border rounded-lg inline-block">
+                        <a href="{{ route('film.index') }}" class="brutal-btn bg-accent !py-2 !px-4 text-xs shadow-[2px_2px_0px_rgba(0,0,0,1)] border-2 border-border rounded-lg inline-block">
                             Cari Film Sekarang
                         </a>
                     </div>

@@ -22,7 +22,7 @@
                 <i data-lucide="ticket" class="w-7 h-7 text-auth-foreground fill-auth-foreground/10"></i> Ticketra.
             </a>
 
-            <div class="w-20 h-20 mx-auto border-[3px] border-border rounded-3xl bg-pastel-mint shadow-[4px_4px_0px_var(--border)] flex items-center justify-center mb-6">
+            <div class="w-20 h-20 mx-auto border-[3px] border-border rounded-3xl bg-background shadow-[4px_4px_0px_var(--border)] flex items-center justify-center mb-6">
                 <i data-lucide="mail-check" class="w-10 h-10 text-accent-green"></i>
             </div>
 
@@ -31,21 +31,21 @@
             <p class="font-medium text-gray-600 text-sm mb-6">klik tautan verifikasi yang baru saja kami kirim ke emailmu.</p>
 
             @if (session('status') == 'verification-link-sent')
-                <div class="mb-4 p-3 bg-accent-green/10 border-2 border-accent-green rounded-lg text-left">
+                <div class="mb-4 p-3 bg-primary/10 border-2 border-accent-green rounded-lg text-left">
                     <p class="text-sm font-bold text-accent-green">Tautan verifikasi baru telah dikirim ke emailmu.</p>
                 </div>
             @endif
 
             <form method="POST" action="{{ route('verification.send') }}" class="mb-4">
                 @csrf
-                <button type="submit" class="brutal-btn bg-pastel-sky w-full !py-3 text-sm">
+                <button type="submit" class="brutal-btn bg-secondary w-full !py-3 text-sm">
                     Kirim Ulang Email <i data-lucide="refresh-cw" class="w-4 h-4"></i>
                 </button>
             </form>
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="text-sm font-bold text-auth-foreground underline decoration-2 hover:text-main">
+                <button type="submit" class="text-sm font-bold text-auth-foreground underline decoration-2 hover:text-primary">
                     Logout
                 </button>
             </form>

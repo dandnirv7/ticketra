@@ -26,7 +26,7 @@
                 @foreach(['🍿', '🎬', '🕶️', '🎟️', '🥤', '🍕', '🦁', '🐱', '🐶', '🦄', '👽', '🤖', '👑', '⭐', '🔥', '⚡', '🎮', '🎧', '🎸', '🎨', '🚀', '🔮', '🧸', '💡'] as $emoji)
                     <button type="button" 
                         @click="selectedEmoji = '{{ $emoji }}'"
-                        :class="selectedEmoji === '{{ $emoji }}' ? 'bg-accent-yellow border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] scale-110' : 'bg-white border-border/20 hover:border-border hover:shadow-[2px_2px_0px_rgba(0,0,0,1)]'"
+                        :class="selectedEmoji === '{{ $emoji }}' ? 'bg-accent border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] scale-110' : 'bg-white border-border/20 hover:border-border hover:shadow-[2px_2px_0px_rgba(0,0,0,1)]'"
                         class="aspect-square flex items-center justify-center text-2xl rounded-lg border-2 transition-all active:scale-95 focus:outline-none">
                         {{ $emoji }}
                     </button>
@@ -76,7 +76,7 @@
 
         
         <div class="flex items-center gap-4">
-            <x-primary-button class="brutal-btn bg-accent-green text-border select-none">
+            <x-primary-button class="brutal-btn bg-primary text-border select-none">
                 {{ __('Simpan Perubahan') }}
             </x-primary-button>
 

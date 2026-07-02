@@ -62,13 +62,13 @@
                     </div>
                 </div>
 
-                <button type="submit" class="brutal-btn bg-accent-green text-white w-full !py-4 text-lg mt-4">
+                <button type="submit" class="brutal-btn bg-primary text-white w-full !py-4 text-lg mt-4">
                     Simpan Password <i data-lucide="save" class="w-5 h-5"></i>
                 </button>
             </form>
 
             <p class="text-center text-sm font-bold text-gray-500 mt-6">
-                <a href="{{ route('auth.page') }}" class="text-auth-foreground underline decoration-2 hover:text-main">Kembali ke halaman masuk</a>
+                <a href="{{ route('auth.page') }}" class="text-auth-foreground underline decoration-2 hover:text-primary">Kembali ke halaman masuk</a>
             </p>
         </div>
     </div>
