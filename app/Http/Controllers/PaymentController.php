@@ -18,6 +18,7 @@ class PaymentController extends Controller
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
         \Midtrans\Config::$isProduction = config('midtrans.is_production');
         \Midtrans\Config::$isSanitized = config('midtrans.sanitized');
+        \Midtrans\Config::$curlOptions = config('midtrans.curl_options', []);
 
         try {
             // Fetch transaction status directly from Midtrans API

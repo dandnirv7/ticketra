@@ -6,4 +6,8 @@ return [
     'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
     'sanitized' => env('MIDTRANS_SANITIZED', true),
     'skip_signature_verification' => env('MIDTRANS_SKIP_SIGNATURE_VERIFICATION', false),
+    'curl_options' => [
+        CURLOPT_SSL_VERIFYPEER => env('MIDTRANS_CURL_SSL_VERIFYPEER', true),
+        CURLOPT_HTTPHEADER => [],
+    ],
 ];

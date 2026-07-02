@@ -15,6 +15,7 @@ class SnackPaymentService
         Config::$isProduction = config('midtrans.is_production');
         Config::$isSanitized = config('midtrans.sanitized');
         Config::$is3ds = true;
+        Config::$curlOptions = config('midtrans.curl_options', []);
     }
 
     public function createTransaction(SnackOrder $order): string

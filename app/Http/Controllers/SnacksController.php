@@ -131,6 +131,7 @@ class SnacksController extends Controller
         \Midtrans\Config::$serverKey = config('midtrans.server_key');
         \Midtrans\Config::$isProduction = config('midtrans.is_production');
         \Midtrans\Config::$isSanitized = config('midtrans.sanitized');
+        \Midtrans\Config::$curlOptions = config('midtrans.curl_options', []);
 
         try {
             $status = \Midtrans\Transaction::status($snackOrder->order_id);
