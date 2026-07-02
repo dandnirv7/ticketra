@@ -56,11 +56,21 @@ class DashboardController extends Controller
             $comingSoon = $this->fallbackComingSoon();
         }
 
-        $bioskopFavorit = Bioskop::query()
-            ->withCount("studios")
-            ->orderBy('nama')
-            ->limit(1)
-            ->first();
+        // Find user's most booked bioskop based on purchase
+        $mostBookedBioskopId = Booking::where('user_id', $user->id)
+            ->where('bookings.status', 'confirmed')
+            ->join('jadwal_tayangs', 'bookings.jadwal_tayang_id', '=', 'jadwal_tayangs.id')
+            ->join('studios', 'jadwal_tayangs.studio_id', '=', 'studios.id')
+            ->select('studios.bioskop_id', \DB::raw('count(*) as total'))
+            ->groupBy('studios.bioskop_id')
+            ->orderByDesc('total')
+            ->first()
+            ?->bioskop_id;
+
+        $bioskopFavorit = null;
+        if ($mostBookedBioskopId) {
+            $bioskopFavorit = Bioskop::withCount('studios')->find($mostBookedBioskopId);
+        }
 
         $favoriteSeats = $this->buildFavoriteSeats($user->id);
 
@@ -104,6 +114,7 @@ class DashboardController extends Controller
     private function buildFavoriteSeats(string $userId): array
     {
         $bookings = Booking::where('user_id', $userId)
+            ->where('status', 'confirmed')
             ->with('statusKursis.kursi')
             ->get();
 
@@ -119,10 +130,6 @@ class DashboardController extends Controller
         arsort($labels);
 
         $top = array_slice(array_keys($labels), 0, 7, true);
-        if (empty($top)) {
-            $top = ['A7', 'A8', 'A9', 'A10', 'A11', 'A12', 'A13'];
-        }
-
         return $top;
     }
 
