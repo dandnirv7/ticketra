@@ -19,7 +19,7 @@
 
 @php
     $user = auth()->user();
-    $avatarInitial = strtoupper(substr($user->name ?? 'A', 0, 1));
+    $avatarInitial = strtoupper(substr($user?->name ?? 'A', 0, 1));
 
     $isActive = fn($route) => request()->routeIs($route);
     $linkClass = fn($routes) => collect($routes)->contains(fn($r) => request()->routeIs($r))
@@ -94,7 +94,7 @@
                 
                 <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                     <div class="pr-12">
-                        <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'Andi')[0] }}!</p>
+                        <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user?->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>
                     </div>
                     <x-icon name="heroicon-s-ticket" class="absolute right-2 bottom-2 w-8 h-8 text-border/25 transform rotate-12" />

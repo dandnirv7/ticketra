@@ -5,9 +5,9 @@ Disallow: /auth/
 Disallow: /profile/
 Disallow: /checkout/
 Disallow: /payment/
-Disallow: /jadwal/
 Disallow: /bookings/
 Disallow: /snacks/
 Disallow: /webhooks/
 
 Sitemap: https://ticketra.web.id/sitemap.xml
+Host: https://ticketra.web.id

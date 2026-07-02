@@ -29,23 +29,23 @@ Route::get('/auth', function () {
         'seo_description' => 'Masuk atau daftar akun Ticketra untuk mulai memesan tiket bioskop online.',
     ]);
 
+Route::get('/film', [FilmController::class, 'index'])
+    ->name('film.index')
+    ->metadata([
+        'seo_title' => 'Film Sedang & Akan Tayang di Bioskop - Ticketra',
+        'seo_description' => 'Lihat daftar film terbaru dan akan tayang di bioskop favoritmu.',
+    ]);
+
+Route::get('/film/{film}', [FilmController::class, 'show'])
+    ->name('film.show')
+    ->metadata([
+        'seo_type' => 'movie',
+    ]);
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])
         ->name('dashboard');
-
-    Route::get('/film', [FilmController::class, 'index'])
-        ->name('film.index')
-        ->metadata([
-            'seo_title' => 'Film Sedang & Akan Tayang di Bioskop - Ticketra',
-            'seo_description' => 'Lihat daftar film terbaru dan akan tayang di bioskop favoritmu.',
-        ]);
-
-    Route::get('/film/{film}', [FilmController::class, 'show'])
-        ->name('film.show')
-        ->metadata([
-            'seo_type' => 'movie',
-        ]);
 
     Route::resource('jadwal', JadwalTayangController::class)->parameters([
         'jadwal' => 'jadwalTayang'

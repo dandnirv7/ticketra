@@ -10,11 +10,7 @@
         <priority>0.9</priority>
         <changefreq>daily</changefreq>
     </url>
-    <url>
-        <loc>{{ url('/auth') }}</loc>
-        <priority>0.5</priority>
-        <changefreq>monthly</changefreq>
-    </url>
+    <!-- /auth di-skip: halaman login/register gak berguna buat indexing -->
     @foreach($films as $film)
     <url>
         <loc>{{ url('/film/' . $film->id) }}</loc>
