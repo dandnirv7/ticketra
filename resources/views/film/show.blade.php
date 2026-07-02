@@ -26,19 +26,10 @@
     "@@type": "Movie",
     "name": "{{ $film->judul }}",
     "image": "{{ $film->poster_url }}",
-    "description": {{ json_encode($film->sinopsis, JSON_UNESCAPED_UNICODE) }},
+    "description": @json($film->sinopsis, JSON_UNESCAPED_UNICODE),
     "datePublished": "{{ $film->tanggal_rilis?->format('Y-m-d') ?? '' }}",
     "duration": "PT{{ $film->durasi_menit }}M",
     "genre": "{{ $film->genre }}",
-    "director": { "@@type": "Person", "name": "{{ $film->sutradara ?? '' }}" },
-    "actor": { "@@type": "Person", "name": "{{ Str::of($film->pemain ?? '')->limit(60) }}" },
-    "aggregateRating": {
-        "@@type": "AggregateRating",
-        "ratingValue": "{{ number_format($film->rating, 1) }}",
-        "bestRating": "10",
-        "worstRating": "1",
-        "ratingCount": "1200"
-    },
     "offers": {
         "@@type": "Offer",
         "availability": "https://schema.org/InStock",
