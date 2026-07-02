@@ -52,17 +52,6 @@
 @stop
 
 <x-app-layout>
-    <x-slot name="header">
-        <div class="relative flex-1 max-w-md">
-            <input type="text"
-                placeholder="Cari film, bioskop, atau promo..."
-                class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border"
-                @keydown.enter="window.location.href = '{{ route('film.index') }}?q=' + $el.value" />
-            <div class="absolute -translate-y-1/2 right-4 top-1/2 text-border">
-                <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
-            </div>
-        </div>
-    </x-slot>
 
     
     <div x-data="{
@@ -498,9 +487,9 @@
             </div>
 
             
-            <div class="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-4">
+            <div class="flex gap-6 overflow-x-auto snap-x scroll-smooth pb-4 md:grid md:grid-cols-4 md:pb-0">
                 @foreach($recommendations as $rec)
-                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[3px_3px_0px_rgba(0,0,0,1)] flex flex-col justify-between group cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_rgba(0,0,0,1)]"
+                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[3px_3px_0px_rgba(0,0,0,1)] flex flex-col justify-between group cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] min-w-[200px] md:min-w-0 snap-start"
                     @click="window.location.href = '{{ route('film.show', $rec->id) }}'">
 
                     <div class="relative aspect-[2/3] overflow-hidden border-b-2 border-border bg-slate-100">

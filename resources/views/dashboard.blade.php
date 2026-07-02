@@ -14,6 +14,8 @@
 @php
 $avatarInitial = strtoupper(substr($user->name ?? 'A', 0, 1));
 $hasBio = $bioskopFavorit !== null;
+$bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
+$bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
 <body class="min-h-screen font-base"
@@ -22,10 +24,10 @@ $hasBio = $bioskopFavorit !== null;
           heroMax: {{ count($heroFilms) }},
           heroFilms: {{ json_encode($heroFilms) }},
           movies: {{ json_encode($nowShowing) }},
-          searchQuery: '',
-          activeGenre: 'All',
-          activeSort: 'populer',
-          selectedLocation: 'Jakarta',
+          searchQuery: new URLSearchParams(window.location.search).get('q') || '',
+          activeGenre: new URLSearchParams(window.location.search).get('genre') || 'All',
+          activeSort: new URLSearchParams(window.location.search).get('sort') || 'populer',
+          selectedLocation: new URLSearchParams(window.location.search).get('location') || 'Jakarta',
           showLocationDropdown: false,
           heroNext() { this.heroSlide = (this.heroSlide + 1) % this.heroMax; },
           heroPrev() { this.heroSlide = (this.heroSlide - 1 + this.heroMax) % this.heroMax; },
@@ -33,6 +35,34 @@ $hasBio = $bioskopFavorit !== null;
           autoHero: null,
           init() {
               this.autoHero = setInterval(() => this.heroNext(), 5000);
+
+              this.$watch('searchQuery', (val) => {
+                  const url = new URL(window.location);
+                  if (!val.trim()) url.searchParams.delete('q');
+                  else url.searchParams.set('q', val.trim());
+                  window.history.replaceState({}, '', url);
+              });
+
+              this.$watch('activeGenre', (val) => {
+                  const url = new URL(window.location);
+                  if (val === 'All') url.searchParams.delete('genre');
+                  else url.searchParams.set('genre', val);
+                  window.history.replaceState({}, '', url);
+              });
+
+              this.$watch('activeSort', (val) => {
+                  const url = new URL(window.location);
+                  if (val === 'populer') url.searchParams.delete('sort');
+                  else url.searchParams.set('sort', val);
+                  window.history.replaceState({}, '', url);
+              });
+
+              this.$watch('selectedLocation', (val) => {
+                  const url = new URL(window.location);
+                  if (val === 'Jakarta') url.searchParams.delete('location');
+                  else url.searchParams.set('location', val);
+                  window.history.replaceState({}, '', url);
+              });
           },
           pauseHero() { if (this.autoHero) clearInterval(this.autoHero); },
           filteredMovies() {
@@ -57,7 +87,7 @@ $hasBio = $bioskopFavorit !== null;
 
     <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto">
 
-        <aside class="lg:w-64 lg:shrink-0">
+        <aside class="hidden lg:block lg:w-64 lg:shrink-0">
             <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
                 <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight font-heading">
@@ -70,10 +100,6 @@ $hasBio = $bioskopFavorit !== null;
                         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                         Beranda
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-building-storefront" class="w-5 h-5 text-border" />
-                        Bioskop
-                    </a>
                     <a href="{{ route('film.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-film" class="w-5 h-5 text-border" />
                         Film
@@ -82,22 +108,21 @@ $hasBio = $bioskopFavorit !== null;
                         <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-border" />
                         Tiket Saya
                     </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-tag" class="w-5 h-5 text-border" />
-                        Promo
-                    </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                    <a href="{{ route('snacks.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                         Snack Bar
-                    </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-heart" class="w-5 h-5 text-border" />
-                        Wishlist
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-user" class="w-5 h-5 text-border" />
                         Profil
                     </a>
+                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                        @csrf
+                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-red-50 hover:border-accent-red hover:text-accent-red hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none text-left font-bold">
+                            <x-icon name="heroicon-s-arrow-left-on-rectangle" class="w-5 h-5" />
+                            Keluar
+                        </button>
+                    </form>
                 </nav>
 
                 <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
@@ -112,17 +137,17 @@ $hasBio = $bioskopFavorit !== null;
 
         <div class="flex flex-col flex-1 min-w-0 gap-4">
 
-            <header class="flex flex-col items-stretch justify-between gap-4 px-1 py-2 sm:flex-row sm:items-center">
+            <header class="flex items-center justify-between gap-3 px-1 py-2">
+                <button @click="$dispatch('toggle-mobile-menu')"
+                        class="lg:hidden w-10 h-10 bg-secondary-background border-[3px] border-border rounded-xl flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors shrink-0">
+                    <x-icon name="heroicon-s-bars-3" class="w-5 h-5 text-border" />
+                </button>
 
-                <div class="relative flex-1 max-w-md">
-                    <input type="text" x-model.debounce.300ms="searchQuery" placeholder="Cari film, bioskop, atau promo..." class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
-                    <div class="absolute -translate-y-1/2 right-4 top-1/2 text-foreground">
-                        <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
-                    </div>
+                <div class="flex-1">
+                    <h2 class="text-xl font-black font-heading text-foreground lg:hidden">Ticketra.</h2>
                 </div>
 
-                <div class="flex items-center justify-end gap-3">
-
+                <div class="flex items-center justify-end gap-3 shrink-0">
                     <div class="relative">
                         <button @click="showLocationDropdown = !showLocationDropdown" @click.away="showLocationDropdown = false"
                             class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
@@ -146,7 +171,7 @@ $hasBio = $bioskopFavorit !== null;
                         <span class="absolute top-2 right-2 w-2.5 h-2.5 rounded-full border-2 bg-accent-red border-border"></span>
                     </button>
 
-                    <a href="{{ route('profile.edit') }}" class="w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full flex items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
+                    <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
                         {{ $user->avatar_emoji ?? '🍿' }}
                     </a>
                 </div>
@@ -155,28 +180,16 @@ $hasBio = $bioskopFavorit !== null;
             <div class="flex-1 border-[3px] border-border rounded-[24px] bg-slate-50 p-6 md:p-8 space-y-6 shadow-[8px_8px_0px_var(--border)]">
 
                 <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
-                    <div class="grid items-center gap-6 lg:grid-cols-2">
-                        <div class="relative z-10 space-y-4 md:space-y-5">
+                    <div class="flex flex-col items-stretch gap-6 lg:grid lg:grid-cols-2">
+                        <!-- 1. Trending Now -->
+                        <div class="relative z-10 lg:col-start-1 lg:row-start-1">
                             <span class="inline-flex items-center gap-1 px-3 py-1 bg-border text-white rounded-full text-[9px] font-extrabold uppercase tracking-wider">
                                 <x-icon name="heroicon-s-fire" class="w-3 h-3 fill-current text-accent-red" /> Trending Now
                             </span>
-                            <h1 class="text-4xl md:text-5xl font-heading font-black leading-[0.95] uppercase tracking-tight max-w-lg">
-                                <span x-text="heroFilms[heroSlide]?.title ?? ''"></span>
-                            </h1>
-                            <p class="max-w-md text-sm font-medium leading-relaxed text-foreground/80" x-text="truncateWords(heroFilms[heroSlide]?.synopsis ?? '', 40)"></p>
-                            <div class="flex flex-wrap gap-3 pt-1">
-                                <a :href="'/film/' + heroFilms[heroSlide]?.id" class="brutal-btn bg-accent-yellow !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                                    <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
-                                    Pesan Tiket
-                                </a>
-                                <a :href="'/film/' + heroFilms[heroSlide]?.id + '#trailer-section'" class="brutal-btn bg-white hover:bg-pastel-sky/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                                    <x-icon name="heroicon-s-play" class="w-4 h-4 fill-current text-border" />
-                                    Tonton Trailer
-                                </a>
-                            </div>
                         </div>
 
-                        <div class="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-border shadow-[8px_8px_0px_0px_var(--border)] bg-foreground/10">
+                        <!-- 2. Carousel Hero Image -->
+                        <div class="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-border shadow-[8px_8px_0px_0px_var(--border)] bg-foreground/10 lg:col-start-2 lg:row-start-1 lg:row-span-2">
                             @foreach ($heroFilms as $i => $film)
                             <div x-show="heroSlide === {{ $i }}" x-transition.opacity.duration.500ms
                                 class="absolute inset-0"
@@ -193,6 +206,24 @@ $hasBio = $bioskopFavorit !== null;
                                 @for ($i = 0; $i < count($heroFilms); $i++)
                                     <button @click="heroGo({{ $i }})" :class="heroSlide === {{ $i }} ? 'w-6 bg-border' : 'w-2 bg-border/40 hover:bg-border/70'" class="h-2 transition-all rounded-full focus:outline-none"></button>
                                     @endfor
+                            </div>
+                        </div>
+
+                        <!-- 3, 4, 5. Title, Synopsis, Action Buttons -->
+                        <div class="relative z-10 flex flex-col justify-center space-y-4 md:space-y-5 lg:col-start-1 lg:row-start-2">
+                            <h1 class="text-4xl md:text-5xl font-heading font-black leading-[0.95] uppercase tracking-tight max-w-lg">
+                                <span x-text="heroFilms[heroSlide]?.title ?? ''"></span>
+                            </h1>
+                            <p class="max-w-md text-sm font-medium leading-relaxed text-foreground/80" x-text="truncateWords(heroFilms[heroSlide]?.synopsis ?? '', 40)"></p>
+                            <div class="flex flex-wrap gap-3 pt-1">
+                                <a :href="'/film/' + heroFilms[heroSlide]?.id" class="brutal-btn bg-accent-yellow !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                    <x-icon name="heroicon-s-ticket" class="w-4 h-4 text-border" />
+                                    Pesan Tiket
+                                </a>
+                                <a :href="'/film/' + heroFilms[heroSlide]?.id + '#trailer-section'" class="brutal-btn bg-white hover:bg-pastel-sky/20 text-border !py-3 !px-6 text-xs tracking-wider shadow-neo-sm border-2 border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                    <x-icon name="heroicon-s-play" class="w-4 h-4 fill-current text-border" />
+                                    Tonton Trailer
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -274,13 +305,11 @@ $hasBio = $bioskopFavorit !== null;
                             Sedang Tayang
                             <span class="w-2.5 h-2.5 rounded-full border animate-pulse bg-accent-red border-border"></span>
                         </h2>
-                        <div class="flex items-center gap-2">
-                            <button class="w-8 h-8 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-pastel-sky/20 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-border">
-                                <x-icon name="heroicon-s-chevron-left" class="w-4 h-4 text-border" />
-                            </button>
-                            <button class="w-8 h-8 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-pastel-sky/20 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all focus:outline-none focus:ring-2 focus:ring-border">
-                                <x-icon name="heroicon-s-chevron-right" class="w-4 h-4 text-border" />
-                            </button>
+                        <div class="relative w-full max-w-md">
+                            <input type="text" x-model.debounce.300ms="searchQuery" placeholder="Cari film, bioskop, atau promo..." class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
+                            <div class="absolute -translate-y-1/2 right-4 top-1/2 text-foreground">
+                                <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
+                            </div>
                         </div>
                     </div>
 
@@ -327,11 +356,9 @@ $hasBio = $bioskopFavorit !== null;
                     </div>
 
                     <div x-show="filteredMovies().length > 0" class="space-y-6">
-
                         <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-
                             <template x-if="filteredMovies().length > 0">
-                                <div class="md:col-span-2 lg:col-span-2 border-[3px] border-border rounded-[20px] relative overflow-hidden min-h-[320px] shadow-[4px_4px_0px_var(--border)] group flex flex-col justify-between">
+                                <div class="md:col-span-2 border-[3px] border-border rounded-[20px] relative overflow-hidden min-h-[320px] shadow-[4px_4px_0px_var(--border)] group flex flex-col justify-between">
                                     <img :src="filteredMovies()[0].poster" :alt="filteredMovies()[0].title" class="absolute inset-0 object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
                                     <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent via-black/40"></div>
 
@@ -357,79 +384,31 @@ $hasBio = $bioskopFavorit !== null;
                                 </div>
                             </template>
 
-                            <template x-if="filteredMovies().length > 1">
-                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
-                                    <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
-                                        <img :src="filteredMovies()[1].poster" :alt="filteredMovies()[1].title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
-                                        <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
-                                            <x-icon name="heroicon-s-star" class="w-3 h-3 fill-current text-accent-yellow" />
-                                            <span x-text="filteredMovies()[1].rating"></span>
+                            <div class="flex gap-4 overflow-x-auto snap-x scroll-smooth pb-4 md:pb-0 md:contents hide-scrollbar">
+                                <template x-for="film in filteredMovies().slice(1, 7)" :key="film.id">
+                                    <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group min-w-[240px] md:min-w-0 snap-start">
+                                        <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
+                                            <img :src="film.poster" :alt="film.title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
+                                            <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
+                                                <x-icon name="heroicon-s-star" class="w-3 h-3 fill-current text-accent-yellow" />
+                                                <span x-text="film.rating"></span>
+                                            </div>
+                                        </div>
+                                        <div class="flex flex-col justify-between flex-1 gap-2 p-4">
+                                            <div>
+                                                <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="film.title" x-text="film.title"></h3>
+                                                <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="film.genre"></p>
+                                            </div>
+                                            <div class="flex items-center justify-between pt-2">
+                                                <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="film.duration"></span>
+                                                <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border hover:underline">
+                                                    Beli Tiket <span class="font-bold">&gt;</span>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="flex flex-col justify-between flex-1 gap-2 p-4">
-                                        <div>
-                                            <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="filteredMovies()[1].title" x-text="filteredMovies()[1].title"></h3>
-                                            <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="filteredMovies()[1].genre"></p>
-                                        </div>
-                                        <div class="flex items-center justify-between pt-2">
-                                            <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="filteredMovies()[1].duration"></span>
-                                            <a :href="'/film/' + filteredMovies()[1].id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border hover:underline">
-                                                
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-
-                            <template x-if="filteredMovies().length > 2">
-                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
-                                    <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
-                                        <img :src="filteredMovies()[2].poster" :alt="filteredMovies()[2].title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
-                                        <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
-                                            <x-icon name="heroicon-s-star" class="w-3 h-3 fill-current text-accent-yellow" />
-                                            <span x-text="filteredMovies()[2].rating"></span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col justify-between flex-1 gap-2 p-4">
-                                        <div>
-                                            <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="filteredMovies()[2].title" x-text="filteredMovies()[2].title"></h3>
-                                            <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="filteredMovies()[2].genre"></p>
-                                        </div>
-                                        <div class="flex items-center justify-between pt-2">
-                                            <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="filteredMovies()[2].duration"></span>
-                                            <a :href="'/film/' + filteredMovies()[2].id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border">
-                                                Beli Tiket <span class="font-bold">&gt;</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
-                        </div>
-
-                        <div x-show="filteredMovies().length > 3" class="grid grid-cols-1 gap-6 mt-6 sm:grid-cols-2 lg:grid-cols-4">
-                            <template x-for="film in filteredMovies().slice(3, 7)" :key="film.id">
-                                <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group">
-                                    <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
-                                        <img :src="film.poster" :alt="film.title" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" />
-                                        <div class="absolute top-2 right-2 px-2 py-1 bg-white border-2 border-border rounded-lg text-[9px] font-extrabold flex items-center gap-0.5 shadow-[1px_1px_0px_var(--border)]">
-                                            <x-icon name="heroicon-s-star" class="w-3 h-3 fill-current text-accent-yellow" />
-                                            <span x-text="film.rating"></span>
-                                        </div>
-                                    </div>
-                                    <div class="flex flex-col justify-between flex-1 gap-2 p-4">
-                                        <div>
-                                            <h3 class="text-sm font-extrabold leading-tight uppercase text-foreground line-clamp-1" :title="film.title" x-text="film.title"></h3>
-                                            <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-1" x-text="film.genre"></p>
-                                        </div>
-                                        <div class="flex items-center justify-between pt-2">
-                                            <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="film.duration"></span>
-                                            <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border">
-                                                Beli Tiket <span class="font-bold">&gt;</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </template>
+                                </template>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -478,9 +457,9 @@ $hasBio = $bioskopFavorit !== null;
                                 <a href="#" class="text-xs font-bold underline decoration-2 hover:text-main">Lihat Semua</a>
                             </div>
 
-                            <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
+                            <div class="flex gap-4 overflow-x-auto snap-x scroll-smooth pb-4 sm:grid sm:grid-cols-3 sm:pb-0 hide-scrollbar">
                                 @foreach (array_slice($snacks, 0, 3) as $snack)
-                                <div class="border-[3px] border-border rounded-xl bg-white p-3 flex flex-col justify-between shadow-[2px_2px_0px_var(--border)] relative">
+                                <div class="border-[3px] border-border rounded-xl bg-white p-3 flex flex-col justify-between shadow-[2px_2px_0px_var(--border)] relative min-w-[140px] sm:min-w-0 snap-start">
                                     <div>
                                         <div class="aspect-square bg-[#E6F3FF] border-2 border-border rounded-lg flex items-center justify-center text-4xl mb-2 select-none">
                                             {{ $snack['emoji'] }}
@@ -498,13 +477,14 @@ $hasBio = $bioskopFavorit !== null;
 
                         <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-4">
                             <h2 class="text-lg font-extrabold md:text-xl text-foreground">Bioskop Favorit</h2>
+                            @if($bioskopFavorit)
                             <div class="flex flex-col items-stretch gap-5 md:flex-row">
                                 <div class="flex-1 border-[3px] border-border rounded-xl bg-pastel-pink/10 p-4 space-y-3 shadow-[2px_2px_0px_var(--border)] flex flex-col justify-between">
                                     <div class="space-y-1.5">
-                                        <p class="text-base font-extrabold leading-tight text-foreground">{{ $bioskopFavorit->nama ?? 'CGV Grand Indonesia' }}</p>
+                                        <p class="text-base font-extrabold leading-tight text-foreground">{{ $bioskopFavorit->nama }}</p>
                                         <p class="text-[11px] font-bold text-foreground/60 flex items-center gap-1">
                                             <x-icon name="heroicon-s-map-pin" class="w-3.5 h-3.5 text-border" />
-                                            {{ $bioskopFavorit->kota ?? 'Jakarta Pusat' }}
+                                            {{ $bioskopFavorit->kota }}
                                         </p>
                                     </div>
 
@@ -520,10 +500,15 @@ $hasBio = $bioskopFavorit !== null;
                                     </div>
                                 </div>
 
-                                <div class="w-full md:w-1/2 h-40 border-[3px] border-border rounded-xl overflow-hidden shadow-[2px_2px_0px_var(--border)] shrink-0">
+                                <div class="hidden md:block w-full md:w-1/2 h-40 border-[3px] border-border rounded-xl overflow-hidden shadow-[2px_2px_0px_var(--border)] shrink-0">
                                     <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&q=80&w=400&h=300" alt="Bioskop" class="object-cover w-full h-full" />
                                 </div>
                             </div>
+                            @else
+                            <div class="p-6 text-center border-2 border-dashed border-border/20 rounded-xl">
+                                <p class="text-xs font-bold text-gray-400">Belum ada bioskop favorit. Transaksi tiket Anda akan terekam di sini.</p>
+                            </div>
+                            @endif
                         </div>
                     </div>
 
@@ -558,30 +543,36 @@ $hasBio = $bioskopFavorit !== null;
                             </div>
                         </div>
 
-                        <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-4" x-data="{ selectedSeat: 'A10' }">
+                        <div class="border-[3px] border-border rounded-[20px] bg-white p-5 md:p-6 shadow-[4px_4px_0px_var(--border)] space-y-4" x-data="{ selectedSeat: '' }">
                             <div class="flex items-start justify-between">
                                 <h2 class="text-lg font-extrabold md:text-xl text-foreground">Kursi Favoritmu</h2>
                                 <a href="#" class="text-xs font-bold underline decoration-2 hover:text-main">Lihat Semua <span class="font-bold">&gt;</span></a>
                             </div>
 
+                            @if(count($favoriteSeats) > 0)
                             <div class="grid grid-cols-7 gap-2.5">
                                 @foreach ($favoriteSeats as $seat)
                                 <button @click="selectedSeat = '{{ $seat }}'"
                                     :class="selectedSeat === '{{ $seat }}' ? 'bg-[#86EFAC] text-border border-border shadow-[2px_2px_0px_var(--border)]' : 'bg-white text-foreground hover:bg-[#E6F3FF]/40'"
                                     class="aspect-square border-2 border-border rounded-xl text-[11px] font-black flex items-center justify-center relative transition-all shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none">
                                     {{ $seat }}
-                                    @if ($seat === 'A10')
+                                    @if ($loop->first)
                                     <span class="absolute -top-1.5 -right-1.5 w-4 h-4 bg-accent-yellow border-2 border-border rounded-full flex items-center justify-center text-[8px] text-foreground shadow-[1px_1px_0px_var(--border)] font-bold">★</span>
                                     @endif
                                 </button>
                                 @endforeach
                             </div>
                             <p class="text-[10px] font-extrabold text-foreground/50 text-center leading-snug">Baris tengah, posisi pas untuk pengalaman terbaik!</p>
+                            @else
+                            <div class="p-6 text-center border-2 border-dashed border-border/20 rounded-xl">
+                                <p class="text-xs font-bold text-gray-400">Belum ada kursi favorit. Transaksi tiket Anda akan terekam di sini.</p>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </section>
 
-                <footer class="border-[3px] border-border rounded-[20px] bg-white p-6 md:p-8 shadow-[4px_4px_0px_var(--border)]">
+                <footer class="hidden md:block border-[3px] border-border rounded-[20px] bg-white p-6 md:p-8 shadow-[4px_4px_0px_var(--border)]">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
                         <div class="space-y-3 md:col-span-5">
                             <div class="flex items-center gap-2 text-2xl font-black tracking-tight font-heading text-foreground">
@@ -615,7 +606,7 @@ $hasBio = $bioskopFavorit !== null;
                                     f
                                 </a>
                                 <a href="#" class="flex items-center justify-center font-bold text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
-                                    
+
                                      <x-icon name="heroicon-s-tv" class="w-4 h-4" />
                                 </a>
                                 <a href="#" class="flex items-center justify-center font-bold text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
@@ -631,6 +622,7 @@ $hasBio = $bioskopFavorit !== null;
             </div>
         </div>
     </div>
+    <x-mobile-nav :bottomActive="$bottomActive" :bottomInactive="$bottomInactive" />
 </body>
 
 <script>

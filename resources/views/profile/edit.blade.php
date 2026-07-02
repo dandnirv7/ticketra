@@ -7,25 +7,25 @@
 
     <div class="max-w-4xl space-y-6" x-data="{ activeTab: 'overview' }">
         
-        <div class="flex flex-wrap gap-2.5 border-b-[3px] border-border/10 pb-4">
+        <div class="flex overflow-x-auto whitespace-nowrap snap-x scroll-smooth pb-2 gap-2.5 border-b-[3px] border-border/10">
             <button @click="activeTab = 'overview'" 
                 :class="activeTab === 'overview' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
-                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none">
+                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Ringkasan
             </button>
             <button @click="activeTab = 'edit'" 
                 :class="activeTab === 'edit' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
-                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none">
+                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Ubah Profil
             </button>
             <button @click="activeTab = 'security'" 
                 :class="activeTab === 'security' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
-                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none">
+                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Keamanan
             </button>
             <button @click="activeTab = 'danger'" 
                 :class="activeTab === 'danger' ? 'bg-accent-red/20 text-accent-red border-accent-red shadow-[2px_2px_0px_rgba(239,68,68,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-red-50 hover:border-accent-red hover:text-accent-red hover:shadow-[3px_3px_0px_rgba(239,68,68,1)] hover:-translate-y-0.5'"
-                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none">
+                class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
                 Zona Bahaya
             </button>
         </div>

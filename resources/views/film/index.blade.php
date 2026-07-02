@@ -17,17 +17,6 @@
 @stop
 
 <x-app-layout>
-    <x-slot name="header">
-        <div class="relative flex-1 max-w-md">
-            <input type="text"
-                x-model.debounce.300ms="searchQuery"
-                placeholder="Cari film atau genre..."
-                class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-3 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
-            <div class="absolute -translate-y-1/2 right-4 top-1/2 text-border">
-                <x-icon name="heroicon-s-magnifying-glass" class="w-5 h-5 text-border" />
-            </div>
-        </div>
-    </x-slot>
 
     <div x-data="{
         searchQuery: new URLSearchParams(window.location.search).get('q') || '',
@@ -40,18 +29,31 @@
             this.showToast = true;
             setTimeout(() => this.showToast = false, 3000);
         },
+        init() {
+            this.$watch('searchQuery', (val) => {
+                const url = new URL(window.location);
+                if (!val.trim()) url.searchParams.delete('q');
+                else url.searchParams.set('q', val.trim());
+                window.history.replaceState({}, '', url);
+            });
+            this.$watch('activeTab', (val) => {
+                const url = new URL(window.location);
+                if (val === 'Semua') url.searchParams.delete('tab');
+                else url.searchParams.set('tab', val);
+                window.history.replaceState({}, '', url);
+            });
+            this.$watch('sortBy', (val) => {
+                const url = new URL(window.location);
+                if (val === 'popular') url.searchParams.delete('sort');
+                else url.searchParams.set('sort', val);
+                window.history.replaceState({}, '', url);
+            });
+        },
         setTab(tab) {
             this.activeTab = tab;
-            const url = new URL(window.location);
-            if (tab === 'Semua') url.searchParams.delete('tab');
-            else url.searchParams.set('tab', tab);
-            window.history.replaceState({}, '', url);
         },
         setSort(sort) {
             this.sortBy = sort;
-            const url = new URL(window.location);
-            url.searchParams.set('sort', sort);
-            window.history.replaceState({}, '', url);
         },
         matchesSearch(title, genre, synopsis) {
             if (!this.searchQuery.trim()) return true;
@@ -68,6 +70,19 @@
                 arr.sort((a, b) => new Date(b.tanggal_rilis) - new Date(a.tanggal_rilis));
             }
             return arr;
+        },
+        hasAnyMovies() {
+            let matchesShowing = false;
+            let matchesComing = false;
+
+            if (this.activeTab === 'Semua' || this.activeTab === 'Sedang Tayang') {
+                matchesShowing = @js($nowShowing).some(m => this.matchesSearch(m.judul, m.genre, m.sinopsis || ''));
+            }
+            if (this.activeTab === 'Semua' || this.activeTab === 'Akan Tayang') {
+                matchesComing = @js($comingSoon).some(m => this.matchesSearch(m.judul, m.genre, m.sinopsis || ''));
+            }
+
+            return matchesShowing || matchesComing;
         }
     }" class="relative space-y-8">
 
@@ -86,12 +101,7 @@
         </div>
 
         
-        <div class="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-            <div>
-                <h1 class="text-4xl font-black tracking-tight uppercase font-heading text-foreground">FILM</h1>
-                <p class="mt-1 text-xs font-bold tracking-wider uppercase text-foreground/60">Temukan film terbaru dan terpopuler di bioskop.</p>
-            </div>
-        </div>
+
 
         
         @if($heroMovie)
@@ -149,27 +159,47 @@
                 </template>
             </div>
 
-            <div class="flex items-center gap-2" x-data="{ showSortDropdown: false }">
-                <span class="text-xs font-black text-foreground">Urutkan:</span>
-                <div class="relative">
-                    <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
-                        class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-arrows-up-down" class="w-4 h-4 text-border" />
-                        <span x-text="sortBy === 'popular' ? 'Popularitas' : (sortBy === 'rating' ? 'Rating Tertinggi' : 'Terbaru')">Popularitas</span>
-                    </button>
-                    <div x-show="showSortDropdown" x-transition.opacity
-                        class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground"
-                        style="display: none;">
-                        <button @click="setSort('popular'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Popularitas</button>
-                        <button @click="setSort('rating'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
-                        <button @click="setSort('latest'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-2" x-data="{ showSortDropdown: false }">
+                    <span class="text-xs font-black text-foreground">Urutkan:</span>
+                    <div class="relative">
+                        <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
+                            class="flex items-center gap-2 px-4 py-2.5 bg-secondary-background border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                            <x-icon name="heroicon-s-arrows-up-down" class="w-4 h-4 text-border" />
+                            <span x-text="sortBy === 'popular' ? 'Popularitas' : (sortBy === 'rating' ? 'Rating Tertinggi' : 'Terbaru')">Popularitas</span>
+                        </button>
+                        <div x-show="showSortDropdown" x-transition.opacity
+                            class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground"
+                            style="display: none;">
+                            <button @click="setSort('popular'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Popularitas</button>
+                            <button @click="setSort('rating'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
+                            <button @click="setSort('latest'); showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative flex-1 max-w-xs">
+                    <input type="text"
+                        x-model.debounce.300ms="searchQuery"
+                        placeholder="Cari film atau genre..."
+                        class="w-full bg-secondary-background border-[3px] border-border rounded-full pl-5 pr-12 py-2.5 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2" />
+                    <div class="absolute -translate-y-1/2 right-4 top-1/2 text-border">
+                        <x-icon name="heroicon-s-magnifying-glass" class="w-4 h-4 text-border" />
                     </div>
                 </div>
             </div>
         </div>
 
         
-        <section x-show="activeTab === 'Semua' || activeTab === 'Sedang Tayang'" class="space-y-6">
+        <div x-show="!hasAnyMovies()"
+            class="text-center py-24 bg-white border-[3px] border-border border-dashed rounded-[2rem]"
+            style="display: none;">
+            <div class="w-20 h-20 bg-pastel-sky border-[3px] border-border rounded-full flex items-center justify-center mx-auto mb-4 text-4xl transform rotate-12 shadow-[3px_3px_0px_var(--border)]">🍿</div>
+            <h3 class="text-3xl mb-2 font-heading font-black uppercase tracking-tight">Ups, Film Gak Ketemu</h3>
+            <p class="font-medium opacity-70 text-lg">Coba cari judul film, genre, atau sinopsis lainnya.</p>
+        </div>
+
+        <section x-show="hasAnyMovies() && (activeTab === 'Semua' || activeTab === 'Sedang Tayang')" class="space-y-6">
             <div class="flex items-center gap-2 pb-2">
                 <h2 class="text-2xl font-black tracking-tight uppercase text-foreground">SEDANG TAYANG</h2>
                 <span class="w-3 h-3 border-2 rounded-full bg-accent-red animate-pulse border-border"></span>
@@ -256,7 +286,7 @@
         </section>
 
         
-        <section x-show="activeTab === 'Semua' || activeTab === 'Akan Tayang'" class="space-y-6">
+        <section x-show="hasAnyMovies() && (activeTab === 'Semua' || activeTab === 'Akan Tayang')" class="space-y-6">
             <div class="flex items-center gap-2 pb-2">
                 <h2 class="text-2xl font-black tracking-tight uppercase text-foreground">AKAN TAYANG</h2>
                 <span class="px-3 py-1 bg-pastel-sky border-2 border-border rounded-full text-[9px] font-extrabold text-foreground uppercase tracking-wider shadow-sm">UPCOMING</span>

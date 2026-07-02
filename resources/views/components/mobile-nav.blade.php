@@ -9,11 +9,6 @@
         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
         <span>Beranda</span>
     </a>
-    <a href="{{ route('film.index') }}"
-       class="{{ request()->routeIs('film.*') ? $bottomActive : $bottomInactive }} flex-1">
-        <x-icon name="heroicon-s-film" class="w-5 h-5 text-border" />
-        <span>Film</span>
-    </a>
     <a href="{{ route('snacks.index') }}"
        class="{{ request()->routeIs('snacks.*') ? $bottomActive : $bottomInactive }} flex-1">
         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
@@ -23,6 +18,11 @@
        class="{{ request()->routeIs('bookings.*') ? $bottomActive : $bottomInactive }} flex-1">
         <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-border" />
         <span>Tiket</span>
+    </a>
+    <a href="{{ route('profile.edit') }}"
+       class="{{ request()->routeIs('profile.*') ? $bottomActive : $bottomInactive }} flex-1">
+        <x-icon name="heroicon-s-user" class="w-5 h-5 text-border" />
+        <span>Profile</span>
     </a>
 </div>
 
@@ -74,32 +74,15 @@
                     <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                     Beranda
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
-                    <x-icon name="heroicon-s-building-storefront" class="w-5 h-5 text-border" />
-                    Bioskop
-                </a>
-                <a href="{{ route('film.index') }}" @click="open = false"
-                   class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
-                    <x-icon name="heroicon-s-film" class="w-5 h-5 text-border" />
-                    Film
-                </a>
                 <a href="{{ route('bookings.index') }}" @click="open = false"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
                     <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-border" />
                     Tiket Saya
                 </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
-                    <x-icon name="heroicon-s-tag" class="w-5 h-5 text-border" />
-                    Promo
-                </a>
                 <a href="{{ route('snacks.index') }}" @click="open = false"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
                     <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                     Snack Bar
-                </a>
-                <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">
-                    <x-icon name="heroicon-s-heart" class="w-5 h-5 text-border" />
-                    Wishlist
                 </a>
                 <a href="{{ route('profile.edit') }}" @click="open = false"
                    class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none">

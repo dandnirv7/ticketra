@@ -54,10 +54,7 @@
                         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                         Beranda
                     </a>
-                    <a href="#" class="{{ $linkClass(['bioskop.*']) }}">
-                        <x-icon name="heroicon-s-building-storefront" class="w-5 h-5 text-border" />
-                        Bioskop
-                    </a>
+
                     <a href="{{ route('film.index') }}" class="{{ $linkClass(['film.*']) }}">
                         <x-icon name="heroicon-s-film" class="w-5 h-5 text-border" />
                         Film
@@ -66,10 +63,7 @@
                         <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-border" />
                         Tiket Saya
                     </a>
-                    <a href="#" class="{{ $linkClass(['promo.*']) }}">
-                        <x-icon name="heroicon-s-tag" class="w-5 h-5 text-border" />
-                        Promo
-                    </a>
+
                     <a href="{{ route('snacks.index') }}" class="{{ $linkClass(['snacks.*']) }}">
                         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                         Snack Bar
@@ -82,10 +76,10 @@
                         <x-icon name="heroicon-s-user" class="w-5 h-5 text-border" />
                         Profil
                     </a>
-                    <form method="POST" action="{{ route('logout') }}" class="w-full">
+                    <form method="POST" action="{{ route('logout') }}" class="w-full mt-2">
                         @csrf
-                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-red-50 hover:border-accent-red hover:text-accent-red hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-accent-red focus:ring-offset-2 text-left font-bold mt-2">
-                            <x-icon name="heroicon-s-arrow-left-on-rectangle" class="w-5 h-5 text-border group-hover:text-accent-red" />
+                        <button type="submit" class="w-full flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-red-50 hover:border-accent-red hover:text-accent-red hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-accent-red focus:ring-offset-2 text-left font-bold">
+                            <x-icon name="heroicon-s-arrow-left-on-rectangle" class="w-5 h-5" />
                             Keluar
                         </button>
                     </form>
@@ -148,7 +142,7 @@
                     </button>
 
                     
-                    <a href="{{ route('profile.edit') }}" class="w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full flex items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
+                    <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
                         {{ $user->avatar_emoji ?? '🍿' }}
                     </a>
                 </div>
