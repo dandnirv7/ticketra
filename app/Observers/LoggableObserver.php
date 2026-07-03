@@ -4,36 +4,42 @@ namespace App\Observers;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class LoggableObserver
 {
     public function created(Model $model): void
     {
-        $this->log($model, 'created');
+        $this->logSafe($model, 'created');
     }
 
     public function updated(Model $model): void
     {
-        $this->log($model, 'updated');
+        $this->logSafe($model, 'updated');
     }
 
     public function deleted(Model $model): void
     {
-        $this->log($model, 'deleted');
+        $this->logSafe($model, 'deleted');
     }
 
     public function restored(Model $model): void
     {
-        $this->log($model, 'restored');
+        $this->logSafe($model, 'restored');
+    }
+
+    protected function logSafe(Model $model, string $event): void
+    {
+        try {
+            $this->log($model, $event);
+        } catch (\Throwable $e) {
+            Log::warning("Activity log skipped for {$event} on " . class_basename($model) . ': ' . $e->getMessage());
+        }
     }
 
     protected function log(Model $model, string $event): void
     {
         $name = class_basename($model);
-
-        if (!config("activitylog.auto_log.{$name}", true)) {
-            return;
-        }
 
         $label = method_exists($model, 'activityLogDescription')
             ? $model->activityLogDescription($event)
@@ -47,8 +53,6 @@ class LoggableObserver
             default => "{$name} '{$label}' {$event}",
         };
 
-        $performer = Auth::user();
-
         $changes = [];
         foreach ($model->getDirty() as $key => $newVal) {
             $changes[$key] = [
@@ -57,13 +61,26 @@ class LoggableObserver
             ];
         }
 
+        // Simpan metadata IP & info browser di properties
+        $properties = [
+            'ip' => request()->ip(),
+            'user_agent' => request()->userAgent(),
+        ];
+
+        // Format $changes sesuai yang diharapkan Spatie v5 (attributes & old)
+        $spatieChanges = [];
+        if (!empty($changes)) {
+            $spatieChanges = [
+                'attributes' => collect($changes)->mapWithKeys(fn($item, $key) => [$key => $item['new']])->toArray(),
+                'old' => collect($changes)->mapWithKeys(fn($item, $key) => [$key => $item['old']])->toArray(),
+            ];
+        }
+
         activity()
-            ->causedBy($performer)
+            ->causedBy(Auth::user())
             ->performedOn($model)
-            ->withProperties([
-                'ip' => request()->ip(),
-            ])
-            ->withChanges($changes)
+            ->withProperties($properties)
+            ->withChanges($spatieChanges)
             ->event($event)
             ->log($description);
     }
