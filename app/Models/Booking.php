@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Booking extends Model
 {
     /** @use HasFactory<\Database\Factories\BookingFactory> */
-    use HasFactory, HasUuids, SoftDeletes;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-use Spatie\Activitylog\Support\LogOptions;
+    use HasFactory, HasUuids, SoftDeletes, LogsActivity;
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -53,7 +53,6 @@ use Spatie\Activitylog\Support\LogOptions;
             $user = $booking->user;
             if (!$user) return;
 
-            // Cek status pembayaran tiket
             if ($booking->isDirty('status')) {
                 if ($booking->status === 'confirmed') {
                     $user->notify(new \App\Notifications\GeneralNotification(
@@ -76,7 +75,6 @@ use Spatie\Activitylog\Support\LogOptions;
                 }
             }
 
-            // Cek status check-in tiket
             if ($booking->isDirty('is_checked_in') && $booking->is_checked_in) {
                 $user->notify(new \App\Notifications\GeneralNotification(
                     'Check-in Berhasil! 🍿',
@@ -105,12 +103,11 @@ use Spatie\Activitylog\Support\LogOptions;
         return $this->hasMany(PaymentWebhook::class);
     }
 
-        public function getActivitylogOptions(): LogOptions
+    public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logAll()
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
+            ->logOnlyDirty();
     }
 
     public function promo(): BelongsTo

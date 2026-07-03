@@ -92,7 +92,7 @@
                 </div>
 
                 @if (in_array($snackOrder->status, ['locked']))
-                    <div class="brutal-box bg-white p-6 md:p-8 text-center" x-data="{ isPaying: false }">
+                    <div class="brutal-box bg-white p-6 md:p-8 text-center" x-data="{ isPaying: false, toastMessage: '', showToast: false }">
                         <p class="mb-2 font-extrabold text-accent-green">
                             <x-icon name="heroicon-s-lock-closed" class="inline w-4 h-4 mr-1" />
                             PEMBAYARAN AMAN
@@ -101,11 +101,11 @@
 
                         <button id="pay-button"
                                 type="button"
-                                @click="isPaying = true; window.snap.pay('{{ $snapToken }}', {
+                                @click="isPaying = true; const _t = (m) => { toastMessage = m; showToast = true; setTimeout(() => showToast = false, 3000); }; window.snap.pay('{{ $snapToken }}', {
                                     onSuccess: (r) => { window.location.href = '{{ route('snacks.payment.success', $snackOrder->id) }}'; },
                                     onPending: (r) => { window.location.href = '{{ route('snacks.payment.pending', $snackOrder->id) }}'; },
-                                    onError:   (r) => { alert('Pembayaran gagal. Silakan coba lagi.'); isPaying = false; },
-                                    onClose:   ()  => { alert('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.'); isPaying = false; }
+                                    onError:   (r) => { _t('Pembayaran gagal. Silakan coba lagi.'); isPaying = false; },
+                                    onClose:   ()  => { _t('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.'); isPaying = false; }
                                 })"
                                 :disabled="isPaying"
                                 class="brutal-btn !py-4 !px-10 text-lg w-full justify-center">
@@ -118,6 +118,10 @@
                                 Memproses Pembayaran...
                             </span>
                         </button>
+
+                        <div x-show="showToast" x-transition.duration.300ms
+                             class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[999] px-6 py-3 bg-white border-[3px] border-border rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs font-black text-center whitespace-nowrap"
+                             x-text="toastMessage"></div>
 
                         <p class="mt-4 text-[10px] font-bold uppercase tracking-widest opacity-60">
                             <x-icon name="heroicon-s-lock-closed" class="inline w-3 h-3 mr-1" />

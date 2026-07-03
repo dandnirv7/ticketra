@@ -5,7 +5,7 @@
         Pilih Kursi
       </h2>
 
-      <a href="{{ route('jadwal.show', $jadwalTayang->id) }}" class="neo-back-button">
+      <a href="{{ route('film.show', $jadwalTayang->film->id) }}" class="neo-back-button">
         <x-heroicon-o-arrow-left class="w-4 h-4" />
         Kembali
       </a>
@@ -64,6 +64,14 @@
                     seats: @json($jadwalTayang->studio->kursis),
                     showSnackModal: false,
                     snacks: @json($snackSuggestions),
+                    toastMessage: '',
+                    showToast: false,
+
+                    toast(msg) {
+                        this.toastMessage = msg;
+                        this.showToast = true;
+                        setTimeout(() => this.showToast = false, 3000);
+                    },
 
                     toggleSeat(seatId) {
                         if (this.selected.includes(seatId)) {
@@ -72,7 +80,7 @@
                             if (this.selected.length < this.maxSeats) {
                                 this.selected.push(seatId);
                             } else {
-                                alert("Maksimal hanya boleh memilih 6 kursi!");
+                                this.toast("Maksimal hanya boleh memilih 6 kursi!");
                             }
                         }
                     },
@@ -114,7 +122,7 @@
 
                     submitBooking() {
                         if (this.selected.length === 0) {
-                            alert("Silakan pilih minimal 1 kursi!");
+                            this.toast("Silakan pilih minimal 1 kursi!");
                             return;
                         }
                         this.showSnackModal = true;
@@ -133,6 +141,10 @@
                     }
                 }'>
         @csrf
+
+    <div x-show="showToast" x-transition.duration.300ms
+         class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[999] px-6 py-3 bg-white border-[3px] border-border rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs font-black text-center whitespace-nowrap"
+         x-text="toastMessage"></div>
 
         <input
           type="hidden"

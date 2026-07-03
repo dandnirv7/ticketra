@@ -85,18 +85,24 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
           }
       }">
 
-    <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto">
+    <div class="flex flex-col lg:flex-row gap-6 p-4 md:p-6 lg:p-8 min-h-screen max-w-[1600px] mx-auto pb-24 lg:pb-6">
 
         <aside class="hidden lg:block lg:w-64 lg:shrink-0">
-            <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
+            <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-4 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
-                <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight font-heading">
-                    <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
-                    Ticketra<span class="text-accent-green">.</span>
-                </a>
+                <a href="{{ route('landing') }}" class="flex items-center gap-3">
+                    <img
+                        src="{{ asset('favicon/android-icon-96x96.png') }}"
+                        alt="Ticketra Logo"
+                        class="w-10 h-10 rounded-xl"
+                    >
+                    <span class="text-2xl font-extrabold tracking-tight font-heading">
+                        Ticketra<span class="text-neo-purple">.</span>
+                    </span>
+                </a> 
 
                 <nav class="flex flex-col gap-1.5 text-sm font-bold tracking-wide">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-neo-purple border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                         Beranda
                     </a>
@@ -111,10 +117,6 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                     <a href="{{ route('snacks.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                         Snack Bar
-                    </a>
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-heart" class="w-5 h-5 text-border" />
-                        Wishlist
                     </a>
                     <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-user" class="w-5 h-5 text-border" />
@@ -178,18 +180,16 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 </div>
             </header>
 
-            <div class="flex-1 border-[3px] border-border rounded-[24px] bg-slate-50 p-6 md:p-8 space-y-6 shadow-[8px_8px_0px_var(--border)]">
+            <div class="flex-1 space-y-6">
 
                 <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
                     <div class="flex flex-col items-stretch gap-6 lg:grid lg:grid-cols-2">
-                        <!-- 1. Trending Now -->
                         <div class="relative z-10 lg:col-start-1 lg:row-start-1">
-                            <span class="inline-flex items-center gap-1 px-3 py-1 bg-border text-white rounded-full text-[9px] font-extrabold uppercase tracking-wider">
-                                <x-icon name="heroicon-s-fire" class="w-3 h-3 fill-current text-accent-red" /> Trending Now
+                            <span class="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-extrabold tracking-wider text-white uppercase rounded-full bg-border">
+                                <x-icon name="heroicon-s-fire" class="w-4 h-4 fill-current text-accent-red" /> Trending Now
                             </span>
                         </div>
 
-                        <!-- 2. Carousel Hero Image -->
                         <div class="relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden border-2 border-border shadow-[8px_8px_0px_0px_var(--border)] bg-foreground/10 lg:col-start-2 lg:row-start-1 lg:row-span-2">
                             @foreach ($heroFilms as $i => $film)
                             <div x-show="heroSlide === {{ $i }}" x-transition.opacity.duration.500ms
@@ -210,7 +210,6 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             </div>
                         </div>
 
-                        <!-- 3, 4, 5. Title, Synopsis, Action Buttons -->
                         <div class="relative z-10 flex flex-col justify-center space-y-4 md:space-y-5 lg:col-start-1 lg:row-start-2">
                             <h1 class="text-4xl md:text-5xl font-heading font-black leading-[0.95] uppercase tracking-tight max-w-lg">
                                 <span x-text="heroFilms[heroSlide]?.title ?? ''"></span>
@@ -237,7 +236,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 <h3 class="text-lg font-extrabold text-foreground">Bioskop</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Lihat bioskop favoritmu</p>
                             </div>
-                            <div class="w-10 h-10 bg-[#E2F5EC] rounded-lg flex items-center justify-center text-accent-green shrink-0">
+                            <div class="w-10 h-10 bg-[#E2F5EC] rounded-lg flex items-center justify-center text-neo-purple shrink-0">
                                 <x-icon name="heroicon-s-building-storefront" class="w-7 h-7 text-border" />
                             </div>
                         </div>
@@ -327,7 +326,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 { label: 'Sci-Fi', value: 'Sci-Fi' }
                             ]" :key="genreObj.value">
                                 <button @click="activeGenre = genreObj.value"
-                                    :class="activeGenre === genreObj.value ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
+                                    :class="activeGenre === genreObj.value ? 'bg-neo-purple text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
                                     class="px-3.5 py-1.5 rounded-xl border-2 border-border text-[10px] font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2"
                                     x-text="genreObj.label">
                                 </button>
@@ -385,7 +384,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 </div>
                             </template>
 
-                            <div class="flex gap-4 overflow-x-auto snap-x scroll-smooth pb-4 md:pb-0 md:contents hide-scrollbar">
+                            <div class="flex gap-4 pb-4 overflow-x-auto snap-x scroll-smooth md:pb-0 md:contents hide-scrollbar">
                                 <template x-for="film in filteredMovies().slice(1, 7)" :key="film.id">
                                     <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[4px_4px_0px_var(--border)] flex flex-col justify-between group min-w-[240px] md:min-w-0 snap-start">
                                         <div class="relative aspect-[4/5] overflow-hidden border-b-[3px] border-border bg-slate-50">
@@ -402,7 +401,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                             </div>
                                             <div class="flex items-center justify-between pt-2">
                                                 <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="film.duration"></span>
-                                                <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border hover:underline">
+                                                <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-accent-green rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border hover:underline">
                                                     Beli Tiket <span class="font-bold">&gt;</span>
                                                 </a>
                                             </div>
@@ -458,7 +457,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 <a href="#" class="text-xs font-bold underline decoration-2 hover:text-main">Lihat Semua</a>
                             </div>
 
-                            <div class="flex gap-4 overflow-x-auto snap-x scroll-smooth pb-4 sm:grid sm:grid-cols-3 sm:pb-0 hide-scrollbar">
+                            <div class="flex gap-4 pb-4 overflow-x-auto snap-x scroll-smooth sm:grid sm:grid-cols-3 sm:pb-0 hide-scrollbar">
                                 @foreach (array_slice($snacks, 0, 3) as $snack)
                                 <div class="border-[3px] border-border rounded-xl bg-white p-3 flex flex-col justify-between shadow-[2px_2px_0px_var(--border)] relative min-w-[140px] sm:min-w-0 snap-start">
                                     <div>
@@ -533,7 +532,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                     <div class="flex-1 min-w-0">
                                         <h3 class="text-xs font-black leading-tight uppercase text-foreground line-clamp-1">{{ $film['title'] }}</h3>
                                         <p class="text-[9px] font-bold text-foreground/50 uppercase tracking-wider mt-0.5">{{ $film['genre'] }}</p>
-                                        <p class="text-[10px] font-extrabold text-emerald-600 mt-1">{{ strtoupper($film['tanggal_rilis'] ?? 'Coming Soon') }}</p>
+                                        <p class="text-[10px] font-extrabold text-accent-green mt-1">{{ strtoupper($film['tanggal_rilis'] ?? 'Coming Soon') }}</p>
                                     </div>
                                     <button class="px-3 py-2 bg-white border-2 border-border rounded-xl text-[10px] font-extrabold text-foreground hover:bg-slate-50 shadow-[1px_1px_0px_var(--border)] active:translate-y-[1px] active:shadow-none transition-all flex items-center gap-1.5 whitespace-nowrap focus:outline-none focus:ring-2 focus:ring-border">
                                         <x-icon name="heroicon-s-bell" class="w-3.5 h-3.5 text-border" />
@@ -576,42 +575,47 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 <footer class="hidden md:block border-[3px] border-border rounded-[20px] bg-white p-6 md:p-8 shadow-[4px_4px_0px_var(--border)]">
                     <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
                         <div class="space-y-3 md:col-span-5">
-                            <div class="flex items-center gap-2 text-2xl font-black tracking-tight font-heading text-foreground">
-                                <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
-                                Ticketra<span class="text-accent-green">.</span>
-                            </div>
+                            <a href="{{ route('landing') }}" class="flex items-center gap-3">
+                                <img
+                                    src="{{ asset('favicon/android-icon-96x96.png') }}"
+                                    alt="Ticketra Logo"
+                                    class="w-10 h-10 rounded-xl"
+                                >
+                                <span class="text-2xl font-extrabold tracking-tight font-heading">
+                                    Ticketra<span class="text-neo-purple">.</span>
+                                </span>
+                            </a> 
                             <p class="max-w-sm text-xs font-bold leading-relaxed text-foreground/60">Platform pemesanan tiket bioskop masa depan. Bebas antre, banyak promo, kursi pasti dapat.</p>
                         </div>
                         <div class="md:col-span-2">
                             <h4 class="mb-4 text-xs font-extrabold tracking-wider uppercase text-foreground">Navigasi</h4>
                             <ul class="space-y-2 text-xs font-bold text-foreground/60">
-                                <li><a href="{{ route('dashboard') }}" class="hover:text-accent-green hover:underline decoration-2">Beranda</a></li>
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Bioskop</a></li>
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Film</a></li>
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Promo</a></li>
+                                <li><a href="{{ route('dashboard') }}" class="hover:text-neo-purple hover:underline decoration-2">Beranda</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Bioskop</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Film</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Promo</a></li>
                             </ul>
                         </div>
                         <div class="md:col-span-2">
                             <h4 class="mb-4 text-xs font-extrabold tracking-wider uppercase text-foreground">Bantuan</h4>
                             <ul class="space-y-2 text-xs font-bold text-foreground/60">
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Pusat Bantuan</a></li>
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Syarat & Ketentuan</a></li>
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Kebijakan Privasi</a></li>
-                                <li><a href="#" class="hover:text-accent-green hover:underline decoration-2">Hubungi Kami</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Pusat Bantuan</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Syarat & Ketentuan</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Kebijakan Privasi</a></li>
+                                <li><a href="#" class="hover:text-neo-purple hover:underline decoration-2">Hubungi Kami</a></li>
                             </ul>
                         </div>
                         <div class="md:col-span-3">
                             <h4 class="mb-4 text-xs font-extrabold tracking-wider uppercase text-foreground">Ikuti Kami</h4>
-                            <div class="flex gap-3">
-                                <a href="#" class="flex items-center justify-center font-black text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
-                                    f
+                            <div class="flex gap-4">
+                                <a href="#" class="flex items-center justify-center w-12 h-12 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:bg-main hover:text-white hover:-translate-y-1" aria-label="Instagram">
+                                    <x-fab-instagram class="w-5 h-5"/>
                                 </a>
-                                <a href="#" class="flex items-center justify-center font-bold text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
-
-                                     <x-icon name="heroicon-s-tv" class="w-4 h-4" />
+                                <a href="#" class="flex items-center justify-center w-12 h-12 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:bg-main hover:text-white hover:-translate-y-1" aria-label="Youtube">
+                                    <x-fab-youtube class="w-5 h-5"/>
                                 </a>
-                                <a href="#" class="flex items-center justify-center font-bold text-white transition-transform border-2 rounded-full w-9 h-9 bg-border border-border hover:scale-105 focus:outline-none">
-                                    ▶
+                                <a href="#" class="flex items-center justify-center w-12 h-12 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:bg-main hover:text-white hover:-translate-y-1" aria-label="Twitter">
+                                    <x-fab-x-twitter class="w-5 h-5"/>
                                 </a>
                             </div>
                         </div>

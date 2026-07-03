@@ -7,12 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class SnackOrder extends Model
 {
-    use HasFactory, HasUuids;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-use Spatie\Activitylog\Support\LogOptions;
+    use HasFactory, HasUuids, LogsActivity;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -34,7 +34,6 @@ use Spatie\Activitylog\Support\LogOptions;
     protected static function booted()
     {
         static::updated(function ($order) {
-            // Cek jika status berubah
             if ($order->isDirty('status')) {
                 $user = $order->user;
                 if ($user) {
@@ -72,12 +71,11 @@ use Spatie\Activitylog\Support\LogOptions;
         return $this->belongsTo(Booking::class);
     }
 
-        public function getActivitylogOptions(): LogOptions
+    public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logOnly(['order_id', 'status', 'fnb_total'])
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
+            ->logOnlyDirty();
     }
 
     public function items(): HasMany

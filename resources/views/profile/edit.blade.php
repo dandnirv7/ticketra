@@ -7,7 +7,7 @@
 
     <div class="max-w-4xl space-y-6" x-data="{ activeTab: 'overview' }">
         
-        <div class="flex overflow-x-auto whitespace-nowrap snap-x scroll-smooth pb-2 gap-2.5 border-b-[3px] border-border/10">
+        <div class="flex overflow-x-auto whitespace-nowrap snap-x scroll-smooth pb-2 gap-2.5 border-b-[3px] border-border/10 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
             <button @click="activeTab = 'overview'" 
                 :class="activeTab === 'overview' ? 'bg-pastel-mint text-border border-border shadow-[2px_2px_0px_rgba(0,0,0,1)] translate-x-[1px] translate-y-[1px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5'"
                 class="px-4 py-2.5 rounded-xl border-2 border-border text-xs font-black uppercase tracking-wider transition-all focus:outline-none select-none snap-start shrink-0">
@@ -107,9 +107,9 @@
                                 $bioskop = $studio?->bioskop;
                             @endphp
                             <div class="border-[3px] border-border rounded-xl p-4 flex flex-col sm:flex-row items-stretch sm:items-center gap-4 bg-slate-50/50 hover:bg-slate-50 transition-colors">
-                                @if($film && $film->poster)
+                                @if($film && $film->poster_url)
                                     <div class="w-16 h-24 border-2 border-border rounded-lg overflow-hidden shrink-0 shadow-[2px_2px_0px_rgba(0,0,0,1)]">
-                                        <img src="{{ $film->poster }}" alt="{{ $film->title }}" class="w-full h-full object-cover">
+                                        <img src="{{ $film->poster_url }}" alt="{{ $film->judul }}" class="w-full h-full object-cover">
                                     </div>
                                 @endif
                                 <div class="flex-1 space-y-1">
@@ -132,7 +132,7 @@
                                         @endif
                                     </div>
                                     <h4 class="text-base font-black text-gray-900 uppercase tracking-tight">
-                                        {{ $film?->title ?? 'N/A' }}
+                                        {{ $film?->judul ?? 'N/A' }}
                                     </h4>
                                     <p class="text-xs font-semibold text-gray-500">
                                         📍 {{ $bioskop?->nama ?? 'N/A' }} &bull; {{ $studio?->nama ?? 'N/A' }}
@@ -143,7 +143,7 @@
                                 </div>
                                 <div class="sm:text-right flex sm:flex-col items-center sm:items-end justify-between sm:justify-center gap-2">
                                     <p class="text-sm font-black text-accent-red">
-                                        Rp {{ number_format($booking->total_harga, 0, ',', '.') }}
+                                        Rp {{ number_format($booking->total_price, 0, ',', '.') }}
                                     </p>
                                     @if($booking->status === 'confirmed' || $booking->status === 'pending_payment')
                                         <a href="{{ route('bookings.show', $booking->id) }}" class="brutal-btn bg-accent-yellow !py-1.5 !px-3 text-[10px] shadow-[2px_2px_0px_rgba(0,0,0,1)] border-2 border-border rounded-lg select-none">

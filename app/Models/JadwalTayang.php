@@ -7,25 +7,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class JadwalTayang extends Model
 {
+    /** @use HasFactory<\Database\Factories\JadwalTayangFactory> */
     use HasFactory, HasUuids, SoftDeletes, LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['film_id', 'studio_id', 'waktu_mulai', 'waktu_selesai', 'harga', 'status'])
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
-    }
-
-
-{
-    /** @use HasFactory<\Database\Factories\JadwalTayangFactory> */
-    use HasFactory, HasUuids, SoftDeletes;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-use Spatie\Activitylog\Support\LogOptions;
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -37,9 +26,16 @@ use Spatie\Activitylog\Support\LogOptions;
         'harga' => 'decimal:2',
     ];
 
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['film_id', 'studio_id', 'waktu_mulai', 'waktu_selesai', 'harga', 'status'])
+            ->logOnlyDirty();
+    }
+
     public function film(): BelongsTo
     {
-        return $this->belongsTo(Film::class)->withTrashed();
+        return $this->belongsTo(Film::class);
     }
 
     public function studio(): BelongsTo

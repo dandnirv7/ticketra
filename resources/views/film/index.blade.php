@@ -18,6 +18,12 @@
 
 <x-app-layout>
 
+      <x-slot name="header">
+    <h2 class="text-2xl font-black leading-tight text-gray-900">
+      Daftar Film
+    </h2>
+  </x-slot>
+
     <div x-data="{
         searchQuery: new URLSearchParams(window.location.search).get('q') || '',
         activeTab: new URLSearchParams(window.location.search).get('tab') || 'Semua',
@@ -108,8 +114,8 @@
         <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[24px] shadow-[8px_8px_0px_var(--border)]">
             <div class="grid items-center gap-6 lg:grid-cols-12">
                 <div class="relative z-10 space-y-4 md:space-y-5 lg:col-span-8">
-                    <span class="inline-flex items-center gap-1 px-3 py-1 bg-border text-white rounded-full text-[9px] font-extrabold uppercase tracking-wider">
-                        <x-icon name="heroicon-s-fire" class="w-3 h-3 text-accent-red fill-current" /> TRENDING NOW
+                    <span class="inline-flex items-center gap-1 px-3 py-1.5 text-sm font-extrabold tracking-wider text-white uppercase rounded-full bg-border">
+                        <x-icon name="heroicon-s-fire" class="w-4 h-4 fill-current text-accent-red" /> Trending Now
                     </span>
                     <h2 class="text-4xl md:text-5xl lg:text-6xl font-heading font-black leading-[0.95] uppercase tracking-tight max-w-lg">
                         {{ $heroMovie->judul }}
@@ -152,7 +158,7 @@
             <div class="flex flex-wrap gap-2">
                 <template x-for="tab in ['Semua', 'Sedang Tayang', 'Akan Tayang']" :key="tab">
                     <button @click="setTab(tab)"
-                        :class="activeTab === tab ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
+                        :class="activeTab === tab ? 'bg-neo-purple text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
                         class="px-4 py-2 rounded-xl border-[3px] border-border text-xs font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none"
                         x-text="tab">
                     </button>
@@ -195,8 +201,8 @@
             class="text-center py-24 bg-white border-[3px] border-border border-dashed rounded-[2rem]"
             style="display: none;">
             <div class="w-20 h-20 bg-pastel-sky border-[3px] border-border rounded-full flex items-center justify-center mx-auto mb-4 text-4xl transform rotate-12 shadow-[3px_3px_0px_var(--border)]">🍿</div>
-            <h3 class="text-3xl mb-2 font-heading font-black uppercase tracking-tight">Ups, Film Gak Ketemu</h3>
-            <p class="font-medium opacity-70 text-lg">Coba cari judul film, genre, atau sinopsis lainnya.</p>
+            <h3 class="mb-2 text-3xl font-black tracking-tight uppercase font-heading">Ups, Film Gak Ketemu</h3>
+            <p class="text-lg font-medium opacity-70">Coba cari judul film, genre, atau sinopsis lainnya.</p>
         </div>
 
         <section x-show="hasAnyMovies() && (activeTab === 'Semua' || activeTab === 'Sedang Tayang')" class="space-y-6">

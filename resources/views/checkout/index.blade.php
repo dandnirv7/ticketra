@@ -7,7 +7,8 @@
     $totalPrice = (float) $booking->total_price;
     $serviceFee = (float) ($booking->service_fee ?? 0);
     $fnbTotal = (float) ($booking->fnb_total ?? 0);
-    $grandTotal = $totalPrice + $serviceFee + $fnbTotal;
+    $discountAmount = (float) ($booking->discount_amount ?? 0);
+    $grandTotal = $totalPrice + $serviceFee + $fnbTotal - $discountAmount;
 @endphp
 
 <x-app-layout>
@@ -15,6 +16,8 @@
         x-data="{
             countdown: '',
             isPaying: false,
+            toastMessage: '',
+            showToast: false,
             init() {
                 @if ($isPayable && $booking->lock_expiry)
                 this.startCountdown('{{ $booking->lock_expiry->toIso8601String() }}');
@@ -43,7 +46,7 @@
                 <h2 class="text-xl sm:text-2xl font-black leading-tight text-gray-900">
                     Checkout Tiket
                 </h2>
-                <a href="{{ route('dashboard') }}" class="neo-back-button border-black hover:border-accent-red hover:bg-red-50 hover:text-accent-red w-full sm:w-auto text-center">
+                <a href="{{ route('film.show', $film->id) }}" class="neo-back-button border-black hover:border-accent-red hover:bg-red-50 hover:text-accent-red w-full sm:w-auto text-center">
                     Batalkan Pesanan
                 </a>
             </div>
@@ -158,7 +161,6 @@
                 </div>
 
                 <div class="space-y-6">
-                    <!-- Form Promo Code -->
                     @if ($isPayable)
                         <div class="brutal-box bg-white p-6 md:p-8">
                             <h3 class="pb-3 mb-4 text-lg uppercase font-black border-b-2 border-dashed border-border flex items-center justify-between">
@@ -209,6 +211,12 @@
                                 <span>Camilan (F&B)</span>
                                 <span>Rp {{ number_format($fnbTotal, 0, ',', '.') }}</span>
                             </div>
+                            @if ($discountAmount > 0)
+                            <div class="flex justify-between text-emerald-600">
+                                <span>Diskon Promo</span>
+                                <span>-Rp {{ number_format($discountAmount, 0, ',', '.') }}</span>
+                            </div>
+                            @endif
                             <div class="flex items-center justify-between pt-4 mt-3 border-t-2 border-dashed border-border">
                                 <span class="text-xs font-extrabold uppercase tracking-widest">Total Pembayaran</span>
                                 <span class="font-price text-3xl font-extrabold text-accent-red">Rp {{ number_format($grandTotal, 0, ',', '.') }}</span>
@@ -226,11 +234,11 @@
 
                             <button id="pay-button"
                                     type="button"
-                                    @click="isPaying = true; window.snap.pay('{{ $snapToken }}', {
+                                    @click="isPaying = true; const _t = (m) => { toastMessage = m; showToast = true; setTimeout(() => showToast = false, 3000); }; window.snap.pay('{{ $snapToken }}', {
                                         onSuccess: (r) => { window.location.href = '{{ route('payment.success', $booking->id) }}'; },
                                         onPending: (r) => { window.location.href = '{{ route('payment.pending', $booking->id) }}'; },
-                                        onError:   (r) => { alert('Pembayaran gagal. Silakan coba lagi.'); isPaying = false; },
-                                        onClose:   ()  => { alert('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.'); isPaying = false; }
+                                        onError:   (r) => { _t('Pembayaran gagal. Silakan coba lagi.'); isPaying = false; },
+                                        onClose:   ()  => { _t('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.'); isPaying = false; }
                                     })"
                                     :disabled="isPaying"
                                     class="brutal-btn !py-4 !px-10 text-lg w-full justify-center">
@@ -243,6 +251,10 @@
                                     Memproses Pembayaran...
                                 </span>
                             </button>
+
+                            <div x-show="showToast" x-transition.duration.300ms
+                                 class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[999] px-6 py-3 bg-white border-[3px] border-border rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs font-black text-center whitespace-nowrap"
+                                 x-text="toastMessage"></div>
 
                             <p class="mt-4 text-[10px] font-bold uppercase tracking-widest opacity-60">
                                 <x-icon name="heroicon-s-lock-closed" class="inline w-3 h-3 mr-1" />

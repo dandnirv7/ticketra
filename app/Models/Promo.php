@@ -5,24 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Promo extends Model
 {
     use HasFactory, HasUuids, LogsActivity;
-
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['code', 'title', 'type', 'discount_amount', 'min_purchase', 'max_uses', 'is_active'])
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
-    }
-
-
-{
-    use HasFactory, HasUuids;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-use Spatie\Activitylog\Support\LogOptions;
 
     protected $fillable = [
         'code',
@@ -37,6 +25,7 @@ use Spatie\Activitylog\Support\LogOptions;
         'starts_at',
         'expires_at',
         'is_active',
+        'max_discount',
     ];
 
     protected $casts = [
@@ -45,7 +34,15 @@ use Spatie\Activitylog\Support\LogOptions;
         'starts_at' => 'datetime',
         'expires_at' => 'datetime',
         'is_active' => 'boolean',
+        'max_discount' => 'decimal:2',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['code', 'title', 'type', 'discount_amount', 'min_purchase', 'max_uses', 'is_active'])
+            ->logOnlyDirty();
+    }
 
     public function isValidFor(float $subtotal, ?string &$errorMsg = null): bool
     {

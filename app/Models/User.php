@@ -11,8 +11,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-#[Fillable(['name', 'email', 'password', 'phone', 'avatar_emoji', 'role'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
     /** @use HasFactory<UserFactory> */
@@ -20,6 +18,20 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 
     public $incrementing = false;
     protected $keyType = 'string';
+
+    protected $fillable = [
+        'name',
+        'email',
+        'password',
+        'phone',
+        'avatar_emoji',
+        'role',
+    ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+    ];
 
     public function canAccessPanel(Panel $panel): bool
     {

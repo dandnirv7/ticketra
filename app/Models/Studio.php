@@ -8,25 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
 class Studio extends Model
 {
+    /** @use HasFactory<\Database\Factories\StudioFactory> */
     use HasFactory, HasUuids, SoftDeletes, LogsActivity;
 
-    public function getActivitylogOptions(): LogOptions
-    {
-        return LogOptions::defaults()
-            ->logOnly(['nama', 'tipe', 'kapasitas', 'bioskop_id'])
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
-    }
-
-
-{
-    /** @use HasFactory<\Database\Factories\StudioFactory> */
-    use HasFactory, HasUuids, SoftDeletes;
-use Spatie\Activitylog\Models\Concerns\LogsActivity;
-use Spatie\Activitylog\Support\LogOptions;
     public $incrementing = false;
     protected $keyType = 'string';
 
@@ -42,6 +31,13 @@ use Spatie\Activitylog\Support\LogOptions;
         'layout_kursi' => 'array',
         'kapasitas' => 'integer',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['nama', 'tipe', 'kapasitas', 'bioskop_id'])
+            ->logOnlyDirty();
+    }
 
     public function bioskop(): BelongsTo
     {

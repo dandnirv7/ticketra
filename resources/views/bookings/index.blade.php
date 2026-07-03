@@ -43,8 +43,8 @@
     </div>
   </div>
 
-  <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
-    <div class="lg:col-span-2 p-6 neo-card bg-white">
+  <div class="grid items-start grid-cols-1 gap-6 lg:grid-cols-3">
+    <div class="p-6 bg-white lg:col-span-2 neo-card">
       <h3 class="flex items-center gap-2 mb-6 text-xl font-black uppercase">
         <x-heroicon-o-clipboard-document-list class="w-6 h-6 text-main" />
         Tiket Bioskop
@@ -59,7 +59,7 @@
           <div class="flex flex-col justify-between gap-4 md:flex-row md:items-center">
             <div class="flex-1">
               <div class="flex items-center gap-2 mb-2">
-                <span class="text-xs font-black text-gray-600 font-mono">{{ $booking->booking_id }}</span>
+                <span class="font-mono text-xs font-black text-gray-600">{{ $booking->booking_id }}</span>
                 @if($booking->status === 'confirmed')
                 <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded border border-emerald-600 bg-emerald-50 text-emerald-700">Confirmed</span>
                 @elseif($booking->status === 'pending_payment' || $booking->status === 'locked')
@@ -101,10 +101,10 @@
             </div>
 
             <div class="text-right shrink-0">
-              <p class="text-2xl font-black font-price text-black">
+              <p class="text-2xl font-black text-black font-price">
                 Rp {{ number_format($booking->total_price + $booking->service_fee + $booking->fnb_total, 0, ',', '.') }}
               </p>
-              <p class="mt-1 text-xs text-gray-600 font-bold">
+              <p class="mt-1 text-xs font-bold text-gray-600">
                 {{ $booking->created_at->diffForHumans() }}
               </p>
               <span class="inline-block mt-3 text-xs brutal-btn !py-1.5 !px-3 shadow-[2px_2px_0px_var(--border)]">
@@ -126,7 +126,7 @@
           <x-heroicon-o-clipboard-document-list class="w-10 h-10 text-black" />
         </div>
         <h3 class="mb-2 text-xl font-black uppercase">Belum ada tiket</h3>
-        <p class="mb-6 font-bold text-sm text-gray-600">Kamu belum pernah memesan tiket film.</p>
+        <p class="mb-6 text-sm font-bold text-gray-600">Kamu belum pernah memesan tiket film.</p>
         <a href="{{ route('landing') }}" class="brutal-btn !py-2.5 !px-6 text-sm">
           Cari Film <x-heroicon-o-film class="inline w-4 h-4 ml-1" />
         </a>
@@ -135,7 +135,7 @@
     </div>
 
     <div class="p-6 neo-card bg-pastel-peach border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)]">
-      <h3 class="flex items-center gap-2 mb-6 text-xl font-black uppercase text-black">
+      <h3 class="flex items-center gap-2 mb-6 text-xl font-black text-black uppercase">
         <x-heroicon-o-shopping-bag class="w-6 h-6 text-black" />
         Pesanan Camilan
       </h3>
@@ -145,7 +145,7 @@
         @foreach($snackOrders as $order)
         <div class="brutal-box bg-white p-4 relative shadow-[3px_3px_0px_var(--border)]">
           <div class="flex items-center justify-between gap-2 mb-3">
-            <span class="text-xs font-black text-gray-700 font-mono">{{ $order->order_id }}</span>
+            <span class="font-mono text-xs font-black text-gray-700">{{ $order->order_id }}</span>
             @if($order->status === 'paid')
             <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded border border-emerald-600 bg-emerald-50 text-emerald-700">Lunas</span>
             @elseif($order->status === 'locked' || $order->status === 'draft')
@@ -155,19 +155,19 @@
             @endif
           </div>
 
-          <div class="space-y-2 border-b-2 border-dashed border-border/20 pb-3 mb-3">
+          <div class="pb-3 mb-3 space-y-2 border-b-2 border-dashed border-border/20">
             @foreach($order->items as $item)
             <div class="flex items-center justify-between text-xs font-bold text-gray-800">
               <span class="flex items-center gap-1.5">
                 <span class="text-sm shrink-0">{{ $item->snack_emoji }}</span>
-                <span>{{ $item->snack_name }} <span class="text-gray-500 font-semibold">&times;{{ $item->qty }}</span></span>
+                <span>{{ $item->snack_name }} <span class="font-semibold text-gray-500">&times;{{ $item->qty }}</span></span>
               </span>
               <span>Rp {{ number_format($item->price * $item->qty, 0, ',', '.') }}</span>
             </div>
             @endforeach
           </div>
 
-          <div class="flex justify-between items-center">
+          <div class="flex items-center justify-between">
             <div>
               <p class="text-[10px] font-bold text-gray-500 uppercase tracking-wider">{{ $order->created_at->diffForHumans() }}</p>
               <p class="font-price font-black text-lg text-black mt-0.5">Rp {{ number_format($order->fnb_total, 0, ',', '.') }}</p>
@@ -194,9 +194,9 @@
 
       @else
       <div class="py-12 text-center bg-white border-2 border-black border-dashed rounded-2xl">
-        <x-heroicon-o-shopping-bag class="w-10 h-10 text-gray-400 mx-auto mb-3" />
-        <p class="text-sm font-black uppercase text-gray-700">Belum ada pesanan camilan</p>
-        <p class="text-xs text-gray-500 font-bold mt-1 px-4">Kamu bisa memesan camilan langsung untuk diambil di bioskop.</p>
+        <x-heroicon-o-shopping-bag class="w-10 h-10 mx-auto mb-3 text-gray-400" />
+        <p class="text-sm font-black text-gray-700 uppercase">Belum ada pesanan camilan</p>
+        <p class="px-4 mt-1 text-xs font-bold text-gray-500">Kamu bisa memesan camilan langsung untuk diambil di bioskop.</p>
         <a href="{{ route('snacks.index') }}" class="brutal-btn !py-2 !px-4 !text-xs mt-4 inline-block bg-pastel-mint">
           Pesan Camilan
         </a>

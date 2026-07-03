@@ -75,14 +75,14 @@
 
         
         <div class="fixed left-0 right-0 z-50 px-4 pointer-events-none top-4">
-            <nav class="relative flex items-center justify-between h-16 max-w-6xl px-6 mx-auto transition-all border-2 shadow-md pointer-events-auto bg-white/90 backdrop-blur-md border-border rounded-xl gap-3">
+            <nav class="relative flex items-center justify-between h-16 max-w-6xl gap-3 px-6 mx-auto transition-all border-2 shadow-md pointer-events-auto bg-white/90 backdrop-blur-md border-border rounded-xl">
                 <a href="{{ route('landing') }}" class="flex items-center gap-2 text-xl font-extrabold tracking-tight md:text-2xl font-heading">
                     <x-icon name="heroicon-s-ticket" class="w-6 h-6 md:w-8 md:h-8 text-main fill-main/20" />
                     Ticketra<span class="text-main">.</span>
                 </a>
 
                 
-                <div class="hidden gap-4 font-bold text-sm tracking-wide md:flex lg:gap-6">
+                <div class="hidden gap-4 text-sm font-bold tracking-wide md:flex lg:gap-6">
                     <a href="#fitur" class="transition-colors hover:text-main">Fitur</a>
                     <a href="#cara-pesan" class="transition-colors hover:text-main">Cara Pesan</a>
                     <a href="#promo" class="transition-colors hover:text-main">Promo</a>
@@ -122,18 +122,18 @@
 
         
         <header class="grid items-center gap-12 px-4 pt-32 pb-16 mx-auto max-w-7xl md:pt-40 md:pb-24 lg:grid-cols-2">
-            <div class="space-y-8 relative z-10">
+            <div class="relative z-10 space-y-8">
                 <div class="inline-flex items-center gap-2 px-4 py-1.5 bg-pastel-lemon border-2 border-border rounded-full font-bold text-sm shadow-sm">
-                    <span class="w-2 h-2 bg-accent-red rounded-full animate-pulse border border-border"></span>
+                    <span class="w-2 h-2 border rounded-full bg-accent-red animate-pulse border-border"></span>
                     Bioskop Kini dalam Genggaman
                 </div>
 
                 <h1 class="text-5xl md:text-7xl leading-[1.1]">
                     Lewati Antrean,<br>
-                    <span class="bg-main px-2 inline-block -rotate-2 border-2 border-border mt-3 text-white shadow-sm">Amankan Kursimu.</span>
+                    <span class="inline-block px-2 mt-3 text-white border-2 shadow-sm bg-main -rotate-2 border-border">Amankan Kursimu.</span>
                 </h1>
 
-                <p class="text-lg md:text-xl font-medium opacity-80 max-w-md leading-relaxed">
+                <p class="max-w-md text-lg font-medium leading-relaxed md:text-xl opacity-80">
                     Pesan tiket bioskop instan, pilih kursi favorit duluan, dan kumpulkan promo eksklusif tanpa harus kehabisan.
                 </p>
 
@@ -146,7 +146,7 @@
                     </a>
                 </div>
 
-                <div class="flex items-center gap-6 md:gap-10 pt-6 border-t-2 border-border/20">
+                <div class="flex items-center gap-6 pt-6 border-t-2 md:gap-10 border-border/20">
                     <div>
                         <div class="text-3xl font-extrabold text-main">500+</div>
                         <div class="text-sm font-bold opacity-70">Bioskop Partner</div>
@@ -156,14 +156,14 @@
                         <div class="text-sm font-bold opacity-70">Tiket Terjual</div>
                     </div>
                     <div>
-                        <div class="text-3xl font-extrabold text-main flex items-center gap-1">4.9 <x-icon name="heroicon-s-star" class="w-6 h-6 fill-main" /></div>
+                        <div class="flex items-center gap-1 text-3xl font-extrabold text-main">4.9 <x-icon name="heroicon-s-star" class="w-6 h-6 fill-main" /></div>
                         <div class="text-sm font-bold opacity-70">Rating User</div>
                     </div>
                 </div>
             </div>
 
             
-            <div class="relative hidden lg:flex justify-center items-center perspective-1000">
+            <div class="relative items-center justify-center hidden lg:flex perspective-1000">
                 <div class="absolute w-[80%] h-[80%] bg-pastel-lavender border-2 border-border rounded-[2rem] transform rotate-6 shadow-lg translate-x-4"></div>
                 <div class="absolute w-[80%] h-[80%] bg-pastel-mint border-2 border-border rounded-[2rem] transform -rotate-3 shadow-lg -translate-x-4"></div>
 
@@ -172,8 +172,8 @@
                         <div class="absolute -left-4 -bottom-4 w-8 h-8 bg-[#f5f6f8] border-y-2 border-r-2 border-border rounded-r-full z-10"></div>
                         <div class="absolute -right-4 -bottom-4 w-8 h-8 bg-[#f5f6f8] border-y-2 border-l-2 border-border rounded-l-full z-10"></div>
 
-                        <div class="flex justify-between items-center mb-5">
-                            <span class="font-heading font-extrabold text-xl flex items-center gap-1">
+                        <div class="flex items-center justify-between mb-5">
+                            <span class="flex items-center gap-1 text-xl font-extrabold font-heading">
                                 <x-icon name="heroicon-s-ticket" class="w-5 h-5 text-main" /> Ticketra.
                             </span>
                             <span class="text-[10px] font-bold bg-pastel-lemon border border-border px-2 py-1 rounded">E-TICKET</span>
@@ -181,14 +181,14 @@
 
                         <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&q=80&w=400&h=600" class="w-full h-40 object-cover border-2 border-border rounded-lg mb-4 grayscale-[10%] group-hover:grayscale-0 transition-all">
 
-                        <h3 class="font-extrabold text-2xl leading-tight mb-1">Dune: Part Two</h3>
-                        <p class="text-sm font-bold opacity-70 mb-2">CGV Grand Indonesia • Studio 1</p>
+                        <h3 class="mb-1 text-2xl font-extrabold leading-tight">Dune: Part Two</h3>
+                        <p class="mb-2 text-sm font-bold opacity-70">CGV Grand Indonesia • Studio 1</p>
                     </div>
 
-                    <div class="h-0 border-t-4 border-dashed border-border bg-white mx-1 relative z-0"></div>
+                    <div class="relative z-0 h-0 mx-1 bg-white border-t-4 border-dashed border-border"></div>
 
                     <div class="brutal-box bg-pastel-sky border-t-0 rounded-t-none p-6 shadow-[8px_8px_0px_var(--border)]">
-                        <div class="grid grid-cols-3 gap-2 text-sm font-bold mb-5 bg-white p-3 rounded-lg border-2 border-border">
+                        <div class="grid grid-cols-3 gap-2 p-3 mb-5 text-sm font-bold bg-white border-2 rounded-lg border-border">
                             <div>
                                 <div class="text-[10px] text-gray-500 uppercase">TGL</div>
                                 <div>24 Apr</div>
@@ -203,7 +203,7 @@
                             </div>
                         </div>
 
-                        <div class="flex justify-between items-end h-12 w-full px-2 opacity-80 mix-blend-multiply">
+                        <div class="flex items-end justify-between w-full h-12 px-2 opacity-80 mix-blend-multiply">
                             <div class="w-1.5 h-full bg-border"></div>
                             <div class="w-3 h-full bg-border"></div>
                             <div class="w-1 h-full bg-border"></div>
@@ -224,34 +224,34 @@
         </header>
 
         
-        <section id="fitur" class="bg-secondary-background border-y-2 border-border py-16 md:py-24 relative z-10">
-            <div class="max-w-7xl mx-auto px-4">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-5xl mb-4">Kenapa Harus <span class="bg-main text-white px-2 border-2 border-border transform -rotate-1 inline-block">Ticketra?</span></h2>
-                    <p class="font-medium opacity-80 max-w-2xl mx-auto text-lg">Tinggalkan cara lama. Kami mendesain platform ini agar pengalaman nonton bioskopmu jadi semulus sutra.</p>
+        <section id="fitur" class="relative z-10 py-16 bg-secondary-background border-y-2 border-border md:py-24">
+            <div class="px-4 mx-auto max-w-7xl">
+                <div class="mb-16 text-center">
+                    <h2 class="mb-4 text-3xl md:text-5xl">Kenapa Harus <span class="inline-block px-2 text-white transform border-2 bg-main border-border -rotate-1">Ticketra?</span></h2>
+                    <p class="max-w-2xl mx-auto text-lg font-medium opacity-80">Tinggalkan cara lama. Kami mendesain platform ini agar pengalaman nonton bioskopmu jadi semulus sutra.</p>
                 </div>
 
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="brutal-box p-8 bg-pastel-sky flex flex-col hover:-translate-y-2 transition-transform">
-                        <div class="w-14 h-14 bg-white border-2 border-border rounded-full flex items-center justify-center mb-6 shadow-sm">
+                <div class="grid gap-8 md:grid-cols-3">
+                    <div class="flex flex-col p-8 transition-transform brutal-box bg-pastel-sky hover:-translate-y-2">
+                        <div class="flex items-center justify-center mb-6 bg-white border-2 rounded-full shadow-sm w-14 h-14 border-border">
                             <x-icon name="heroicon-s-bolt" class="w-7 h-7 text-accent-red" />
                         </div>
-                        <h3 class="text-2xl mb-3">Tanpa Antre, Tanpa Kertas</h3>
-                        <p class="font-medium opacity-80 text-base">Pesan dari rumah, dapatkan E-Ticket seketika. Cukup scan barcode langsung di pintu studio. Sayangi waktumu dan bumi.</p>
+                        <h3 class="mb-3 text-2xl">Tanpa Antre, Tanpa Kertas</h3>
+                        <p class="text-base font-medium opacity-80">Pesan dari rumah, dapatkan E-Ticket seketika. Cukup scan barcode langsung di pintu studio. Sayangi waktumu dan bumi.</p>
                     </div>
-                    <div class="brutal-box p-8 bg-pastel-peach flex flex-col md:mt-8 hover:-translate-y-2 transition-transform">
-                        <div class="w-14 h-14 bg-white border-2 border-border rounded-full flex items-center justify-center mb-6 shadow-sm">
+                    <div class="flex flex-col p-8 transition-transform brutal-box bg-pastel-peach md:mt-8 hover:-translate-y-2">
+                        <div class="flex items-center justify-center mb-6 bg-white border-2 rounded-full shadow-sm w-14 h-14 border-border">
                             <x-icon name="heroicon-s-cube" class="w-7 h-7 text-accent-green" />
                         </div>
-                        <h3 class="text-2xl mb-3">Pilih Kursi Strategis</h3>
-                        <p class="font-medium opacity-80 text-base">Denah kursi real-time di semua layar. Amankan posisi tengah (sweet spot) dengan cepat sebelum didahului penonton lain.</p>
+                        <h3 class="mb-3 text-2xl">Pilih Kursi Strategis</h3>
+                        <p class="text-base font-medium opacity-80">Denah kursi real-time di semua layar. Amankan posisi tengah (sweet spot) dengan cepat sebelum didahului penonton lain.</p>
                     </div>
-                    <div class="brutal-box p-8 bg-pastel-lavender flex flex-col md:mt-16 hover:-translate-y-2 transition-transform">
-                        <div class="w-14 h-14 bg-white border-2 border-border rounded-full flex items-center justify-center mb-6 shadow-sm">
+                    <div class="flex flex-col p-8 transition-transform brutal-box bg-pastel-lavender md:mt-16 hover:-translate-y-2">
+                        <div class="flex items-center justify-center mb-6 bg-white border-2 rounded-full shadow-sm w-14 h-14 border-border">
                             <x-icon name="heroicon-s-shield-check" class="w-7 h-7 text-accent-yellow" />
                         </div>
-                        <h3 class="text-2xl mb-3">Aman & Banyak Untungnya</h3>
-                        <p class="font-medium opacity-80 text-base">Transaksi aman terenkripsi. Dapatkan loyalty points di setiap pembelian tiket atau makanan yang bisa ditukar tiket gratis.</p>
+                        <h3 class="mb-3 text-2xl">Aman & Banyak Untungnya</h3>
+                        <p class="text-base font-medium opacity-80">Transaksi aman terenkripsi. Dapatkan loyalty points di setiap pembelian tiket atau makanan yang bisa ditukar tiket gratis.</p>
                     </div>
                 </div>
             </div>
@@ -259,19 +259,19 @@
 
         
         <section id="cara-pesan" class="py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4">
-                <h2 class="text-3xl md:text-5xl text-center mb-16">Pesan Tiket Semudah <span class="text-accent-red">1, 2, 3!</span></h2>
+            <div class="px-4 mx-auto max-w-7xl">
+                <h2 class="mb-16 text-3xl text-center md:text-5xl">Pesan Tiket Semudah <span class="text-accent-red">1, 2, 3!</span></h2>
 
-                <div class="grid md:grid-cols-4 gap-6 relative">
+                <div class="relative grid gap-6 md:grid-cols-4">
                     <div class="hidden md:block absolute top-8 left-[10%] right-[10%] h-1 border-t-2 border-dashed border-border z-0"></div>
 
                     @foreach ($steps as $i => $step)
                         <div class="relative z-10 flex flex-col items-center text-center group">
-                            <div class="w-16 h-16 bg-main text-white font-extrabold text-2xl flex items-center justify-center rounded-full border-4 border-border shadow-md mb-6 group-hover:scale-110 transition-transform">
+                            <div class="flex items-center justify-center w-16 h-16 mb-6 text-2xl font-extrabold text-white transition-transform border-4 rounded-full shadow-md bg-main border-border group-hover:scale-110">
                                 {{ $i + 1 }}
                             </div>
-                            <div class="brutal-box bg-white p-5 w-full">
-                                <h4 class="text-xl mb-2 font-bold">{{ $step['title'] }}</h4>
+                            <div class="w-full p-5 bg-white brutal-box">
+                                <h4 class="mb-2 text-xl font-bold">{{ $step['title'] }}</h4>
                                 <p class="text-sm font-medium opacity-75">{{ $step['desc'] }}</p>
                             </div>
                         </div>
@@ -281,26 +281,26 @@
         </section>
 
         
-        <section id="promo" class="bg-secondary-background border-y-2 border-border py-16 overflow-hidden relative z-10">
-            <div class="max-w-7xl mx-auto px-4">
+        <section id="promo" class="relative z-10 py-16 overflow-hidden bg-secondary-background border-y-2 border-border">
+            <div class="px-4 mx-auto max-w-7xl">
                 <div class="flex items-center justify-between mb-10">
-                    <h2 class="text-3xl md:text-4xl flex items-center gap-3">
+                    <h2 class="flex items-center gap-3 text-3xl md:text-4xl">
                         Promo Spesial 💸
                     </h2>
-                    <a href="#" class="font-bold underline decoration-2 decoration-main hover:text-main text-sm md:text-base">Lihat Semua Promo</a>
+                    <a href="#" class="text-sm font-bold underline decoration-2 decoration-main hover:text-main md:text-base">Lihat Semua Promo</a>
                 </div>
 
-                <div class="flex gap-6 overflow-x-auto pb-6 snap-x hide-scrollbar">
+                <div class="flex gap-6 pb-6 overflow-x-auto snap-x hide-scrollbar">
                     @foreach ($promos as $promo)
                         <div class="min-w-[300px] md:min-w-[420px] brutal-card p-6 md:p-8 flex flex-col justify-between snap-start {{ $promo['color'] }}">
                             <div>
-                                <span class="inline-block px-3 py-1 bg-white border-2 border-border rounded-full text-xs font-bold mb-4 shadow-sm">{{ $promo['tag'] }}</span>
-                                <h3 class="text-2xl md:text-3xl mb-3 leading-tight">{{ $promo['title'] }}</h3>
-                                <p class="font-medium opacity-90 text-sm md:text-base">{{ $promo['desc'] }}</p>
+                                <span class="inline-block px-3 py-1 mb-4 text-xs font-bold bg-white border-2 rounded-full shadow-sm border-border">{{ $promo['tag'] }}</span>
+                                <h3 class="mb-3 text-2xl leading-tight md:text-3xl">{{ $promo['title'] }}</h3>
+                                <p class="text-sm font-medium opacity-90 md:text-base">{{ $promo['desc'] }}</p>
                             </div>
-                            <div class="mt-8 flex items-center justify-between">
-                                <div class="font-bold text-sm bg-white/60 px-3 py-1.5 rounded border border-border/30">Kode: <span class="uppercase tracking-wider font-mono">{{ $promo['code'] }}</span></div>
-                                <button class="w-10 h-10 bg-white border-2 border-border rounded-full flex items-center justify-center hover:scale-110 hover:bg-main hover:text-white transition-all shadow-sm" aria-label="Salin kode">
+                            <div class="flex items-center justify-between mt-8">
+                                <div class="font-bold text-sm bg-white/60 px-3 py-1.5 rounded border border-border/30">Kode: <span class="font-mono tracking-wider uppercase">{{ $promo['code'] }}</span></div>
+                                <button class="flex items-center justify-center w-10 h-10 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:scale-110 hover:bg-main hover:text-white" aria-label="Salin kode">
                                     <x-icon name="heroicon-s-document-duplicate" class="w-4 h-4" />
                                 </button>
                             </div>
@@ -311,28 +311,28 @@
         </section>
 
         
-        <section id="now-showing" class="max-w-7xl mx-auto px-4 py-16 md:py-24 overflow-hidden relative">
-            <div class="brutal-box p-6 bg-pastel-lemon mb-12 flex flex-col md:flex-row items-start md:items-center justify-between gap-6 relative z-10">
+        <section id="now-showing" class="relative px-4 py-16 mx-auto overflow-hidden max-w-7xl md:py-24">
+            <div class="relative z-10 flex flex-col items-start justify-between gap-6 p-6 mb-12 brutal-box bg-pastel-lemon md:flex-row md:items-center">
                 <div>
-                    <h3 class="text-2xl font-bold mb-1">Pilih Lokasimu</h3>
+                    <h3 class="mb-1 text-2xl font-bold">Pilih Lokasimu</h3>
                     <p class="text-sm font-medium opacity-80">Tentukan bioskop favoritmu sebelum memilih film.</p>
                 </div>
                 <div class="relative w-full md:w-96">
-                    <select x-model="selectedCinemaId" class="w-full appearance-none bg-white border-2 border-border rounded-base px-4 py-3 font-bold text-lg cursor-pointer focus:ring-4 focus:ring-ring focus:outline-none shadow-sm hover:shadow-md transition-shadow">
+                    <select x-model="selectedCinemaId" class="w-full px-4 py-3 text-lg font-bold transition-shadow bg-white border-2 shadow-sm appearance-none cursor-pointer border-border rounded-base focus:ring-4 focus:ring-ring focus:outline-none hover:shadow-md">
                         @foreach ($cinemas as $cinema)
                             <option value="{{ $cinema['id'] }}">{{ $cinema['name'] }} ({{ $cinema['location'] }})</option>
                         @endforeach
                     </select>
-                    <x-icon name="heroicon-s-chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none w-6 h-6" />
+                    <x-icon name="heroicon-s-chevron-down" class="absolute w-6 h-6 -translate-y-1/2 pointer-events-none right-4 top-1/2" />
                 </div>
             </div>
 
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 border-b-4 border-border pb-4 gap-4 relative z-10">
+            <div class="relative z-10 flex flex-col justify-between gap-4 pb-4 mb-8 border-b-4 md:flex-row md:items-end border-border">
                 <div>
-                    <h2 class="text-3xl md:text-4xl flex items-center gap-3">
-                        Sedang Tayang <span class="w-3 h-3 bg-accent-red rounded-full animate-pulse border border-border"></span>
+                    <h2 class="flex items-center gap-3 text-3xl md:text-4xl">
+                        Sedang Tayang <span class="w-3 h-3 border rounded-full bg-accent-red animate-pulse border-border"></span>
                     </h2>
-                    <p class="font-medium mt-2 text-lg text-main">Lokasi Terpilih: <span class="font-bold underline decoration-wavy" x-text="selectedCinema.name"></span></p>
+                    <p class="mt-2 text-lg font-medium text-main">Lokasi Terpilih: <span class="font-bold underline decoration-wavy" x-text="selectedCinema.name"></span></p>
                 </div>
                 <div class="flex gap-2">
                     <button @click="activeDayTab = 'today'" :class="activeDayTab === 'today' ? 'bg-main text-white shadow-sm' : 'bg-white text-gray-500 hover:bg-pastel-sky hover:text-main-foreground'" class="px-5 py-2.5 border-2 border-border rounded-full font-bold text-sm transition-colors cursor-pointer">Hari Ini</button>
@@ -340,19 +340,19 @@
                 </div>
             </div>
 
-            <div class="flex gap-6 overflow-x-auto pb-8 snap-x hide-scrollbar relative z-10">
+            <div class="relative z-10 flex gap-6 pb-8 overflow-x-auto snap-x hide-scrollbar">
                 @foreach ($movies as $movie)
                     <article class="min-w-[280px] md:min-w-[300px] lg:min-w-[280px] brutal-card group flex flex-col overflow-hidden bg-white snap-start">
                         <div class="relative aspect-[2/3] border-b-2 border-border overflow-hidden bg-gray-100 cursor-pointer"
                              onclick="window.location.href = '{{ route('film.show', $movie['id']) }}'">
-                            <img src="{{ $movie['poster'] }}" alt="{{ $movie['title'] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
-                            <div class="absolute top-3 right-3 bg-accent-yellow border-2 border-border rounded-full px-2 py-1 text-sm font-bold flex items-center gap-1 shadow-sm">
+                            <img src="{{ $movie['poster'] }}" alt="{{ $movie['title'] }}" class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105" loading="lazy">
+                            <div class="absolute flex items-center gap-1 px-2 py-1 text-sm font-bold border-2 rounded-full shadow-sm top-3 right-3 bg-accent-yellow border-border">
                                 <x-icon name="heroicon-s-star" class="w-4 h-4 fill-main-foreground" /> {{ $movie['rating'] }}
                             </div>
                         </div>
-                        <div class="p-5 flex-1 flex flex-col">
-                            <span class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">{{ $movie['genre'] }}</span>
-                            <h3 class="text-xl mb-2 line-clamp-1 cursor-pointer hover:text-main" title="{{ $movie['title'] }}"
+                        <div class="flex flex-col flex-1 p-5">
+                            <span class="mb-1 text-xs font-bold tracking-wider text-gray-500 uppercase">{{ $movie['genre'] }}</span>
+                            <h3 class="mb-2 text-xl cursor-pointer line-clamp-1 hover:text-main" title="{{ $movie['title'] }}"
                                 onclick="window.location.href = '{{ route('film.show', $movie['id']) }}'">
                                 {{ $movie['title'] }}
                             </h3>
@@ -372,21 +372,21 @@
         </section>
 
         
-        <section id="testimoni" class="bg-pastel-sky border-y-2 border-border py-16 md:py-24 relative z-10">
-            <div class="max-w-7xl mx-auto px-4">
-                <h2 class="text-3xl md:text-5xl text-center mb-16">Kata Mereka Tentang <span class="bg-white px-2 border-2 border-border transform rotate-1 inline-block">Ticketra</span></h2>
+        <section id="testimoni" class="relative z-10 py-16 bg-pastel-sky border-y-2 border-border md:py-24">
+            <div class="px-4 mx-auto max-w-7xl">
+                <h2 class="mb-16 text-3xl text-center md:text-5xl">Kata Mereka Tentang <span class="inline-block px-2 transform bg-white border-2 border-border rotate-1">Ticketra</span></h2>
 
-                <div class="grid md:grid-cols-3 gap-6">
+                <div class="grid gap-6 md:grid-cols-3">
                     @foreach ($testimonials as $testi)
-                        <div class="brutal-card bg-white p-6 md:p-8 flex flex-col">
-                            <div class="flex text-accent-yellow mb-4">
+                        <div class="flex flex-col p-6 bg-white brutal-card md:p-8">
+                            <div class="flex mb-4 text-accent-yellow">
                                 @for ($s = 0; $s < 5; $s++)
                                     <x-icon name="heroicon-s-star" class="w-5 h-5 fill-current" />
                                 @endfor
                             </div>
-                            <p class="font-medium text-lg mb-6 flex-1">"{{ $testi['quote'] }}"</p>
+                            <p class="flex-1 mb-6 text-lg font-medium">"{{ $testi['quote'] }}"</p>
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 bg-pastel-mint border-2 border-border rounded-full flex items-center justify-center font-extrabold text-auth-foreground">
+                                <div class="flex items-center justify-center w-12 h-12 font-extrabold border-2 rounded-full bg-pastel-mint border-border text-auth-foreground">
                                     {{ strtoupper(substr($testi['name'], 0, 1)) }}
                                 </div>
                                 <div>
@@ -401,18 +401,18 @@
         </section>
 
         
-        <section id="faq" class="max-w-3xl mx-auto px-4 py-16 md:py-24 relative z-10">
-            <h2 class="text-3xl md:text-5xl font-bold mb-10 text-center">Bantuan (FAQ) 🙋‍♂️</h2>
+        <section id="faq" class="relative z-10 max-w-3xl px-4 py-16 mx-auto md:py-24">
+            <h2 class="mb-10 text-3xl font-bold text-center md:text-5xl">Bantuan (FAQ) 🙋‍♂️</h2>
             <div class="space-y-4">
                 @foreach ($faqs as $index => $faq)
-                    <div class="brutal-box bg-white overflow-hidden transition-all duration-300">
-                        <button type="button" @click="toggleFaq({{ $index }})" class="w-full text-left p-5 flex justify-between items-center font-bold text-lg focus:outline-none cursor-pointer">
+                    <div class="overflow-hidden transition-all duration-300 bg-white brutal-box">
+                        <button type="button" @click="toggleFaq({{ $index }})" class="flex items-center justify-between w-full p-5 text-lg font-bold text-left cursor-pointer focus:outline-none">
                             <span>{{ $faq['q'] }}</span>
-                            <span :class="openFaq === {{ $index }} ? 'rotate-180' : ''" class="bg-pastel-sky p-1 border-2 border-border rounded-full transition-transform duration-300">
+                            <span :class="openFaq === {{ $index }} ? 'rotate-180' : ''" class="p-1 transition-transform duration-300 border-2 rounded-full bg-pastel-sky border-border">
                                 <x-icon name="heroicon-s-chevron-down" class="w-5 h-5" />
                             </span>
                         </button>
-                        <div x-show="openFaq === {{ $index }}" x-transition.opacity class="px-5 pb-5 font-medium opacity-80 border-t-2 border-border/10" style="display: none;">
+                        <div x-show="openFaq === {{ $index }}" x-transition.opacity class="px-5 pb-5 font-medium border-t-2 opacity-80 border-border/10" style="display: none;">
                             {{ $faq['a'] }}
                         </div>
                     </div>
@@ -425,7 +425,7 @@
             <div class="max-w-5xl px-4 mx-auto">
                 <div class="brutal-box bg-main p-8 md:p-16 text-center transform hover:scale-[1.02] transition-transform duration-300">
                     <h2 class="mb-6 text-4xl text-white md:text-5xl">Siap Untuk Pengalaman Nonton Terbaik?</h2>
-                    <p class="font-medium text-white/90 text-lg mb-8 max-w-2xl mx-auto">Daftar sekarang, dapatkan diskon 50% untuk film pertamamu, dan katakan selamat tinggal pada antrean loket selamanya.</p>
+                    <p class="max-w-2xl mx-auto mb-8 text-lg font-medium text-white/90">Daftar sekarang, dapatkan diskon 50% untuk film pertamamu, dan katakan selamat tinggal pada antrean loket selamanya.</p>
                     <a href="{{ route('auth.page', ['view' => 'register']) }}" class="brutal-btn brutal-btn-secondary text-lg !py-4 !px-10 inline-flex">
                         Buat Akun Gratis <x-icon name="heroicon-s-sparkles" class="w-5 h-5" />
                     </a>
@@ -435,28 +435,28 @@
 
         
         <footer class="bg-secondary-background border-t-4 border-x-0 border-b-0 border-border rounded-t-[3rem] md:rounded-t-[5rem] mt-auto relative z-10 pt-16 md:pt-20">
-            <div class="max-w-7xl mx-auto px-6 pb-12">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
+            <div class="px-6 pb-12 mx-auto max-w-7xl">
+                <div class="grid grid-cols-1 gap-12 md:grid-cols-4 md:gap-8">
                     <div class="md:col-span-2">
-                        <div class="flex items-center gap-2 text-3xl font-heading font-extrabold tracking-tight mb-4">
+                        <div class="flex items-center gap-2 mb-4 text-3xl font-extrabold tracking-tight font-heading">
                             <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-main fill-main/20" />
                             Ticketra<span class="text-main">.</span>
                         </div>
-                        <p class="font-medium opacity-80 max-w-sm mb-8 text-lg">Aplikasi pemesanan tiket bioskop #1 yang membebaskanmu dari antrean panjang. Pilih kursi, bayar, dan nikmati filmnya.</p>
+                        <p class="max-w-sm mb-8 text-lg font-medium opacity-80">Aplikasi pemesanan tiket bioskop #1 yang membebaskanmu dari antrean panjang. Pilih kursi, bayar, dan nikmati filmnya.</p>
                         <div class="flex gap-4">
-                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-main hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="Instagram">
-                                <x-icon name="heroicon-s-camera" class="w-5 h-5" />
+                            <a href="#" class="flex items-center justify-center w-12 h-12 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:bg-main hover:text-white hover:-translate-y-1" aria-label="Instagram">
+                                 <x-fab-instagram class="w-5 h-5"/>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-main hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="Twitter">
-                                <x-icon name="heroicon-s-chat-bubble-left" class="w-5 h-5" />
+                            <a href="#" class="flex items-center justify-center w-12 h-12 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:bg-main hover:text-white hover:-translate-y-1" aria-label="Youtube">
+                                <x-fab-youtube class="w-5 h-5"/>
                             </a>
-                            <a href="#" class="w-12 h-12 bg-white border-2 border-border rounded-full flex items-center justify-center hover:bg-main hover:text-white hover:-translate-y-1 transition-all shadow-sm" aria-label="YouTube">
-                                <x-icon name="heroicon-s-play" class="w-5 h-5" />
+                            <a href="#" class="flex items-center justify-center w-12 h-12 transition-all bg-white border-2 rounded-full shadow-sm border-border hover:bg-main hover:text-white hover:-translate-y-1" aria-label="Twitter">
+                                <x-fab-x-twitter class="w-5 h-5"/>
                             </a>
                         </div>
                     </div>
                     <div>
-                        <h4 class="text-xl mb-6">Eksplorasi</h4>
+                        <h4 class="mb-6 text-xl">Eksplorasi</h4>
                         <ul class="space-y-3 font-medium opacity-80">
                             <li><a href="#now-showing" class="hover:text-main hover:underline decoration-2">Film Sedang Tayang</a></li>
                             <li><a href="#" class="hover:text-main hover:underline decoration-2">Film Akan Datang</a></li>
@@ -465,7 +465,7 @@
                         </ul>
                     </div>
                     <div>
-                        <h4 class="text-xl mb-6">Bantuan</h4>
+                        <h4 class="mb-6 text-xl">Bantuan</h4>
                         <ul class="space-y-3 font-medium opacity-80">
                             <li><a href="#faq" class="hover:text-main hover:underline decoration-2">Pusat Bantuan (FAQ)</a></li>
                             <li><a href="#" class="hover:text-main hover:underline decoration-2">Syarat & Ketentuan</a></li>
@@ -474,9 +474,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="mt-16 pt-8 border-t-2 border-border/20 flex flex-col md:flex-row items-center justify-between font-bold text-sm opacity-60 gap-4 text-center">
+                <div class="flex items-center justify-center gap-4 pt-8 mt-16 text-sm font-bold text-center border-t-2 border-border/20 opacity-60">
                     <p>&copy; {{ date('Y') }} Ticketra. All rights reserved.</p>
-                    <p>Designed with <x-icon name="heroicon-s-heart" class="w-4 h-4 inline text-accent-red fill-accent-red" /> for Movie Lovers in Indonesia</p>
                 </div>
             </div>
         </footer>

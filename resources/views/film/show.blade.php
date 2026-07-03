@@ -141,7 +141,7 @@
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
 
                 
-                <div class="flex flex-col items-center gap-4 lg:col-span-3">
+                <div class="flex flex-col items-center gap-4 lg:col-span-4">
                     <div
                         class="relative w-full max-w-[240px]
            border-[3px] border-border
@@ -184,10 +184,11 @@
                             </button>
                         </div>
                     </div>
+                    
                 </div>
 
                 
-                <div class="flex flex-col justify-between gap-6 lg:col-span-6">
+                <div class="flex flex-col justify-between gap-6 lg:col-span-8">
                     <div class="space-y-4">
                         <div class="space-y-2">
                             
@@ -266,38 +267,6 @@
                             <p class="text-[10px] font-bold text-foreground/50 uppercase tracking-wider">Pemain</p>
                             <p class="text-xs font-extrabold text-foreground mt-0.5 line-clamp-2" title="{{ $film->pemain }}">{{ $film->pemain ?: 'N/A' }}</p>
                         </div>
-                    </div>
-                </div>
-
-                
-                <div class="flex flex-col justify-center gap-4 lg:col-span-3">
-                    <div class="border-[3px] border-border rounded-[24px] bg-white p-5 shadow-[8px_8px_0px_rgba(0,0,0,1)] flex flex-col gap-4">
-
-                        
-                        <button @click="triggerToast('Sukses! Film {{ addslashes($film->judul) }} ditambahkan ke Wishlist.')"
-                            class="w-full bg-white border-[3px] border-border rounded-[20px] p-4 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex items-center gap-4 hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all text-left group">
-                            <div class="w-14 h-14 bg-[#FFC5C5] rounded-xl flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 border-[3px] border-border shadow-[2px_2px_0px_rgba(0,0,0,1)]">
-                                <svg xmlns="http:
-                                    <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
-                                </svg>
-                            </div>
-                            <span class="text-xs font-black leading-tight tracking-wider uppercase text-foreground">Tambah<br>Wishlist</span>
-                        </button>
-
-                        
-                        <a href="#pilih-jadwal"
-                            class="w-full text-center py-4 bg-accent-green hover:bg-accent-green/90 border-[3px] border-border rounded-[20px] text-xs font-black text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all uppercase tracking-wider block">
-                            Pesan Tiket
-                        </a>
-
-                        
-                        <div class="border-[3px] border-border rounded-[20px] bg-accent-yellow p-5 shadow-[4px_4px_0px_rgba(0,0,0,1)] flex flex-col items-center justify-center text-center">
-                            <p class="text-2xl font-black leading-none font-heading text-foreground">1.2M+</p>
-                            <p class="text-[9px] font-bold text-foreground/75 leading-normal mt-2 uppercase tracking-wider">
-                                penonton sudah<br>menonton film ini
-                            </p>
-                        </div>
-
                     </div>
                 </div>
 
@@ -487,7 +456,7 @@
             </div>
 
             
-            <div class="flex gap-6 overflow-x-auto snap-x scroll-smooth pb-4 md:grid md:grid-cols-4 md:pb-0">
+            <div class="flex gap-6 pb-4 overflow-x-auto snap-x scroll-smooth md:grid md:grid-cols-4 md:pb-0">
                 @foreach($recommendations as $rec)
                 <div class="border-[3px] border-border rounded-[20px] overflow-hidden bg-white shadow-[3px_3px_0px_rgba(0,0,0,1)] flex flex-col justify-between group cursor-pointer transition-all hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_rgba(0,0,0,1)] min-w-[200px] md:min-w-0 snap-start"
                     @click="window.location.href = '{{ route('film.show', $rec->id) }}'">

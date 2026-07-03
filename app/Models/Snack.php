@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Snack extends Model
 {
+    use LogsActivity;
+
     protected $primaryKey = 'id';
     protected $keyType = 'string';
     public $incrementing = false;
@@ -25,12 +27,11 @@ class Snack extends Model
         'layout',
     ];
 
-        public function getActivitylogOptions(): LogOptions
+    public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
             ->logOnly(['name', 'price', 'status', 'category', 'popular'])
-            ->logOnlyDirty()
-            ->dontSubmitEmptyLogs();
+            ->logOnlyDirty();
     }
 
     public function bioskops(): BelongsToMany
