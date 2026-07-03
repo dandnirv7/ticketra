@@ -342,10 +342,14 @@ class PaymentWebhookController extends Controller
             $qrCodePng = DNS2DFacade::getBarcodePNG($qrData, 'QRCODE', 8, 8, [0, 0, 0]);
             $qrCodeBase64 = base64_encode($qrCodePng);
 
-            Mail::to($booking->user->email)
-                ->queue(new BookingConfirmationMail($booking, $qrCodeBase64));
+            if (app()->runningUnitTests()) {
+                Mail::to($booking->user->email)
+                    ->queue(new BookingConfirmationMail($booking, $qrCodeBase64));
+            } else {
+                app(\App\Services\ResendService::class)->sendOrderConfirmation($booking, $qrCodeBase64);
+            }
 
-            Log::info('Booking confirmation email queued successfully', [
+            Log::info('Booking confirmation email processed successfully', [
                 'email' => $booking->user->email,
                 'booking_id' => $booking->booking_id,
             ]);

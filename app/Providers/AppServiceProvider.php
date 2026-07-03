@@ -47,5 +47,21 @@ class AppServiceProvider extends ServiceProvider
         foreach ($models as $model) {
             $model::observe(LoggableObserver::class);
         }
+
+        \Illuminate\Support\Facades\Event::listen(
+            \Illuminate\Auth\Events\Verified::class,
+            function (\Illuminate\Auth\Events\Verified $event) {
+                if (!app()->runningUnitTests()) {
+                    try {
+                        app(\App\Services\ResendService::class)->sendWelcome($event->user);
+                    } catch (\Exception $e) {
+                        \Illuminate\Support\Facades\Log::error('Failed to send welcome email upon verification', [
+                            'user_id' => $event->user->id,
+                            'error' => $e->getMessage(),
+                        ]);
+                    }
+                }
+            }
+        );
     }
 }

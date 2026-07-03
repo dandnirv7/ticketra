@@ -120,8 +120,10 @@
                         </button>
 
                         <div x-show="showToast" x-transition.duration.300ms
-                             class="fixed bottom-6 left-1/2 -translate-x-1/2 z-[999] px-6 py-3 bg-white border-[3px] border-border rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs font-black text-center whitespace-nowrap"
-                             x-text="toastMessage"></div>
+                             class="fixed inset-0 z-[999] flex items-center justify-center pointer-events-none">
+                          <div class="px-6 py-3 bg-white border-[3px] border-border rounded-2xl shadow-[4px_4px_0px_rgba(0,0,0,1)] text-xs font-black text-center pointer-events-auto"
+                               x-text="toastMessage"></div>
+                        </div>
 
                         <p class="mt-4 text-[10px] font-bold uppercase tracking-widest opacity-60">
                             <x-icon name="heroicon-s-lock-closed" class="inline w-3 h-3 mr-1" />
