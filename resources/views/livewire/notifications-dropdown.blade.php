@@ -1,5 +1,5 @@
-<div wire:poll.30s class="relative" x-data="{ open: false }">
-    <button @click="open = !open" @click.away="open = false" 
+<div wire:poll.30s class="relative" x-data="{ open: false }" @click.outside="open = false">
+    <button @click="open = !open" 
             class="relative w-11 h-11 bg-secondary-background border-[3px] border-border rounded-full flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
         <x-icon name="heroicon-s-bell" class="w-5 h-5 text-border" />
         @if($unreadCount > 0)
