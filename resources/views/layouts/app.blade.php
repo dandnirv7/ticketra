@@ -11,9 +11,6 @@
 
     @yield('seo')
     
-    <link href="https:
-
-    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -155,6 +152,8 @@
     </div>
 
     <x-mobile-nav :bottomActive="$bottomActive" :bottomInactive="$bottomInactive" />
+
+    @livewireScriptConfig
 </body>
 </html>
 

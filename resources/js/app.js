@@ -1,9 +1,7 @@
-import Alpine from 'alpinejs';
+import { Livewire, Alpine } from '../../vendor/livewire/livewire/dist/livewire.esm';
 import { registerSW } from 'virtual:pwa-register';
 
-window.Alpine = Alpine;
-
-Alpine.start();
+Livewire.start();
 
 if ('serviceWorker' in navigator) {
     registerSW({
