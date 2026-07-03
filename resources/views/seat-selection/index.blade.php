@@ -12,7 +12,7 @@
     </div>
   </x-slot>
 
-  <div class="min-h-screen pt-8 pb-40 bg-amber-50">
+  <div class="min-h-screen pt-8 pb-40 bg-background">
     <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
 
       @if (session('success'))
@@ -146,12 +146,12 @@
 
         <div class="flex gap-4 mb-8 text-xs font-bold">
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 bg-green-300 border-2 border-black rounded shadow-[2px_2px_0px_0px_#000]"></span>
+            <span class="w-6 h-6 bg-secondary border-2 border-black rounded shadow-[2px_2px_0px_0px_#000]"></span>
             Tersedia
           </div>
 
           <div class="flex items-center gap-2">
-            <span class="w-6 h-6 bg-yellow-300 border-2 border-black rounded shadow-[2px_2px_0px_0px_#000]"></span>
+            <span class="w-6 h-6 bg-primary border-2 border-black rounded shadow-[2px_2px_0px_0px_#000]"></span>
             Dipilih
           </div>
 
@@ -192,10 +192,10 @@
                       type="button"
                       @click.prevent="toggleSeat('{{ $kursi->id }}')"
                       :class="{
-                          'bg-green-300 hover:bg-green-400': !selected.includes('{{ $kursi->id }}'),
-                          'bg-yellow-300': selected.includes('{{ $kursi->id }}')
+                          'bg-white hover:bg-secondary text-gray-900': !selected.includes('{{ $kursi->id }}'),
+                          'bg-primary text-white': selected.includes('{{ $kursi->id }}')
                       }"
-                      class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg shadow-[3px_3px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center text-[10px] font-bold text-gray-900"
+                      class="w-8 h-8 md:w-10 md:h-10 border-2 border-black rounded-lg shadow-[3px_3px_0px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all flex items-center justify-center text-[10px] font-bold"
                       title="Kursi {{ $kursi->label_baris }}{{ $kursi->nomor_kursi }}">
                       {{ $kursi->nomor_kursi }}
                     </button>
@@ -218,7 +218,7 @@
           @click.away="showSnackModal = false"
           x-transition.opacity>
           <div class="w-full max-w-lg border-4 border-black rounded-2xl bg-white shadow-[10px_10px_0px_#000]" @click.stop>
-            <div class="p-6 text-center border-b-4 border-black bg-pastel-lemon rounded-t-2xl">
+            <div class="p-6 text-center border-b-4 border-black bg-[#F1EEFE] rounded-t-2xl">
               <div class="text-3xl mb-2">🍿</div>
               <h3 class="text-xl font-black uppercase">Tambahkan Camilan?</h3>
               <p class="mt-1 text-sm font-bold opacity-70">Pesan sekarang atau nanti di snack bar!</p>
@@ -230,7 +230,7 @@
                   type="button"
                   @click="toggleSnack(snack.id)"
                   :class="{
-                      'border-accent-green bg-green-50 shadow-[3px_3px_0px_#059669]': isSnackSelected(snack.id),
+                      'border-primary bg-primary/5 shadow-[3px_3px_0px_#B7A5F8]': isSnackSelected(snack.id),
                       'border-black bg-slate-50 shadow-[3px_3px_0px_#000]': !isSnackSelected(snack.id)
                   }"
                   class="flex items-center gap-4 p-4 border-2 rounded-xl transition-all hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_#000] w-full text-left">
@@ -243,7 +243,7 @@
                     <p class="font-black whitespace-nowrap text-accent-red" x-text="'Rp ' + Number(snack.price).toLocaleString('id-ID')"></p>
                     <span
                       x-show="isSnackSelected(snack.id)"
-                      class="text-[10px] font-extrabold text-accent-green uppercase tracking-wider">
+                      class="text-[10px] font-extrabold text-primary uppercase tracking-wider">
                       ✓ Dipilih
                     </span>
                   </div>
@@ -252,7 +252,7 @@
             </div>
 
             <div class="px-6 pb-4">
-              <div class="flex items-center justify-between p-4 border-2 border-black rounded-xl bg-pastel-lemon shadow-[3px_3px_0px_#000]">
+              <div class="flex items-center justify-between p-4 border-2 border-black rounded-xl bg-[#FAF8FF] shadow-[3px_3px_0px_#000]">
                 <span class="text-xs font-extrabold uppercase tracking-widest">Total Belanja</span>
                 <span class="font-black text-accent-red" x-text="'Rp ' + grandTotal.toLocaleString('id-ID')"></span>
               </div>
@@ -262,7 +262,7 @@
               <button
                 type="button"
                 @click="goToPayment()"
-                class="w-full py-4 font-black text-center uppercase border-4 border-black rounded-xl bg-accent-green text-white shadow-[5px_5px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
+                class="w-full py-4 font-black text-center uppercase border-4 border-black rounded-xl bg-primary hover:bg-[#A88CF8] text-white shadow-[5px_5px_0px_#000] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[3px_3px_0px_#000] active:translate-x-[3px] active:translate-y-[3px] active:shadow-none transition-all">
                 Lanjutkan ke Pembayaran
                 <x-heroicon-o-arrow-right class="inline w-5 h-5 ml-1" />
               </button>

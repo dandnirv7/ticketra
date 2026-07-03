@@ -23,12 +23,13 @@
             letter-spacing: 0.05em;
         }
         .filter-pill:hover {
-            background-color: rgba(255, 243, 176, 0.2);
+            background-color: rgba(183, 165, 248, 0.1);
             transform: translateY(-2px);
             box-shadow: 3px 3px 0px var(--border, #111827);
         }
         .filter-pill.active {
-            background-color: var(--pastel-mint, #bef264);
+            background-color: var(--primary, #B7A5F8);
+            color: #ffffff;
             transform: translate(-1px, -1px);
             box-shadow: 3px 3px 0px var(--border, #111827);
         }
@@ -144,13 +145,13 @@
                 getCategoryColor(category) {
                     switch (category) {
                         case 'Popcorn':
-                            return 'bg-pastel-sky';
+                            return 'bg-primary/10';
                         case 'Combo':
-                            return 'bg-pastel-peach';
+                            return 'bg-accent-yellow/20';
                         case 'Minuman':
-                            return 'bg-pastel-mint';
+                            return 'bg-secondary/35';
                         case 'Snack':
-                            return 'bg-pastel-pink';
+                            return 'bg-accent-red/15';
                         default:
                             return 'bg-gray-100';
                     }
@@ -224,7 +225,7 @@
         </div>
 
 
-        <section class="relative bg-pastel-peach border-[3px] border-border rounded-[2rem] p-8 md:p-14 shadow-[8px_8px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col md:flex-row gap-12 items-center mb-16">
+        <section class="relative bg-[#F1EEFE] border-[3px] border-border rounded-[2rem] p-8 md:p-14 shadow-[8px_8px_0px_rgba(0,0,0,1)] overflow-hidden flex flex-col md:flex-row gap-12 items-center mb-16">
             <div class="absolute inset-0 opacity-[0.06] pointer-events-none bg-dot-matrix"></div>
 
             <div class="relative z-10 flex-1 w-full">
@@ -242,10 +243,10 @@
             </div>
 
             <div class="relative z-10 flex items-center justify-center w-full h-64 mt-10 select-none md:w-auto md:mt-0 md:h-auto">
-                <div class="absolute w-48 h-48 md:w-64 md:h-64 bg-accent-yellow border-4 border-border rounded-2xl transform rotate-[15deg] shadow-[8px_8px_0px_rgba(0,0,0,0.2)] flex items-center justify-center">
+                <div class="absolute w-48 h-48 md:w-64 md:h-64 bg-primary/20 border-4 border-border rounded-2xl transform rotate-[15deg] shadow-[8px_8px_0px_rgba(0,0,0,0.2)] flex items-center justify-center">
                     <x-icon name="heroicon-s-sparkles" class="w-20 h-20 text-border" />
                 </div>
-                <div class="absolute w-48 h-48 md:w-64 md:h-64 bg-pastel-pink border-4 border-border rounded-2xl transform -rotate-[10deg] shadow-[8px_8px_0px_rgba(0,0,0,0.2)] flex items-center justify-center">
+                <div class="absolute w-48 h-48 md:w-64 md:h-64 bg-secondary/40 border-4 border-border rounded-2xl transform -rotate-[10deg] shadow-[8px_8px_0px_rgba(0,0,0,0.2)] flex items-center justify-center">
                     <x-icon name="heroicon-s-shopping-bag" class="w-20 h-20 text-border" />
                 </div>
             </div>
@@ -253,7 +254,7 @@
 
 
         <section class="grid gap-6 mb-16 md:grid-cols-2">
-            <div class="brutal-card p-6 md:p-8 bg-pastel-lemon flex flex-col md:flex-row items-start md:items-center gap-6 cursor-pointer rounded-[2rem] border-4 hover:-translate-y-2 transform -rotate-1 shadow-[6px_6px_0px_var(--border)]"
+            <div class="brutal-card p-6 md:p-8 bg-accent-yellow/40 flex flex-col md:flex-row items-start md:items-center gap-6 cursor-pointer rounded-[2rem] border-4 hover:-translate-y-2 transform -rotate-1 shadow-[6px_6px_0px_var(--border)]"
                 @click="triggerAction('Klaim Promo Upsize')">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-white border-2 border-border rounded-2xl flex items-center justify-center shadow-[3px_3px_0px_var(--border)] shrink-0 transform rotate-6 select-none">
                     <x-icon name="heroicon-s-shopping-bag" class="w-8 h-8 text-border" />
@@ -266,7 +267,7 @@
                     </p>
                 </div>
             </div>
-            <div class="brutal-card p-6 md:p-8 bg-pastel-sky flex flex-col md:flex-row items-start md:items-center gap-6 cursor-pointer rounded-[2rem] border-4 hover:-translate-y-2 transform rotate-1 shadow-[6px_6px_0px_var(--border)]"
+            <div class="brutal-card p-6 md:p-8 bg-primary/20 flex flex-col md:flex-row items-start md:items-center gap-6 cursor-pointer rounded-[2rem] border-4 hover:-translate-y-2 transform rotate-1 shadow-[6px_6px_0px_var(--border)]"
                 @click="triggerAction('Klaim Cashback QRIS')">
                 <div class="w-16 h-16 md:w-20 md:h-20 bg-white border-2 border-border rounded-2xl flex items-center justify-center shadow-[3px_3px_0px_var(--border)] shrink-0 transform -rotate-6 select-none">
                     <x-icon name="heroicon-s-credit-card" class="w-8 h-8 text-border" />
@@ -283,7 +284,7 @@
 
 
         <section class="bg-white border-4 border-border rounded-[2rem] p-8 shadow-[8px_8px_0px_rgba(0,0,0,1)] relative mb-16">
-            <div class="absolute -top-5 left-8 bg-accent-yellow border-2 border-border px-4 py-1 text-sm font-black uppercase shadow-[3px_3px_0px_var(--border)] transform -rotate-3 select-none">
+            <div class="absolute -top-5 left-8 bg-[#F1EEFE] border-2 border-border px-4 py-1 text-sm font-black uppercase shadow-[3px_3px_0px_var(--border)] transform -rotate-3 select-none">
                 Cara Kerjanya
             </div>
             <div class="grid grid-cols-1 gap-8 mt-4 md:grid-cols-3">
@@ -400,9 +401,9 @@
                                         <div class="flex items-center gap-2">
                                             <template x-if="getItemQty(item.id) > 0">
                                                 <div class="flex items-center gap-2">
-                                                    <button @click="updateCart(item, -1)" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-white hover:bg-pastel-sky font-bold shadow-[2px_2px_0px_var(--border)] text-2xl">-</button>
+                                                    <button @click="updateCart(item, -1)" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-white hover:bg-primary/20 font-bold shadow-[2px_2px_0px_var(--border)] text-2xl">-</button>
                                                     <span class="w-12 text-2xl font-black text-center font-price" x-text="getItemQty(item.id)"></span>
-                                                    <button @click="updateCart(item, 1)" :disabled="item.status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-accent-yellow hover:bg-main hover:text-white font-bold shadow-[2px_2px_0px_var(--border)] text-2xl">+</button>
+                                                    <button @click="updateCart(item, 1)" :disabled="item.status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-primary hover:bg-[#A88CF8] text-white font-bold shadow-[2px_2px_0px_var(--border)] text-2xl">+</button>
                                                 </div>
                                             </template>
                                             <template x-if="getItemQty(item.id) === 0">
@@ -425,7 +426,7 @@
                             <div class="relative z-10 flex flex-col justify-between flex-1">
                                 <div class="absolute z-20 -top-3 -left-3">
                                     <template x-if="item.status === 'TERSEDIA'">
-                                        <span class="bg-lime-neon border-2 border-border px-3 py-1.5 rounded-sm text-[10px] font-black uppercase tracking-widest shadow-[2px_2px_0px_var(--border)] transform -rotate-3 inline-block">Tersedia</span>
+                                        <span class="bg-secondary border-2 border-border px-3 py-1.5 rounded-sm text-[10px] font-black uppercase tracking-widest shadow-[2px_2px_0px_var(--border)] transform -rotate-3 inline-block">Tersedia</span>
                                     </template>
                                     <template x-if="item.status === 'SISA SEDIKIT'">
                                         <span class="bg-accent-yellow border-2 border-border px-3 py-1.5 rounded-sm text-[10px] font-black uppercase tracking-widest shadow-[2px_2px_0px_var(--border)] transform rotate-3 inline-block">🔥 Sisa Sedikit</span>
@@ -452,9 +453,9 @@
                                     <div class="flex items-center gap-2 pt-4 mt-auto border-t-2 border-border/20">
                                         <template x-if="getItemQty(item.id) > 0">
                                             <div class="flex items-center w-full gap-2">
-                                                <button @click="updateCart(item, -1)" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-white hover:bg-pastel-sky font-black transition-colors shadow-[2px_2px_0px_var(--border)] text-xl">-</button>
+                                                <button @click="updateCart(item, -1)" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-white hover:bg-primary/20 font-black transition-colors shadow-[2px_2px_0px_var(--border)] text-xl">-</button>
                                                 <span class="flex-1 text-2xl font-black text-center font-price" x-text="getItemQty(item.id)"></span>
-                                                <button @click="updateCart(item, 1)" :disabled="item.status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-accent-yellow hover:bg-main hover:text-white font-black transition-colors shadow-[2px_2px_0px_var(--border)] text-xl">+</button>
+                                                <button @click="updateCart(item, 1)" :disabled="item.status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl flex items-center justify-center bg-primary hover:bg-[#A88CF8] text-white font-black transition-colors shadow-[2px_2px_0px_var(--border)] text-xl">+</button>
                                             </div>
                                         </template>
                                         <template x-if="getItemQty(item.id) === 0">
@@ -499,9 +500,9 @@
                             <div class="flex items-center w-full gap-2 sm:w-auto">
                                 <template x-if="getItemQty(sortedItems[0].id) > 0">
                                     <div class="flex items-center w-full gap-2">
-                                        <button @click="updateCart(sortedItems[0], -1)" class="w-12 h-12 border-2 border-border rounded-xl bg-white font-bold text-xl shadow-[2px_2px_0px_var(--border)]">-</button>
+                                        <button @click="updateCart(sortedItems[0], -1)" class="w-12 h-12 border-2 border-border rounded-xl bg-white hover:bg-primary/20 font-bold text-xl shadow-[2px_2px_0px_var(--border)]">-</button>
                                         <span class="flex-1 text-2xl font-black text-center font-price" x-text="getItemQty(sortedItems[0].id)"></span>
-                                        <button @click="updateCart(sortedItems[0], 1)" :disabled="sortedItems[0].status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl bg-accent-yellow font-bold text-xl shadow-[2px_2px_0px_var(--border)]">+</button>
+                                        <button @click="updateCart(sortedItems[0], 1)" :disabled="sortedItems[0].status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl bg-primary hover:bg-[#A88CF8] text-white font-bold text-xl shadow-[2px_2px_0px_var(--border)]">+</button>
                                     </div>
                                 </template>
                                 <template x-if="getItemQty(sortedItems[0].id) === 0">
@@ -522,7 +523,7 @@
                                 <div class="brutal-card p-5 bg-white flex flex-col h-full rounded-[1.5rem] border-2 shadow-[4px_4px_0px_var(--border)]" :class="item.status === 'HABIS' ? 'disabled-card' : ''">
                                     <div class="absolute z-20 -top-3 -left-3">
                                         <template x-if="item.status === 'TERSEDIA'">
-                                            <span class="bg-lime-neon border-2 border-border px-2 py-1 rounded-sm text-[9px] font-black uppercase shadow-[2px_2px_0px_var(--border)] transform -rotate-3 inline-block">Tersedia</span>
+                                            <span class="bg-secondary border-2 border-border px-2 py-1 rounded-sm text-[9px] font-black uppercase shadow-[2px_2px_0px_var(--border)] transform -rotate-3 inline-block">Tersedia</span>
                                         </template>
                                         <template x-if="item.status === 'SISA SEDIKIT'">
                                             <span class="bg-accent-yellow border-2 border-border px-2 py-1 rounded-sm text-[9px] font-black uppercase shadow-[2px_2px_0px_var(--border)] transform rotate-3 inline-block">🔥 Sedikit</span>
@@ -550,7 +551,7 @@
                                                 <div class="flex items-center w-full gap-2">
                                                     <button @click="updateCart(item, -1)" class="w-12 h-12 border-2 border-border rounded-xl bg-white font-black text-xl shadow-[2px_2px_0px_var(--border)]">-</button>
                                                     <span class="flex-1 text-xl font-black text-center font-price" x-text="getItemQty(item.id)"></span>
-                                                    <button @click="updateCart(item, 1)" :disabled="item.status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl bg-accent-yellow font-black text-xl shadow-[2px_2px_0px_var(--border)]">+</button>
+                                                    <button @click="updateCart(item, 1)" :disabled="item.status === 'HABIS'" class="w-12 h-12 border-2 border-border rounded-xl bg-primary hover:bg-[#A88CF8] text-white font-black text-xl shadow-[2px_2px_0px_var(--border)]">+</button>
                                                 </div>
                                             </template>
                                             <template x-if="getItemQty(item.id) === 0">
@@ -600,8 +601,8 @@
                         </p>
                     </div>
                 </div>
-                <button @click="checkoutCart" class="flex items-center gap-1.5 py-2 px-4 md:py-2.5 md:px-6 bg-pastel-lemon text-foreground border-2 border-black rounded-xl font-bold text-xs md:text-sm shadow-[2px_2px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-none transition-all hover:bg-pastel-lemon/90">
-                    Checkout <x-icon name="heroicon-s-arrow-right" class="w-4 h-4 text-foreground" />
+                <button @click="checkoutCart" class="flex items-center gap-1.5 py-2 px-4 md:py-2.5 md:px-6 bg-primary text-white border-2 border-black rounded-xl font-bold text-xs md:text-sm shadow-[2px_2px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-none transition-all hover:bg-[#A88CF8]">
+                    Checkout <x-icon name="heroicon-s-arrow-right" class="w-4 h-4 text-white" />
                 </button>
             </div>
         </div>

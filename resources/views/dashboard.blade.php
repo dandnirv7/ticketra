@@ -14,7 +14,7 @@
 @php
 $avatarInitial = strtoupper(substr($user->name ?? 'A', 0, 1));
 $hasBio = $bioskopFavorit !== null;
-$bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
+$bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-white bg-primary border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
 $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
@@ -91,12 +91,12 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
             <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
                 <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight font-heading">
-                    <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
-                    Ticketra<span class="text-accent-green">.</span>
+                    <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-primary" />
+                    Ticketra<span class="text-primary">.</span>
                 </a>
 
                 <nav class="flex flex-col gap-1.5 text-sm font-bold tracking-wide">
-                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                    <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-3 bg-primary text-white border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
                         Beranda
                     </a>
@@ -129,7 +129,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                     </form>
                 </nav>
 
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
+                <div class="border-[3px] border-border rounded-[20px] bg-primary/20 p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                     <div class="pr-12">
                         <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>
@@ -180,7 +180,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
             <div class="flex-1 border-[3px] border-border rounded-[24px] bg-slate-50 p-6 md:p-8 space-y-6 shadow-[8px_8px_0px_var(--border)]">
 
-                <section class="brutal-card bg-pastel-lavender p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
+                <section class="brutal-card bg-primary/20 p-6 md:p-8 overflow-hidden relative border-[3px] border-border rounded-[20px] shadow-[4px_4px_0px_var(--border)]">
                     <div class="flex flex-col items-stretch gap-6 lg:grid lg:grid-cols-2">
                         <!-- 1. Trending Now -->
                         <div class="relative z-10 lg:col-start-1 lg:row-start-1">
@@ -231,14 +231,14 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                 </section>
 
                 <section class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-mint p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-white p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Bioskop</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Lihat bioskop favoritmu</p>
                             </div>
-                            <div class="w-10 h-10 bg-[#E2F5EC] rounded-lg flex items-center justify-center text-accent-green shrink-0">
-                                <x-icon name="heroicon-s-building-storefront" class="w-7 h-7 text-border" />
+                            <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <x-icon name="heroicon-s-building-storefront" class="w-7 h-7 text-primary" />
                             </div>
                         </div>
                         <div class="flex justify-end mt-4">
@@ -248,14 +248,14 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="{{ route('bookings.index') }}" class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="{{ route('bookings.index') }}" class="border-[3px] border-border rounded-[20px] bg-white p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Tiket Saya</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Cek tiket & riwayat kamu</p>
                             </div>
-                            <div class="w-10 h-10 bg-[#FFFBEA] rounded-lg flex items-center justify-center text-accent-yellow shrink-0">
-                                <x-icon name="heroicon-s-ticket" class="w-7 h-7 text-border" />
+                            <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <x-icon name="heroicon-s-ticket" class="w-7 h-7 text-primary" />
                             </div>
                         </div>
                         <div class="flex justify-end mt-4">
@@ -265,13 +265,13 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-pastel-pink p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-accent-yellow/30 p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Promo</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Temukan promo menarik hari ini</p>
                             </div>
-                            <div class="w-10 h-10 bg-[#FFF0F5] rounded-lg flex items-center justify-center text-[#ec4899] shrink-0">
+                            <div class="w-10 h-10 bg-accent-yellow rounded-lg flex items-center justify-center shrink-0">
                                 <x-icon name="heroicon-s-tag" class="w-7 h-7 text-border" />
                             </div>
                         </div>
@@ -282,14 +282,14 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </a>
 
-                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-[#E6F3FF] p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
+                    <a href="#" class="border-[3px] border-border rounded-[20px] bg-white p-5 flex flex-col justify-between shadow-[4px_4px_0px_var(--border)] transition-transform hover:-translate-y-0.5 hover:shadow-[6px_6px_0px_var(--border)] hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 group">
                         <div class="flex items-start justify-between gap-2">
                             <div>
                                 <h3 class="text-lg font-extrabold text-foreground">Snack Bar</h3>
                                 <p class="text-[11px] font-medium text-foreground/70 mt-1 leading-snug">Pesan camilan sebelum nonton</p>
                             </div>
-                            <div class="w-10 h-10 bg-[#E6F3FF] rounded-lg flex items-center justify-center text-main shrink-0">
-                                <x-icon name="heroicon-s-shopping-bag" class="w-7 h-7 text-border" />
+                            <div class="w-10 h-10 bg-primary/20 rounded-lg flex items-center justify-center shrink-0">
+                                <x-icon name="heroicon-s-shopping-bag" class="w-7 h-7 text-primary" />
                             </div>
                         </div>
                         <div class="flex justify-end mt-4">
@@ -327,7 +327,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                 { label: 'Sci-Fi', value: 'Sci-Fi' }
                             ]" :key="genreObj.value">
                                 <button @click="activeGenre = genreObj.value"
-                                    :class="activeGenre === genreObj.value ? 'bg-accent-green text-border border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
+                                    :class="activeGenre === genreObj.value ? 'bg-primary text-white border-border shadow-none translate-x-[2px] translate-y-[2px]' : 'bg-white text-border hover:bg-slate-50 hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5'"
                                     class="px-3.5 py-1.5 rounded-xl border-2 border-border text-[10px] font-extrabold uppercase tracking-wide transition-all shadow-[2px_2px_0px_var(--border)] active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2"
                                     x-text="genreObj.label">
                                 </button>
@@ -338,15 +338,15 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                             <span class="text-xs font-black text-foreground">Urutkan:</span>
                             <div class="relative">
                                 <button @click="showSortDropdown = !showSortDropdown" @click.away="showSortDropdown = false"
-                                    class="flex items-center gap-2 px-4 py-2.5 bg-white border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-pastel-lemon/20 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                                    class="flex items-center gap-2 px-4 py-2.5 bg-white border-[3px] border-border rounded-xl text-xs font-bold whitespace-nowrap shadow-none hover:shadow-[3px_3px_0px_var(--border)] hover:-translate-y-0.5 hover:bg-primary/10 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                                     <span x-text="activeSort === 'populer' ? 'Terpopuler' : (activeSort === 'rating' ? 'Rating Tertinggi' : 'Terbaru')">Terpopuler</span>
                                     <x-icon name="heroicon-s-chevron-down" class="w-3.5 h-3.5 text-border" />
                                 </button>
                                 <div x-show="showSortDropdown" x-transition.opacity
                                     class="absolute right-0 mt-2 w-44 bg-white border-[3px] border-border rounded-xl shadow-[4px_4px_0px_var(--border)] z-50 py-1 text-xs font-bold text-foreground">
-                                    <button @click="activeSort = 'populer'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Terpopuler</button>
-                                    <button @click="activeSort = 'rating'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-pastel-mint/30 border-border/10">Rating Tertinggi</button>
-                                    <button @click="activeSort = 'terbaru'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-pastel-mint/30">Terbaru</button>
+                                    <button @click="activeSort = 'populer'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-primary/10 border-border/10">Terpopuler</button>
+                                    <button @click="activeSort = 'rating'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left border-b-2 transition-colors hover:bg-primary/10 border-border/10">Rating Tertinggi</button>
+                                    <button @click="activeSort = 'terbaru'; showSortDropdown = false" class="px-4 py-2.5 w-full text-left transition-colors hover:bg-primary/10">Terbaru</button>
                                 </div>
                             </div>
                         </div>
@@ -365,7 +365,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                                     <div class="relative z-10 flex flex-col justify-between flex-1 h-full p-5 md:p-6">
                                         <div class="flex items-center gap-2">
-                                            <span class="px-3 py-1 bg-pastel-pink text-border border-2 border-border rounded-full text-[9px] font-extrabold uppercase tracking-wide">Terlaris</span>
+                                            <span class="px-3 py-1 bg-primary text-white border-2 border-border rounded-full text-[9px] font-extrabold uppercase tracking-wide">Terlaris</span>
                                             <span class="px-2.5 py-1 bg-accent-yellow text-border border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="'★ ' + filteredMovies()[0].rating"></span>
                                             <span class="px-2 py-1 bg-slate-200 text-border border-2 border-border rounded-lg text-[9px] font-extrabold tracking-wider">IMAX</span>
                                         </div>
@@ -402,7 +402,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                                             </div>
                                             <div class="flex items-center justify-between pt-2">
                                                 <span class="px-2 py-0.5 bg-[#F3F4F6] border-2 border-border rounded-lg text-[9px] font-extrabold" x-text="film.duration"></span>
-                                                <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-emerald-600 rounded transition-colors hover:text-emerald-700 focus:outline-none focus:ring-2 focus:ring-border hover:underline">
+                                                <a :href="'/film/' + film.id" class="flex gap-0.5 items-center text-xs font-black text-primary rounded transition-colors hover:text-brand-hover focus:outline-none focus:ring-2 focus:ring-border hover:underline">
                                                     Beli Tiket <span class="font-bold">&gt;</span>
                                                 </a>
                                             </div>
@@ -416,7 +416,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
 
                 <section class="grid grid-cols-1 gap-6 md:grid-cols-2">
 
-                    <div class="border-[3px] border-border rounded-[20px] bg-pastel-lemon p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
+                    <div class="border-[3px] border-border rounded-[20px] bg-accent-yellow/40 p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
                         <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                             <x-icon name="heroicon-s-shopping-bag" class="w-7 h-7 text-border" />
                         </div>
@@ -429,7 +429,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </a>
                     </div>
 
-                    <div class="border-[3px] border-border rounded-[20px] bg-pastel-peach p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
+                    <div class="border-[3px] border-border rounded-[20px] bg-accent-yellow/40 p-5 md:p-6 flex items-center gap-4 shadow-[4px_4px_0px_var(--border)]">
                         <div class="w-14 h-14 bg-white border-[3px] border-border rounded-xl flex items-center justify-center text-border shadow-[3px_3px_0px_rgba(0,0,0,1)] shrink-0 select-none">
                             <x-icon name="heroicon-s-credit-card" class="w-7 h-7 text-border" />
                         </div>

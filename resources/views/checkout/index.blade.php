@@ -51,7 +51,7 @@
 
         <div class="max-w-4xl mx-auto px-4 sm:px-6">
             @if ($isPayable && $booking->lock_expiry && count($seats) > 0)
-            <div class="px-4 py-3 mb-6 text-center border-2 border-black rounded-full shadow-[3px_3px_0px_#000] bg-pastel-lemon">
+            <div class="px-4 py-3 mb-6 text-center border-2 border-black rounded-full shadow-[3px_3px_0px_#000] bg-[#F1EEFE]">
                 <p class="text-sm font-bold text-gray-700 md:text-base">
                     Kursi telah dikunci secara eksklusif. Pesanan otomatis dibatalkan dalam
                     <strong class="ml-1 text-lg font-price text-accent-red" x-text="countdown || '--:--'"></strong>.
@@ -76,11 +76,11 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
                 <div class="brutal-box bg-white p-6 md:p-8 relative">
                     @if ($isPayable)
-                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-pastel-lemon border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10">
+                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-primary/20 border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10 text-primary">
                             ⏳ Menunggu Pembayaran
                         </span>
                     @elseif ($booking->status === 'confirmed')
-                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-pastel-mint text-accent-green -rotate-6 z-10">
+                        <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-secondary/40 text-emerald-800 -rotate-6 z-10">
                             ✅ Lunas
                         </span>
                     @else
@@ -164,15 +164,15 @@
                             <h3 class="pb-3 mb-4 text-lg uppercase font-black border-b-2 border-dashed border-border flex items-center justify-between">
                                 <span>🎟️ Kode Promo</span>
                                 @if ($booking->promo)
-                                    <span class="text-xs font-bold text-accent-green uppercase">Aktif</span>
+                                    <span class="text-xs font-bold text-primary uppercase">Aktif</span>
                                 @endif
                             </h3>
 
                             @if ($booking->promo)
-                                <div class="flex items-center justify-between p-3 bg-emerald-50 border-2 border-black rounded-lg">
+                                <div class="flex items-center justify-between p-3 bg-primary/5 border-2 border-primary rounded-lg shadow-[2px_2px_0px_#B7A5F8]">
                                     <div>
-                                        <p class="font-extrabold text-sm text-emerald-900">{{ $booking->promo->title }} ({{ $booking->promo->code }})</p>
-                                        <p class="text-xs text-emerald-700">Diskon Rp {{ number_format($discountAmount, 0, ',', '.') }}</p>
+                                        <p class="font-extrabold text-sm text-primary">{{ $booking->promo->title }} ({{ $booking->promo->code }})</p>
+                                        <p class="text-xs text-foreground/70">Diskon Rp {{ number_format($discountAmount, 0, ',', '.') }}</p>
                                     </div>
                                     <form action="{{ route('checkout.promo.remove', $booking->id) }}" method="POST">
                                         @csrf
@@ -184,7 +184,7 @@
                                 <form action="{{ route('checkout.promo.apply', $booking->id) }}" method="POST" class="flex gap-2">
                                     @csrf
                                     <input type="text" name="promo_code" placeholder="Ketik Kode Promo..." required class="neo-input uppercase flex-1 text-sm font-mono tracking-wider" />
-                                    <button type="submit" class="brutal-btn !py-2 !px-4 text-xs font-black">Pakai</button>
+                                    <button type="submit" class="brutal-btn bg-primary text-white hover:bg-[#A88CF8] !py-2 !px-4 text-xs font-black shadow-[2px_2px_0px_rgba(0,0,0,1)]">Pakai</button>
                                 </form>
                             @endif
                         </div>
@@ -218,7 +218,7 @@
 
                     @if ($isPayable)
                         <div class="brutal-box bg-white p-6 md:p-8 text-center">
-                            <p class="mb-2 font-extrabold text-accent-green">
+                            <p class="mb-2 font-extrabold text-primary">
                                 <x-icon name="heroicon-s-lock-closed" class="inline w-4 h-4 mr-1" />
                                 PEMBAYARAN AMAN
                             </p>
@@ -233,7 +233,7 @@
                                         onClose:   ()  => { alert('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.'); isPaying = false; }
                                     })"
                                     :disabled="isPaying"
-                                    class="brutal-btn !py-4 !px-10 text-lg w-full justify-center">
+                                    class="brutal-btn bg-primary text-white hover:bg-[#A88CF8] shadow-[5px_5px_0px_#000] !py-4 !px-10 text-lg w-full justify-center">
                                 <span x-show="!isPaying">
                                     <x-icon name="heroicon-s-bolt" class="inline w-5 h-5 mr-2" />
                                     Bayar Sekarang

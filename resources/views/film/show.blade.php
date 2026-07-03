@@ -121,7 +121,7 @@
             x-transition:leave="transition ease-in duration-200"
             x-transition:leave-start="opacity-100 translate-y-0"
             x-transition:leave-end="opacity-0 translate-y-[-20px]"
-            :class="toastType === 'error' ? 'bg-[#FFD1D1] border-red-500 text-red-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]' : 'bg-pastel-mint border-border text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
+            :class="toastType === 'error' ? 'bg-[#FFD1D1] border-red-500 text-red-900 shadow-[4px_4px_0px_rgba(0,0,0,1)]' : 'bg-[#E8FDF5] border-border text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
             class="fixed top-24 left-1/2 -translate-x-1/2 z-[999] border-[3px] px-6 py-3.5 rounded-xl font-bold text-xs flex items-center gap-2"
             style="display: none;">
             <template x-if="toastType === 'error'">
@@ -137,7 +137,7 @@
         
 
         
-        <section class="brutal-card bg-[#EBE9FE] p-6 md:p-8 border-[3px] border-border rounded-[24px] shadow-[8px_8px_0px_rgba(0,0,0,1)]">
+        <section class="brutal-card bg-[#F1EEFE] p-6 md:p-8 border-[3px] border-border rounded-[24px] shadow-[8px_8px_0px_rgba(0,0,0,1)]">
             <div class="grid grid-cols-1 gap-8 lg:grid-cols-12">
 
                 
@@ -286,7 +286,7 @@
 
                         
                         <a href="#pilih-jadwal"
-                            class="w-full text-center py-4 bg-accent-green hover:bg-accent-green/90 border-[3px] border-border rounded-[20px] text-xs font-black text-foreground shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all uppercase tracking-wider block">
+                            class="w-full text-center py-4 bg-primary hover:bg-[#A88CF8] border-[3px] border-border rounded-[20px] text-xs font-black text-white shadow-[4px_4px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[5px_5px_0px_rgba(0,0,0,1)] active:translate-y-[1px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all uppercase tracking-wider block">
                             Pesan Tiket
                         </a>
 
@@ -318,7 +318,7 @@
                         <div class="flex gap-2">
                             <template x-for="date in dates" :key="date.isoDate">
                                 <button @click="selectedDate = date.isoDate"
-                                    :class="selectedDate === date.isoDate ? 'bg-accent-green text-border border-border translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_rgba(0,0,0,1)]' : 'bg-white text-border hover:bg-slate-50 active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
+                                    :class="selectedDate === date.isoDate ? 'bg-primary text-white border-border translate-x-[2px] translate-y-[2px] shadow-[2px_2px_0px_rgba(0,0,0,1)]' : 'bg-white text-border hover:bg-slate-50 active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_rgba(0,0,0,1)] shadow-[4px_4px_0px_rgba(0,0,0,1)]'"
                                     class="px-5 py-3.5 rounded-[16px] border-[3px] border-border text-center flex flex-col items-center justify-center min-w-[100px] transition-all focus:outline-none">
                                     <span class="text-[10px] font-extrabold uppercase tracking-wide opacity-60" x-text="date.dayName"></span>
                                     <span class="text-sm font-black mt-0.5" x-text="date.dateStr"></span>
@@ -360,7 +360,7 @@
                                         <a :href="st.is_past ? 'javascript:void(0)' : '/jadwal/' + st.id + '/kursi'"
                                             :class="st.is_past 
                                                 ? 'px-4 py-2 bg-gray-100 text-gray-400 border-2 border-border/30 rounded-xl font-black text-xs cursor-not-allowed opacity-50' 
-                                                : 'px-4 py-2 bg-white hover:bg-accent-green hover:border-border border-2 border-border rounded-xl font-black text-xs transition-all shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px]'"
+                                                : 'px-4 py-2 bg-white hover:bg-primary hover:text-white hover:border-border border-2 border-border rounded-xl font-black text-xs transition-all shadow-[2px_2px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] active:translate-y-[1px]'"
                                             x-text="st.time">
                                         </a>
                                     </template>
@@ -388,7 +388,7 @@
 
                     <div class="space-y-3.5 text-xs font-bold text-foreground">
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-mint border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-secondary/30 border-border shrink-0">
                                 <x-icon name="heroicon-s-calendar" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -398,7 +398,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-sky border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-primary/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-language" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -408,7 +408,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-peach border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-accent-yellow/30 border-border shrink-0">
                                 <x-icon name="heroicon-s-globe-alt" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -418,7 +418,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-lemon border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-accent-yellow/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-clock" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -428,7 +428,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-lavender border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-primary/30 border-border shrink-0">
                                 <x-icon name="heroicon-s-building-office" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -438,7 +438,7 @@
                         </div>
 
                         <div class="flex items-center gap-3">
-                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-pastel-pink border-border shrink-0">
+                            <div class="flex items-center justify-center w-8 h-8 border-2 rounded-lg bg-accent-red/20 border-border shrink-0">
                                 <x-icon name="heroicon-s-shield-check" class="w-4 h-4 text-border" />
                             </div>
                             <div>
@@ -483,7 +483,7 @@
         <section class="border-[3px] border-border rounded-[24px] bg-white p-5 md:p-6 shadow-[6px_6px_0px_rgba(0,0,0,1)] space-y-6">
             <div class="flex items-center justify-between">
                 <h2 class="text-2xl font-black tracking-tight uppercase text-foreground">FILM LAINNYA YANG MUNGKIN KAMU SUKAI</h2>
-                <a href="{{ route('film.index') }}" class="text-xs font-bold underline hover:text-emerald-600">Lihat Semua</a>
+                <a href="{{ route('film.index') }}" class="text-xs font-bold underline hover:text-primary">Lihat Semua</a>
             </div>
 
             
@@ -501,7 +501,7 @@
                     </div>
 
                     <div class="p-3.5 space-y-1">
-                        <h3 class="text-xs font-extrabold leading-tight uppercase text-foreground line-clamp-1 group-hover:text-emerald-600">
+                        <h3 class="text-xs font-extrabold leading-tight uppercase text-foreground line-clamp-1 group-hover:text-primary">
                             {{ $rec->judul }}
                         </h3>
                         <p class="text-[8px] font-bold text-foreground/50 uppercase tracking-wider truncate">{{ $rec->genre }}</p>
@@ -567,7 +567,7 @@
         <div @click.away="openTrailer = false"
             class="relative w-full max-w-3xl bg-white border-[4px] border-border rounded-[24px] shadow-[8px_8px_0px_rgba(0,0,0,1)] overflow-hidden">
             
-            <div class="flex items-center justify-between p-4 border-b-[3px] border-border bg-pastel-sky">
+            <div class="flex items-center justify-between p-4 border-b-[3px] border-border bg-[#F1EEFE]">
                 <h3 class="text-sm font-black uppercase font-heading text-foreground">TRAILER: {{ $film->judul }}</h3>
                 <button @click="openTrailer = false" class="w-8 h-8 bg-white border-2 border-border rounded-full flex items-center justify-center hover:scale-105 active:translate-y-[1px] focus:outline-none">
                     <x-icon name="heroicon-s-x-mark" class="w-4 h-4 text-border" />

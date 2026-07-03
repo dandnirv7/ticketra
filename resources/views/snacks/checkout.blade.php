@@ -29,11 +29,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             <div class="brutal-box bg-white p-6 md:p-8 relative">
                 @if ($snackOrder->status === 'locked')
-                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-pastel-lemon border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10">
+                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase bg-primary/20 border-2 border-black rounded-md tracking-widest shadow-sm rotate-6 z-10 text-primary">
                         ⏳ Menunggu Pembayaran
                     </span>
                 @elseif ($snackOrder->status === 'paid')
-                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-pastel-mint text-accent-green -rotate-6 z-10">
+                    <span class="absolute -top-3 right-0 px-3 py-1.5 text-[10px] font-extrabold uppercase border-2 border-black rounded-md tracking-widest shadow-sm bg-secondary/40 text-emerald-800 -rotate-6 z-10">
                         ✅ Lunas
                     </span>
                 @else
@@ -93,7 +93,7 @@
 
                 @if (in_array($snackOrder->status, ['locked']))
                     <div class="brutal-box bg-white p-6 md:p-8 text-center" x-data="{ isPaying: false }">
-                        <p class="mb-2 font-extrabold text-accent-green">
+                        <p class="mb-2 font-extrabold text-primary">
                             <x-icon name="heroicon-s-lock-closed" class="inline w-4 h-4 mr-1" />
                             PEMBAYARAN AMAN
                         </p>
@@ -108,7 +108,7 @@
                                     onClose:   ()  => { alert('Anda menutup popup pembayaran. Silakan coba lagi jika ingin melanjutkan.'); isPaying = false; }
                                 })"
                                 :disabled="isPaying"
-                                class="brutal-btn !py-4 !px-10 text-lg w-full justify-center">
+                                class="brutal-btn bg-primary text-white hover:bg-[#A88CF8] shadow-[5px_5px_0px_#000] !py-4 !px-10 text-lg w-full justify-center">
                             <span x-show="!isPaying">
                                 <x-icon name="heroicon-s-bolt" class="inline w-5 h-5 mr-2" />
                                 Bayar Sekarang

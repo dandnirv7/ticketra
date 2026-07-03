@@ -6,9 +6,9 @@
   </x-slot>
 
   <div class="grid grid-cols-1 gap-4 mb-6 md:grid-cols-3">
-    <div class="p-4 bg-green-100 neo-card-sm">
+    <div class="p-4 bg-[#E8FDF5] neo-card-sm">
       <div class="flex items-center gap-3">
-        <div class="bg-green-300 neo-icon">
+        <div class="bg-secondary neo-icon">
           <x-heroicon-o-ticket class="w-6 h-6" />
         </div>
         <div>
@@ -18,9 +18,9 @@
       </div>
     </div>
 
-    <div class="p-4 bg-blue-100 neo-card-sm">
+    <div class="p-4 bg-[#F1EEFE] neo-card-sm">
       <div class="flex items-center gap-3">
-        <div class="bg-blue-300 neo-icon">
+        <div class="bg-primary/20 neo-icon">
           <x-heroicon-o-check-circle class="w-6 h-6" />
         </div>
         <div>
@@ -30,9 +30,9 @@
       </div>
     </div>
 
-    <div class="p-4 bg-red-100 neo-card-sm">
+    <div class="p-4 bg-[#FFF1F2] neo-card-sm">
       <div class="flex items-center gap-3">
-        <div class="bg-red-300 neo-icon">
+        <div class="bg-accent-red/20 neo-icon">
           <x-heroicon-o-x-circle class="w-6 h-6" />
         </div>
         <div>
@@ -61,9 +61,9 @@
               <div class="flex items-center gap-2 mb-2">
                 <span class="text-xs font-black text-gray-600 font-mono">{{ $booking->booking_id }}</span>
                 @if($booking->status === 'confirmed')
-                <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded border border-emerald-600 bg-emerald-50 text-emerald-700">Confirmed</span>
+                <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded border border-secondary bg-secondary/25 text-emerald-800">Confirmed</span>
                 @elseif($booking->status === 'pending_payment' || $booking->status === 'locked')
-                <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded border border-amber-600 bg-amber-50 text-amber-700">Menunggu Pembayaran</span>
+                <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded border border-primary bg-primary/20 text-primary">Menunggu Pembayaran</span>
                 @elseif($booking->status === 'cancelled' || $booking->status === 'failed')
                 <span class="text-[10px] uppercase font-black px-2 py-0.5 rounded border border-red-600 bg-red-50 text-red-700">Dibatalkan</span>
                 @endif
@@ -107,7 +107,7 @@
               <p class="mt-1 text-xs text-gray-600 font-bold">
                 {{ $booking->created_at->diffForHumans() }}
               </p>
-              <span class="inline-block mt-3 text-xs brutal-btn !py-1.5 !px-3 shadow-[2px_2px_0px_var(--border)]">
+              <span class="inline-block mt-3 text-xs brutal-btn bg-primary text-white hover:bg-[#A88CF8] !py-1.5 !px-3 shadow-[2px_2px_0px_var(--border)]">
                 Lihat Tiket
               </span>
             </div>
@@ -122,19 +122,19 @@
 
       @else
       <div class="py-12 text-center">
-        <div class="inline-flex items-center justify-center w-20 h-20 mb-4 bg-pastel-sky border-4 border-black rounded-full shadow-[3px_3px_0px_var(--border)]">
+        <div class="inline-flex items-center justify-center w-20 h-20 mb-4 bg-primary/20 border-4 border-black rounded-full shadow-[3px_3px_0px_var(--border)]">
           <x-heroicon-o-clipboard-document-list class="w-10 h-10 text-black" />
         </div>
         <h3 class="mb-2 text-xl font-black uppercase">Belum ada tiket</h3>
         <p class="mb-6 font-bold text-sm text-gray-600">Kamu belum pernah memesan tiket film.</p>
-        <a href="{{ route('landing') }}" class="brutal-btn !py-2.5 !px-6 text-sm">
+        <a href="{{ route('landing') }}" class="brutal-btn bg-primary text-white hover:bg-[#A88CF8] !py-2.5 !px-6 text-sm">
           Cari Film <x-heroicon-o-film class="inline w-4 h-4 ml-1" />
         </a>
       </div>
       @endif
     </div>
 
-    <div class="p-6 neo-card bg-pastel-peach border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)]">
+    <div class="p-6 neo-card bg-background border-4 border-black shadow-[6px_6px_0px_rgba(0,0,0,1)]">
       <h3 class="flex items-center gap-2 mb-6 text-xl font-black uppercase text-black">
         <x-heroicon-o-shopping-bag class="w-6 h-6 text-black" />
         Pesanan Camilan
@@ -147,9 +147,9 @@
           <div class="flex items-center justify-between gap-2 mb-3">
             <span class="text-xs font-black text-gray-700 font-mono">{{ $order->order_id }}</span>
             @if($order->status === 'paid')
-            <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded border border-emerald-600 bg-emerald-50 text-emerald-700">Lunas</span>
+            <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded border border-secondary bg-secondary/25 text-emerald-800">Lunas</span>
             @elseif($order->status === 'locked' || $order->status === 'draft')
-            <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded border border-amber-600 bg-amber-50 text-amber-700">Belum Bayar</span>
+            <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded border border-primary bg-primary/20 text-primary">Belum Bayar</span>
             @else
             <span class="text-[9px] uppercase font-black px-2 py-0.5 rounded border border-red-600 bg-red-50 text-red-700">{{ $order->status }}</span>
             @endif
@@ -175,7 +175,7 @@
 
             <div class="flex gap-2">
               @if(in_array($order->status, ['draft', 'locked']))
-              <a href="{{ route('snacks.checkout.show', $order->id) }}" class="brutal-btn !py-1.5 !px-3 !text-xs bg-pastel-lemon">
+              <a href="{{ route('snacks.checkout.show', $order->id) }}" class="brutal-btn !py-1.5 !px-3 !text-xs bg-primary text-white hover:bg-[#A88CF8]">
                 Bayar
               </a>
               @endif
@@ -197,7 +197,7 @@
         <x-heroicon-o-shopping-bag class="w-10 h-10 text-gray-400 mx-auto mb-3" />
         <p class="text-sm font-black uppercase text-gray-700">Belum ada pesanan camilan</p>
         <p class="text-xs text-gray-500 font-bold mt-1 px-4">Kamu bisa memesan camilan langsung untuk diambil di bioskop.</p>
-        <a href="{{ route('snacks.index') }}" class="brutal-btn !py-2 !px-4 !text-xs mt-4 inline-block bg-pastel-mint">
+        <a href="{{ route('snacks.index') }}" class="brutal-btn !py-2 !px-4 !text-xs mt-4 inline-block bg-primary text-white hover:bg-[#A88CF8]">
           Pesan Camilan
         </a>
       </div>

@@ -23,10 +23,10 @@
 
     $isActive = fn($route) => request()->routeIs($route);
     $linkClass = fn($routes) => collect($routes)->contains(fn($r) => request()->routeIs($r))
-        ? 'flex items-center gap-3 px-4 py-3 bg-pastel-mint border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none'
+        ? 'flex items-center gap-3 px-4 py-3 bg-primary text-white border-[3px] border-border rounded-xl font-bold shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:translate-x-[1px] hover:translate-y-[1px] hover:shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all focus:outline-none'
         : 'flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none';
 
-    $bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-black bg-pastel-mint border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
+    $bottomActive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-black text-white bg-primary border-[3px] border-black rounded-xl p-1.5 shadow-[2px_2px_0px_rgba(0,0,0,1)] transition-all';
     $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] font-bold text-gray-700 hover:text-black border-[3px] border-transparent p-1.5 transition-all';
 @endphp
 
@@ -42,10 +42,10 @@
         <aside class="hidden lg:block lg:w-64 lg:shrink-0">
             <div class="lg:sticky lg:top-8 border-[3px] border-border rounded-[24px] bg-secondary-background p-5 space-y-6 shadow-[6px_6px_0px_rgba(0,0,0,1)]">
 
-                
+                <!-- Logo -->
                 <a href="{{ route('landing') }}" class="flex items-center gap-2 text-2xl font-heading font-extrabold tracking-tight">
-                    <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-accent-green" />
-                    Ticketra<span class="text-accent-green">.</span>
+                    <x-icon name="heroicon-s-ticket" class="w-8 h-8 text-primary" />
+                    Ticketra<span class="text-primary">.</span>
                 </a>
 
                 
@@ -85,8 +85,8 @@
                     </form>
                 </nav>
 
-                
-                <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
+                <!-- User Mini Card -->
+                <div class="border-[3px] border-border rounded-[20px] bg-primary/20 p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                     <div class="pr-12">
                         <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user?->name ?? 'Andi')[0] }}!</p>
                         <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Selamat datang di Ticketra.</p>

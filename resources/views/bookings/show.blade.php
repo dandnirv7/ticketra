@@ -14,26 +14,26 @@
   <div class="max-w-4xl">
 
       @if($booking->status === 'confirmed')
-      <div class="p-4 mb-6 bg-green-100 neo-card-sm">
+      <div class="p-4 mb-6 bg-[#E8FDF5] border-4 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] rounded-xl">
         <div class="flex items-center gap-3">
-          <div class="bg-green-300 neo-icon">
-            <x-heroicon-o-check-circle class="w-6 h-6 text-green-700" />
+          <div class="bg-secondary border-2 border-black rounded-lg w-10 h-10 flex items-center justify-center shrink-0">
+            <x-heroicon-o-check-circle class="w-6 h-6 text-emerald-800" />
           </div>
           <div>
-            <p class="font-black text-green-900">Pembayaran Berhasil!</p>
-            <p class="text-sm text-green-800">Tunjukkan QR code ini saat masuk bioskop</p>
+            <p class="font-black text-emerald-950">Pembayaran Berhasil!</p>
+            <p class="text-sm text-emerald-900/80 font-semibold">Tunjukkan QR code ini saat masuk bioskop</p>
           </div>
         </div>
       </div>
       @elseif($booking->status === 'pending_payment')
-      <div class="p-4 mb-6 bg-yellow-100 neo-card-sm">
+      <div class="p-4 mb-6 bg-[#FFFBEB] border-4 border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] rounded-xl">
         <div class="flex items-center gap-3">
-          <div class="bg-yellow-300 neo-icon">
-            <x-heroicon-o-clock class="w-6 h-6 text-yellow-700" />
+          <div class="bg-accent-yellow border-2 border-black rounded-lg w-10 h-10 flex items-center justify-center shrink-0">
+            <x-heroicon-o-clock class="w-6 h-6 text-yellow-800" />
           </div>
           <div>
-            <p class="font-black text-yellow-900">Menunggu Pembayaran</p>
-            <p class="text-sm text-yellow-800">Selesaikan pembayaran sebelum {{ $booking->lock_expiry->format('H:i') }}</p>
+            <p class="font-black text-yellow-950">Menunggu Pembayaran</p>
+            <p class="text-sm text-yellow-900/80 font-semibold">Selesaikan pembayaran sebelum {{ $booking->lock_expiry->format('H:i') }}</p>
           </div>
         </div>
       </div>
@@ -85,11 +85,11 @@
               <div class="flex-1 text-center sm:text-left">
                 <h4 class="mb-2 text-xl font-black text-black">{{ $booking->jadwalTayang->film->judul }}</h4>
                 <div class="flex flex-wrap justify-center sm:justify-start gap-2 mb-3">
-                  <span class="text-xs neo-badge-blue">{{ $booking->jadwalTayang->film->genre }}</span>
-                  <span class="flex flex-row items-center justify-center gap-1 text-xs text-center neo-badge-yellow">
-                    <x-heroicon-o-star class="w-3 h-3" />
+                  <span class="text-xs px-2.5 py-1 rounded-lg bg-primary/20 text-primary border-2 border-border font-extrabold shadow-[1px_1px_0px_#000]">{{ $booking->jadwalTayang->film->genre }}</span>
+                  <span class="flex flex-row items-center justify-center gap-1 text-xs px-2.5 py-1 rounded-lg bg-accent-yellow border-2 border-border font-extrabold text-black shadow-[1px_1px_0px_#000]">
+                    <x-heroicon-o-star class="w-3.5 h-3.5 fill-current text-black" />
                     {{ $booking->jadwalTayang->film->rating }}</span>
-                  <span class="text-xs neo-badge-green">{{ $booking->jadwalTayang->film->durasi_menit }} menit</span>
+                  <span class="text-xs px-2.5 py-1 rounded-lg bg-secondary/40 border-2 border-border font-extrabold text-emerald-800 shadow-[1px_1px_0px_#000]">{{ $booking->jadwalTayang->film->durasi_menit }} menit</span>
                 </div>
                 <p class="text-sm text-gray-600 font-medium">{{ $booking->jadwalTayang->film->sinopsis }}</p>
               </div>
@@ -103,25 +103,25 @@
             </h3>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div class="neo-info-pink">
+              <div class="bg-[#FFF1F2] border-[3px] border-border p-4 rounded-xl shadow-[3px_3px_0px_#000]">
                 <p class="neo-subtitle">Bioskop</p>
                 <p class="neo-text">{{ $booking->jadwalTayang->studio->bioskop->nama }}</p>
                 <p class="neo-text-sm">{{ $booking->jadwalTayang->studio->bioskop->alamat }}</p>
               </div>
 
-              <div class="neo-info-blue">
+              <div class="bg-[#F1EEFE] border-[3px] border-border p-4 rounded-xl shadow-[3px_3px_0px_#000]">
                 <p class="neo-subtitle">Studio</p>
                 <p class="neo-text">{{ $booking->jadwalTayang->studio->nama }}</p>
                 <p class="neo-text-sm">{{ ucfirst($booking->jadwalTayang->studio->tipe) }}</p>
               </div>
 
-              <div class="neo-info-yellow">
+              <div class="bg-[#FEF08A]/35 border-[3px] border-border p-4 rounded-xl shadow-[3px_3px_0px_#000]">
                 <p class="neo-subtitle">Tanggal</p>
                 <p class="neo-text">{{ $booking->jadwalTayang->waktu_mulai->format('d M Y') }}</p>
                 <p class="neo-text-sm">{{ $booking->jadwalTayang->waktu_mulai->format('l') }}</p>
               </div>
 
-              <div class="neo-info-green">
+              <div class="bg-secondary/30 border-[3px] border-border p-4 rounded-xl shadow-[3px_3px_0px_#000]">
                 <p class="neo-subtitle">Waktu</p>
                 <p class="neo-text">{{ $booking->jadwalTayang->waktu_mulai->format('H:i') }} WIB</p>
                 <p class="neo-text-sm">s/d {{ $booking->jadwalTayang->waktu_selesai->format('H:i') }} WIB</p>
@@ -137,7 +137,7 @@
 
             <div class="flex flex-wrap gap-2">
               @foreach($booking->statusKursis as $statusKursi)
-              <span class="text-sm font-black bg-purple-200 neo-badge">
+              <span class="text-sm px-3 py-1.5 rounded-lg bg-primary text-white border-2 border-border font-black shadow-[1.5px_1.5px_0px_#000]">
                 {{ $statusKursi->kursi->label_baris }}{{ $statusKursi->kursi->nomor_kursi }}
               </span>
               @endforeach

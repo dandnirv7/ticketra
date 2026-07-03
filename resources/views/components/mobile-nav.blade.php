@@ -3,7 +3,7 @@
     'bottomInactive' => '',
 ])
 
-<div class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-neo-cream border-t-4 border-black px-4 py-2 flex items-center justify-between shadow-[0px_-4px_10px_rgba(0,0,0,0.05)]">
+<div class="lg:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t-4 border-black px-4 py-2 flex items-center justify-between shadow-[0px_-4px_10px_rgba(0,0,0,0.05)]">
     <a href="{{ route('dashboard') }}"
        class="{{ request()->routeIs('dashboard') ? $bottomActive : $bottomInactive }} flex-1">
         <x-icon name="heroicon-s-home" class="w-5 h-5 text-border" />
@@ -46,13 +46,13 @@
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="translate-x-0"
          x-transition:leave-end="-translate-x-full"
-         class="w-80 max-w-full bg-neo-cream border-r-4 border-black h-full p-6 flex flex-col justify-between shadow-2xl relative overflow-y-auto">
+         class="w-80 max-w-full bg-white border-r-4 border-black h-full p-6 flex flex-col justify-between shadow-2xl relative overflow-y-auto">
 
         <div class="space-y-6">
             <div class="flex items-center justify-between border-b-4 border-black pb-4">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2 text-xl font-heading font-extrabold tracking-tight">
-                    <x-icon name="heroicon-s-ticket" class="w-7 h-7 text-accent-green" />
-                    Ticketra<span class="text-accent-green">.</span>
+                    <x-icon name="heroicon-s-ticket" class="w-7 h-7 text-primary" />
+                    Ticketra<span class="text-primary">.</span>
                 </a>
                 <button @click="open = false" class="p-2 border-2 border-black bg-white hover:bg-red-50 rounded-xl transition-colors">
                     <x-icon name="heroicon-s-x-mark" class="w-5 h-5" />
@@ -60,7 +60,7 @@
             </div>
 
             @php $user = auth()->user(); @endphp
-            <div class="border-[3px] border-border rounded-[20px] bg-pastel-lavender p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
+            <div class="border-[3px] border-border rounded-[20px] bg-primary/20 p-4 relative overflow-hidden shadow-[3px_3px_0px_var(--border)]">
                 <div class="pr-12">
                     <p class="text-sm font-extrabold text-foreground">Hi, {{ explode(' ', $user->name ?? 'User')[0] }}!</p>
                     <p class="text-[11px] font-medium text-foreground/80 mt-1 leading-snug">Kelola akun dan cek promo menarik.</p>

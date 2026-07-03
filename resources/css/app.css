@@ -12,7 +12,9 @@
     height: 0 !important;
 }
 
-[x-cloak] { display: none !important; }
+[x-cloak] {
+    display: none !important;
+}
 
 @layer components {
     .filter-pill {
@@ -39,7 +41,8 @@
         box-shadow: 3px 3px 0px var(--border, #111827);
     }
     .filter-pill.active {
-        background-color: var(--pastel-mint, #bef264);
+        background-color: #b7a5f8;
+        color: #ffffff;
         transform: translate(-1px, -1px);
         box-shadow: 3px 3px 0px var(--border, #111827);
     }
@@ -86,15 +89,15 @@
     }
 
     .neo-button-primary {
-        @apply bg-green-300 neo-button;
+        @apply bg-primary neo-button;
     }
 
     .neo-button-secondary {
-        @apply bg-yellow-200 neo-button;
+        @apply bg-accent-yellow neo-button;
     }
 
     .neo-button-danger {
-        @apply bg-red-300 neo-button;
+        @apply bg-accent-red neo-button;
     }
 
     .neo-badge {
@@ -174,7 +177,7 @@
     }
 
     .neo-poster-frame {
-        @apply absolute top-3 left-3 right-[-12px] bottom-[-12px] bg-purple-300 border-4 border-black rounded-2xl -z-10;
+        @apply absolute top-3 left-3 right-[-12px] bottom-[-12px] bg-brand-light border-4 border-black rounded-2xl -z-10;
     }
 
     .neo-poster {
@@ -194,7 +197,7 @@
     }
     body {
         @apply antialiased text-foreground font-base;
-        background-color: oklch(0.96 0.01 155);
+        background-color: #faf8ff;
         background-image:
             linear-gradient(to right, rgba(0, 0, 0, 0.04) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
@@ -248,23 +251,21 @@
         @apply opacity-50 cursor-not-allowed;
     }
     .brutal-btn-secondary {
-        @apply bg-white hover:bg-pastel-sky;
+        @apply bg-white hover:bg-primary/20;
     }
 
     .seat {
         @apply flex items-center justify-center w-8 h-8 text-xs font-bold transition-all border-2 rounded-t-lg rounded-b-sm cursor-pointer border-border md:w-10 md:h-10;
     }
     .seat-available {
-        @apply bg-secondary-background hover:bg-pastel-sky hover:-translate-y-1;
+        @apply bg-secondary-background hover:bg-secondary hover:-translate-y-1;
     }
     .seat-selected {
-        @apply scale-105 shadow-sm bg-accent-green text-main-foreground;
+        @apply text-white scale-105 shadow-sm bg-primary;
     }
     .seat-occupied {
         @apply text-gray-500 bg-gray-300 border-gray-400 cursor-not-allowed opacity-60 hover:translate-y-0;
     }
-
-
 
     .perspective-1000 {
         perspective: 1000px;
@@ -368,4 +369,3 @@
     opacity: 0;
     transform: translate(-50%, -20px);
 }
-
