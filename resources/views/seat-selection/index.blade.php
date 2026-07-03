@@ -52,94 +52,102 @@
         </p>
       </div>
 
+      @php
+        $kursiJson = json_encode($jadwalTayang->studio->kursis);
+        $snackJson = json_encode($snackSuggestions);
+      @endphp
+      <script>
+        window.seatData = {
+          selected: [],
+          selectedSnacks: [],
+          maxSeats: 6,
+          price: {{ $jadwalTayang->harga }},
+          seats: {!! $kursiJson !!},
+          showSnackModal: false,
+          snacks: {!! $snackJson !!},
+          toastMessage: '',
+          showToast: false,
+
+          toast(msg) {
+            this.toastMessage = msg;
+            this.showToast = true;
+            setTimeout(() => this.showToast = false, 3000);
+          },
+
+          toggleSeat(seatId) {
+            if (this.selected.includes(seatId)) {
+              this.selected = this.selected.filter(id => id !== seatId);
+            } else {
+              if (this.selected.length < this.maxSeats) {
+                this.selected.push(seatId);
+              } else {
+                this.toast("Maksimal hanya boleh memilih 6 kursi!");
+              }
+            }
+          },
+
+          toggleSnack(snackId) {
+            if (this.selectedSnacks.includes(snackId)) {
+              this.selectedSnacks = this.selectedSnacks.filter(id => id !== snackId);
+            } else {
+              this.selectedSnacks.push(snackId);
+            }
+          },
+
+          isSnackSelected(snackId) {
+            return this.selectedSnacks.includes(snackId);
+          },
+
+          get snackTotal() {
+            return this.snacks
+              .filter(s => this.selectedSnacks.includes(s.id))
+              .reduce((sum, s) => sum + Number(s.price), 0);
+          },
+
+          get total() {
+            return this.selected.length * this.price;
+          },
+
+          get grandTotal() {
+            return this.total + this.snackTotal;
+          },
+
+          get seatLabels() {
+            return this.selected.map(id => {
+              const seat = this.seats.find(s => s.id === id);
+              return seat
+                ? `${seat.label_baris}${seat.nomor_kursi}`
+                : "";
+            }).join(", ");
+          },
+
+          submitBooking() {
+            if (this.selected.length === 0) {
+              this.toast("Silakan pilih minimal 1 kursi!");
+              return;
+            }
+            this.showSnackModal = true;
+          },
+
+          goToPayment() {
+            document.getElementById("kursi_ids_input").value =
+              JSON.stringify(this.selected);
+            document.getElementById("snack_ids_input").value =
+              JSON.stringify(this.selectedSnacks);
+            document.getElementById("bookingForm").submit();
+          },
+
+          goToSnacks() {
+            window.location.href = "{{ route('snacks.index') }}";
+          }
+        };
+      </script>
+
       <form
         id="bookingForm"
         action="{{ route('jadwal.kursi.store', $jadwalTayang->id) }}"
         method="POST"
-        x-data='{
-                    selected: [],
-                    selectedSnacks: [],
-                    maxSeats: 6,
-                    price: {{ $jadwalTayang->harga }},
-                    seats: @json($jadwalTayang->studio->kursis),
-                    showSnackModal: false,
-                    snacks: @json($snackSuggestions),
-                    toastMessage: '',
-                    showToast: false,
-
-                    toast(msg) {
-                        this.toastMessage = msg;
-                        this.showToast = true;
-                        setTimeout(() => this.showToast = false, 3000);
-                    },
-
-                    toggleSeat(seatId) {
-                        if (this.selected.includes(seatId)) {
-                            this.selected = this.selected.filter(id => id !== seatId);
-                        } else {
-                            if (this.selected.length < this.maxSeats) {
-                                this.selected.push(seatId);
-                            } else {
-                                this.toast("Maksimal hanya boleh memilih 6 kursi!");
-                            }
-                        }
-                    },
-
-                    toggleSnack(snackId) {
-                        if (this.selectedSnacks.includes(snackId)) {
-                            this.selectedSnacks = this.selectedSnacks.filter(id => id !== snackId);
-                        } else {
-                            this.selectedSnacks.push(snackId);
-                        }
-                    },
-
-                    isSnackSelected(snackId) {
-                        return this.selectedSnacks.includes(snackId);
-                    },
-
-                    get snackTotal() {
-                        return this.snacks
-                            .filter(s => this.selectedSnacks.includes(s.id))
-                            .reduce((sum, s) => sum + Number(s.price), 0);
-                    },
-
-                    get total() {
-                        return this.selected.length * this.price;
-                    },
-
-                    get grandTotal() {
-                        return this.total + this.snackTotal;
-                    },
-
-                    get seatLabels() {
-                        return this.selected.map(id => {
-                            const seat = this.seats.find(s => s.id === id);
-                            return seat
-                                ? `${seat.label_baris}${seat.nomor_kursi}`
-                                : "";
-                        }).join(", ");
-                    },
-
-                    submitBooking() {
-                        if (this.selected.length === 0) {
-                            this.toast("Silakan pilih minimal 1 kursi!");
-                            return;
-                        }
-                        this.showSnackModal = true;
-                    },
-
-                    goToPayment() {
-                        document.getElementById("kursi_ids_input").value =
-                            JSON.stringify(this.selected);
-                        document.getElementById("snack_ids_input").value =
-                            JSON.stringify(this.selectedSnacks);
-                        document.getElementById("bookingForm").submit();
-                    },
-
-                    goToSnacks() {
-                        window.location.href = "{{ route('snacks.index') }}";
-                    }
-                }'>
+        x-data="window.seatData">
         @csrf
 
     <div x-show="showToast" x-transition.duration.300ms
