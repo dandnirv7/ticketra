@@ -59,6 +59,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/checkout/{booking}', [CheckoutController::class, 'index'])
         ->name('checkout.index');
+    Route::post('/checkout/{booking}/promo', [CheckoutController::class, 'applyPromo'])
+        ->name('checkout.promo.apply');
+    Route::delete('/checkout/{booking}/promo', [CheckoutController::class, 'removePromo'])
+        ->name('checkout.promo.remove');
 
     Route::get('/payment/success/{booking}', [PaymentController::class, 'success'])
         ->name('payment.success');
@@ -74,6 +78,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/bookings/{booking}', [BookingController::class, 'show'])->name('bookings.show');
     Route::get('/bookings/{booking}/pdf', [BookingController::class, 'downloadPdf'])
         ->name('bookings.pdf');
+
+    // Admin Reports Export
+    Route::get('/admin/export/bookings', [App\Http\Controllers\ReportExportController::class, 'exportBookings'])->name('admin.export.bookings');
+    Route::get('/admin/export/snacks', [App\Http\Controllers\ReportExportController::class, 'exportSnackOrders'])->name('admin.export.snacks');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

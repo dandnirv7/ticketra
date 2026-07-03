@@ -11,6 +11,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class SnackOrder extends Model
 {
     use HasFactory, HasUuids;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -29,6 +31,37 @@ class SnackOrder extends Model
         'paid_at' => 'datetime',
     ];
 
+    protected static function booted()
+    {
+        static::updated(function ($order) {
+            // Cek jika status berubah
+            if ($order->isDirty('status')) {
+                $user = $order->user;
+                if ($user) {
+                    if ($order->status === 'paid') {
+                        $user->notify(new \App\Notifications\GeneralNotification(
+                            'Pembayaran Snack Berhasil! 🍿',
+                            'Pesanan snack ' . $order->order_id . ' telah berhasil dibayar.',
+                            route('bookings.snack.show', $order->id)
+                        ));
+                    } elseif ($order->status === 'ready') {
+                        $user->notify(new \App\Notifications\GeneralNotification(
+                            'Snack Siap Diambil! 🌭',
+                            'Pesanan snack ' . $order->order_id . ' siap diambil di counter bioskop.',
+                            route('bookings.snack.show', $order->id)
+                        ));
+                    } elseif ($order->status === 'picked_up') {
+                        $user->notify(new \App\Notifications\GeneralNotification(
+                            'Snack Telah Diambil 🍿',
+                            'Pesanan snack ' . $order->order_id . ' telah berhasil diambil. Selamat menikmati!',
+                            route('bookings.snack.show', $order->id)
+                        ));
+                    }
+                }
+            }
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
@@ -37,6 +70,14 @@ class SnackOrder extends Model
     public function booking(): BelongsTo
     {
         return $this->belongsTo(Booking::class);
+    }
+
+        public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['order_id', 'status', 'fnb_total'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 
     public function items(): HasMany

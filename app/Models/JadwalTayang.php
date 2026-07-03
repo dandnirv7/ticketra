@@ -10,8 +10,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class JadwalTayang extends Model
 {
+    use HasFactory, HasUuids, SoftDeletes, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['film_id', 'studio_id', 'waktu_mulai', 'waktu_selesai', 'harga', 'status'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+
+{
     /** @use HasFactory<\Database\Factories\JadwalTayangFactory> */
     use HasFactory, HasUuids, SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
     public $incrementing = false;
     protected $keyType = 'string';
 

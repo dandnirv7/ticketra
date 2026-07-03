@@ -136,10 +136,7 @@
                     </div>
 
                     
-                    <button class="relative w-11 h-11 bg-secondary-background border-[3px] border-border rounded-full flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-bell" class="w-5 h-5 text-border" />
-                        <span class="absolute top-2 right-2 w-2.5 h-2.5 bg-accent-red rounded-full border-2 border-border"></span>
-                    </button>
+                    <livewire:notifications-dropdown />
 
                     
                     <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">

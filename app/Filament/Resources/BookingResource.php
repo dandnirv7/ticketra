@@ -268,6 +268,11 @@ class BookingResource extends Resource
                     ->relationship('jadwalTayang.film', 'judul', fn(Builder $query) => $query->orderBy('judul'))
                     ->searchable()
                     ->preload(),
+                Tables\Filters\SelectFilter::make('user_id')
+                    ->label('Pelanggan')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

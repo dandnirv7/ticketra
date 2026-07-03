@@ -31,11 +31,20 @@ class PaymentWebhookController extends Controller
 
             Log::info('Parsed data', ['order_id' => $data['order_id'] ?? 'N/A']);
 
-            $orderId           = $data['order_id'] ?? null;
+            $rawOrderId        = $data['order_id'] ?? null;
             $transactionId     = $data['transaction_id'] ?? null;
             $transactionStatus = $data['transaction_status'] ?? null;
             $fraudStatus       = $data['fraud_status'] ?? 'accept';
             $paymentType       = $data['payment_type'] ?? null;
+
+            $orderId = $rawOrderId;
+            if ($rawOrderId) {
+                $parts = explode('-', $rawOrderId);
+                if (count($parts) > 1 && is_numeric(end($parts))) {
+                    array_pop($parts);
+                    $orderId = implode('-', $parts);
+                }
+            }
 
             if (!$orderId || !$transactionId) {
                 Log::error('Missing required fields', [
@@ -248,7 +257,16 @@ class PaymentWebhookController extends Controller
 
     private function handleSnackWebhook(array $data): \Illuminate\Http\JsonResponse
     {
-        $orderId = $data['order_id'];
+        $rawOrderId = $data['order_id'];
+        $orderId = $rawOrderId;
+        if ($rawOrderId) {
+            $parts = explode('-', $rawOrderId);
+            if (count($parts) > 1 && is_numeric(end($parts))) {
+                array_pop($parts);
+                $orderId = implode('-', $parts);
+            }
+        }
+
         $transactionId = $data['transaction_id'] ?? null;
         $transactionStatus = $data['transaction_status'] ?? null;
         $fraudStatus = $data['fraud_status'] ?? 'accept';

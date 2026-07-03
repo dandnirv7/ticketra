@@ -9,8 +9,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Bioskop extends Model
 {
+    use HasFactory, HasUuids, SoftDeletes, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['nama', 'kota', 'alamat'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+
+{
     /** @use HasFactory<\Database\Factories\BioskopFactory> */
     use HasFactory, HasUuids, SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
     public $incrementing = false;
     protected $keyType = 'string';
 

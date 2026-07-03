@@ -12,6 +12,8 @@ class Film extends Model
 {
     
     use HasFactory, HasUuids, SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
     public $incrementing = false;
     protected $keyType = 'string';
 

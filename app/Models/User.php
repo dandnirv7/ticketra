@@ -6,8 +6,6 @@ use Database\Factories\UserFactory;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -17,8 +15,8 @@ use Illuminate\Notifications\Notifiable;
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser
 {
-    
-    use HasFactory, Notifiable, HasUuids;
+    /** @use HasFactory<UserFactory> */
+    use HasFactory, HasUuids, Notifiable;
 
     public $incrementing = false;
     protected $keyType = 'string';
@@ -28,7 +26,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser
         return in_array($this->role, ['admin', 'editor'], true);
     }
 
-    
     protected function casts(): array
     {
         return [

@@ -139,7 +139,7 @@
 </x-app-layout>
 
 @if($snapToken && in_array($snackOrder->status, ['locked']))
-<script src="{{ config('midtrans.snap_url', 'https://app.sandbox.midtrans.com/snap2.js') }}"
+<script src="{{ config('midtrans.snap_url', 'https://app.sandbox.midtrans.com/snap/snap.js') }}"
         data-client-key="{{ config('midtrans.client_key') }}"></script>
 @endif
 

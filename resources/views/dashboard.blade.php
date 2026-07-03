@@ -112,6 +112,10 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         <x-icon name="heroicon-s-shopping-bag" class="w-5 h-5 text-border" />
                         Snack Bar
                     </a>
+                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
+                        <x-icon name="heroicon-s-heart" class="w-5 h-5 text-border" />
+                        Wishlist
+                    </a>
                     <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl border-[3px] border-transparent hover:bg-white hover:border-border hover:shadow-[3px_3px_0px_rgba(0,0,0,1)] hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
                         <x-icon name="heroicon-s-user" class="w-5 h-5 text-border" />
                         Profil
@@ -166,10 +170,7 @@ $bottomInactive = 'flex flex-col items-center justify-center gap-1 text-[10px] f
                         </div>
                     </div>
 
-                    <button class="relative w-11 h-11 bg-secondary-background border-[3px] border-border rounded-full flex items-center justify-center hover:bg-pastel-lemon/20 transition-colors focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2">
-                        <x-icon name="heroicon-s-bell" class="w-5 h-5 text-border" />
-                        <span class="absolute top-2 right-2 w-2.5 h-2.5 rounded-full border-2 bg-accent-red border-border"></span>
-                    </button>
+                    <livewire:notifications-dropdown />
 
                     <a href="{{ route('profile.edit') }}" class="hidden lg:flex w-11 h-11 bg-accent-yellow border-[3px] border-border rounded-full items-center justify-center text-xl hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-border focus:ring-offset-2 select-none">
                         {{ $user->avatar_emoji ?? '🍿' }}

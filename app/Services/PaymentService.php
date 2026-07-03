@@ -59,11 +59,14 @@ class PaymentService
             ];
         }
 
-        $grossAmount = ($ticketPrice * $ticketCount) + $serviceFee + $fnbTotal;
+        $grossAmount = (int) ($booking->total_price + $booking->service_fee + $booking->fnb_total - $booking->discount_amount);
+        if ($grossAmount < 1) {
+            $grossAmount = 1;
+        }
 
         $params = [
             'transaction_details' => [
-                'order_id' => $booking->booking_id,
+                'order_id' => $booking->booking_id . '-' . time(),
                 'gross_amount' => $grossAmount,
             ],
             'customer_details' => [

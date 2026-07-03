@@ -11,8 +11,22 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Studio extends Model
 {
+    use HasFactory, HasUuids, SoftDeletes, LogsActivity;
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['nama', 'tipe', 'kapasitas', 'bioskop_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
+    }
+
+
+{
     /** @use HasFactory<\Database\Factories\StudioFactory> */
     use HasFactory, HasUuids, SoftDeletes;
+use Spatie\Activitylog\Models\Concerns\LogsActivity;
+use Spatie\Activitylog\Support\LogOptions;
     public $incrementing = false;
     protected $keyType = 'string';
 

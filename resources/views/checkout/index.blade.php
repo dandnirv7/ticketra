@@ -158,6 +158,38 @@
                 </div>
 
                 <div class="space-y-6">
+                    <!-- Form Promo Code -->
+                    @if ($isPayable)
+                        <div class="brutal-box bg-white p-6 md:p-8">
+                            <h3 class="pb-3 mb-4 text-lg uppercase font-black border-b-2 border-dashed border-border flex items-center justify-between">
+                                <span>🎟️ Kode Promo</span>
+                                @if ($booking->promo)
+                                    <span class="text-xs font-bold text-accent-green uppercase">Aktif</span>
+                                @endif
+                            </h3>
+
+                            @if ($booking->promo)
+                                <div class="flex items-center justify-between p-3 bg-emerald-50 border-2 border-black rounded-lg">
+                                    <div>
+                                        <p class="font-extrabold text-sm text-emerald-900">{{ $booking->promo->title }} ({{ $booking->promo->code }})</p>
+                                        <p class="text-xs text-emerald-700">Diskon Rp {{ number_format($discountAmount, 0, ',', '.') }}</p>
+                                    </div>
+                                    <form action="{{ route('checkout.promo.remove', $booking->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-xs font-extrabold text-red-600 hover:underline">Hapus</button>
+                                    </form>
+                                </div>
+                            @else
+                                <form action="{{ route('checkout.promo.apply', $booking->id) }}" method="POST" class="flex gap-2">
+                                    @csrf
+                                    <input type="text" name="promo_code" placeholder="Ketik Kode Promo..." required class="neo-input uppercase flex-1 text-sm font-mono tracking-wider" />
+                                    <button type="submit" class="brutal-btn !py-2 !px-4 text-xs font-black">Pakai</button>
+                                </form>
+                            @endif
+                        </div>
+                    @endif
+
                     <div class="brutal-box bg-white p-6 md:p-8">
                         <h3 class="pb-4 mb-4 text-xl uppercase border-b-2 border-dashed border-border">Rincian Harga</h3>
                         <div class="space-y-2 text-sm font-bold">
@@ -236,7 +268,7 @@
 </x-app-layout>
 
 @if($snapToken && $isPayable)
-<script src="{{ config('midtrans.snap_url', 'https://app.sandbox.midtrans.com/snap2.js') }}"
+<script src="{{ config('midtrans.snap_url', 'https://app.sandbox.midtrans.com/snap/snap.js') }}"
         data-client-key="{{ config('midtrans.client_key') }}"></script>
 @endif
 
